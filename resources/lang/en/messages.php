@@ -10,5 +10,10 @@ return [
     'Form_Elements'=> 'Form Elements',
     'Basic_Tables'=> 'Basic Tables',
     'Forms'=>'Forms',
-
+    'Authentication'=>'Authentication',
+    'others'=>'Others',
+    'Pages'=>'Pages',
+    'Register'=>'Register',
+    'Student Register'=>'Student Register',
+    'Student List'=>'Student List',
 ];

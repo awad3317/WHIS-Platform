@@ -10,4 +10,10 @@ return [
     'Form_Elements'=> 'عناصر النموذج',
     'Basic_Tables'=> 'الجداول الأساسية',
     'Forms'=>'النماذج',
+    'Authentication'=>' المصادقة',
+    'others'=>'آخرى',
+    'Pages'=>'الصفحات',
+    'Register'=>'التسجيل',
+    'Student Register'=>'التسجيل للطالب',
+    'Student List'=>'قائمة الطلاب',
 ];
