@@ -41,18 +41,18 @@ layer(base);
   --color-white: #ffffff;
   --color-black: #101828;
 
-  --color-brand-25: #f2f7ff;
-  --color-brand-50: #ecf3ff;
-  --color-brand-100: #dde9ff;
-  --color-brand-200: #c2d6ff;
-  --color-brand-300: #9cb9ff;
-  --color-brand-400: #7592ff;
-  --color-brand-500: #465fff;
-  --color-brand-600: #3641f5;
-  --color-brand-700: #2a31d8;
-  --color-brand-800: #252dae;
-  --color-brand-900: #262e89;
-  --color-brand-950: #161950;
+  --color-brand-25:  #f3f9ff;
+--color-brand-50:  #e7f3ff;
+--color-brand-100: #cce6ff;
+--color-brand-200: #99ccff;
+--color-brand-300: #66b2ff;
+--color-brand-400: #3399ff;
+--color-brand-500: #0066b2; 
+--color-brand-600: #005a9e;
+--color-brand-700: #004d89;
+--color-brand-800: #004076;
+--color-brand-900: #003360;
+--color-brand-950: #00264d;
 
   --color-blue-light-25: #f5fbff;
   --color-blue-light-50: #f0f9ff;
@@ -81,18 +81,18 @@ layer(base);
   --color-gray-950: #0c111d;
   --color-gray-dark: #1a2231;
 
-  --color-orange-25: #fffaf5;
-  --color-orange-50: #fff6ed;
-  --color-orange-100: #ffead5;
-  --color-orange-200: #fddcab;
-  --color-orange-300: #feb273;
-  --color-orange-400: #fd853a;
-  --color-orange-500: #fb6514;
-  --color-orange-600: #ec4a0a;
-  --color-orange-700: #c4320a;
-  --color-orange-800: #9c2a10;
-  --color-orange-900: #7e2410;
-  --color-orange-950: #511c10;
+    --color-orange-25:  #fffaf5;
+  --color-orange-50:  #fff4eb;
+  --color-orange-100: #ffe0cc;
+  --color-orange-200: #ffc299;
+  --color-orange-300: #ffa366;
+  --color-orange-400: #ff8533;
+  --color-orange-500: #f28c20; 
+  --color-orange-600: #d6781c;
+  --color-orange-700: #b86318;
+  --color-orange-800: #994f13;
+  --color-orange-900: #7a3f0f;
+  --color-orange-950: #4e2709;
 
   --color-success-25: #f6fef9;
   --color-success-50: #ecfdf3;
@@ -504,13 +504,13 @@ span.flatpickr-weekday,
 .flatpickr-day.selected.nextMonthDay,
 .flatpickr-day.startRange.nextMonthDay,
 .flatpickr-day.endRange.nextMonthDay {
-  background: #465fff;
+  background: #ed7036;
   @apply border-brand-500! bg-brand-500! hover:border-brand-500! hover:bg-brand-500!;
 }
 .flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n + 1)),
 .flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
 .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
-  box-shadow: -10px 0 0 #465fff;
+  box-shadow: -10px 0 0 #ed7036;
 }
 
 .flatpickr-months .flatpickr-prev-month svg,

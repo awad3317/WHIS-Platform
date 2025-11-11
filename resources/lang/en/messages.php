@@ -16,4 +16,5 @@ return [
     'Register'=>'Register',
     'Student Register'=>'Student Register',
     'Student List'=>'Student List',
+    
 ];

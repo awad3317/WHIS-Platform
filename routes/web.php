@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\EmployeeRegisterController;
+
 use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\App;
@@ -33,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/student_list', [RegisterController::class, 'index'])->name('student_list.index');
     Route::get('/student_register', [RegisterController::class, 'create'])->name('student_register.create');
+    Route::get('/employee_register', [EmployeeRegisterController::class, 'create'])->name('employee_register.create');
+    Route::get('/employee_list', [EmployeeRegisterController::class, 'index'])->name('employee_list.index');
+    
 });
 
 require __DIR__.'/auth.php';

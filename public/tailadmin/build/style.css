@@ -112,10 +112,10 @@ svg{-ms-touch-action:none;touch-action:none}image,text,.jvm-zoomin,.jvm-zoomout{
     --color-brand-50: #ecf3ff;
     --color-brand-100: #dde9ff;
     --color-brand-300: #9cb9ff;
-    --color-brand-400: #7592ff;
-    --color-brand-500: #465fff;
-    --color-brand-600: #3641f5;
-    --color-brand-800: #252dae;
+    --color-brand-400: #0066b2;
+    --color-brand-500: #0066b2;
+    --color-brand-600: #f28c20;
+    --color-brand-800: #0066b2;
     --color-brand-950: #161950;
     --color-blue-light-50: #f0f9ff;
     --color-blue-light-500: #0ba5ec;
@@ -134,7 +134,7 @@ svg{-ms-touch-action:none;touch-action:none}image,text,.jvm-zoomin,.jvm-zoomout{
     --color-error-800: #912018;
     --color-warning-50: #fffaeb;
     --color-warning-400: #fdb022;
-    --color-warning-500: #f79009;
+    --color-warning-500: #f28c20;
     --color-warning-600: #dc6803;
     --color-warning-700: #b54708;
     --color-theme-pink-500: #ee46bc;

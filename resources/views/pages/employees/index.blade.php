@@ -1,12 +1,15 @@
 @extends('layouts.app')
 @section('title')
+    {{ __('Register Employee') }}
+@endsection
 @section('content')
-    <div class="space-y-5 sm:space-y-6">
+
+<div class="space-y-5 sm:space-y-6">
 
         <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="px-5 py-4 sm:px-6 sm:py-5">
                 <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
-                    {{ trans('student.BasicTable') }}
+                    {{ trans('employee.EmployeeList') }}
                 </h3>
             </div>
             <div class="border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
@@ -16,8 +19,8 @@
                     <div class="flex flex-col gap-5 px-6 mb-4 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
-                                {{ trans('student.StudentsList') }}
-                             </h3>
+                                {{ trans('employee.RecentEmployees') }}
+                            </h3>
                         </div>
 
                         <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -31,7 +34,7 @@
                                                 fill=""></path>
                                         </svg>
                                     </span>
-                                    <input type="text" placeholder="{{ trans('student.Search') }}"
+                                    <input type="text" placeholder="{{ trans('employee.Search') }}"
                                         class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-10 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-4 pl-[42px] text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden xl:w-[300px] dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30">
                                 </div>
                             </form>
@@ -52,7 +55,7 @@
                                             fill="" stroke="" stroke-width="1.5"></path>
                                     </svg>
 
-                                    {{ trans('student.Filter') }}
+                                    {{ trans('employee.Filter') }}
                                 </button>
                             </div>
                         </div>
@@ -81,7 +84,7 @@
                                                 <div>
                                                     <span
                                                         class="block font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                        {{ trans('student.StudentID') }}
+                                                        {{ trans('employee.EmployeeID') }}
                                                     </span>
                                                 </div>
                                             </div>
@@ -90,42 +93,42 @@
                                     <th class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                {{ trans('student.FullName') }}
+                                                {{ trans('employee.EmployeeName') }}
                                             </p>
                                         </div>
                                     </th>
                                     <th class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                {{ trans('student.Grade') }}
+                                                {{ trans('employee.EmployeeRole') }}
                                             </p>
                                         </div>
                                     </th>
                                     <th class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                {{ trans('student.DateOfBirth') }}
+                                                {{ trans('employee.EmployeeEmail') }}
                                             </p>
                                         </div>
                                     </th>
                                     <th class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                {{ trans('student.Nationality') }}
+                                                {{ trans('employee.EmployeePhone') }}
                                             </p>
                                         </div>
                                     </th>
                                     <th class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                {{ trans('student.Status') }}
+                                                {{ trans('employee.EmployeeStatus') }}
                                             </p>
                                         </div>
                                     </th>
                                     <th class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center justify-center">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                {{ trans('student.Action') }}
+                                                {{ trans('employee.Action') }}
                                             </p>
                                         </div>
                                     </th>
@@ -576,5 +579,6 @@
         </div>
 
     </div>
+
 
 @endsection
