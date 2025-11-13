@@ -16,4 +16,5 @@ return [
     'Register'=>'التسجيل',
     'Student Register'=>'التسجيل للطالب',
     'Student List'=>'قائمة الطلاب',
+    'Attendance'=>'الحضور',
 ];

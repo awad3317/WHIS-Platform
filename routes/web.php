@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\EmployeeRegisterController;
 
 use App\Http\Controllers\LanguageController;
@@ -37,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/student_register', [RegisterController::class, 'create'])->name('student_register.create');
     Route::get('/employee_register', [EmployeeRegisterController::class, 'create'])->name('employee_register.create');
     Route::get('/employee_list', [EmployeeRegisterController::class, 'index'])->name('employee_list.index');
+    Route::get('/Dashboard',[DashboardController::class,'index'])->name('Dashboard.index');
+        Route::get('/Dashboard', [DashboardController::class, 'index'])->name('Dashboard.index');
+        Route::get('/Attendance',[AttendanceController::class,'index'])->name('Attendance.index');
+        
+
     
 });
 
