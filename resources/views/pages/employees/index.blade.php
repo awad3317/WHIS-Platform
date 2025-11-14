@@ -511,9 +511,9 @@
                                             <div class="flex items-center gap-3">
                                                 <div
                                                     class="flex items-center justify-center w-10 h-10 rounded-full bg-success-50">
-                                                    <span class="text-xs font-semibold text-success-600">
-                                                        TG
-                                                    </span>
+                                                    {{-- <span class="text-xs font-semibold text-success-600"> --}}
+                                                      <img src="{{ asset('tailadmin/src/images/user/user-01.jpg') }}" class="w-8 h-8 rounded-full">
+                                                    {{-- </span> --}}
                                                 </div>
 
                                                 <div>

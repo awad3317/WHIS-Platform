@@ -99,6 +99,11 @@ return  [
     'Status' => 'الحالة',
     'Active' => 'نشط',
     'Action' => 'إجراء',
+    'Edit' => 'تعديل',
+    'Delete' => 'حذف',
+    'Previous' => 'السابق',
+    'Next' => 'التالي',
+    'Student Register' => 'تسجيل الطالب',
 
 
 ];

@@ -101,5 +101,7 @@ return [
     'Action' => 'Action',
     'Edit' => 'Edit',
     'Delete' => 'Delete',
-
+    'Previous' => 'Previous',
+    'Next' => 'Next',
+    'Student Register' => 'Student Register',
 ];

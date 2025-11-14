@@ -17,4 +17,14 @@ return [
     'Student Register'=>'Student Register',
     'Student List'=>'Student List',
     'Attendance'=>'Attendance',
+    'day' => 'Day',
+    'week' => 'Week',
+    'Attendance Overview'=>'Attendance Overview',
+    'Student Attendance'=>'Student Attendance',
+    'Holiday'=>'Holiday',
+
+    'On time'=>'On time',
+    'Late'=>'Late',
+    'Absent'=>'Absent',
+    
 ];

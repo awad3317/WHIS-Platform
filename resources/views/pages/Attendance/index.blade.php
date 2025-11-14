@@ -5,7 +5,8 @@
     <div class="p-6">
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Student Attendance</h2>
+                <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">{{ trans('messages.Student Attendance') }}
+                </h2>
                 <p class="text-gray-500 dark:text-gray-400">23 Sep - 29 Sep 2024</p>
             </div>
 
@@ -14,7 +15,7 @@
                 <!-- Holiday -->
                 <span
                     class="flex items-center gap-2 bg-white dark:bg-gray-400 px-4 py-1.5 rounded-full shadow-sm border border-gray-200 dark:border-gray-700">
-                    <span class="text-sm font-medium text-gray-600 dark:text-gray-50">Holiday</span>
+                    <span class="text-sm font-medium text-gray-600 dark:text-gray-50">{{ trans('messages.Holiday') }}</span>
                 </span>
 
                 <!-- On time -->
@@ -63,25 +64,26 @@
                         :class="{ 'opacity-40 cursor-not-allowed': week === 1 }" :disabled="week === 1"
                         title="Previous Week">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5">
+                            stroke="currentColor" class="w-5 h-5 dark:text-white">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                         </svg>
                     </button>
 
-                    <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-100">Attendance Overview</h2>
+                    <h2 class="text-sm font-semibold text-gray-700 dark:text-white">
+                        {{ trans('messages.Attendance Overview') }}</h2>
 
                     <button @click="week = week < 4 ? week + 1 : 4"
                         class="p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition"
                         :class="{ 'opacity-40 cursor-not-allowed': week === 4 }" :disabled="week === 4" title="Next Week">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5">
+                            stroke="currentColor" class="w-5 h-5 dark:text-white">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                         </svg>
                     </button>
 
                     <span
-                        class="ml-2 text-[12px] text-gray-500 dark:text-gray-400 font-medium border px-2 py-0.5 rounded-md bg-white dark:bg-gray-700">
-                        Week <span x-text="week"></span> •
+                        class="ml-2 text-[12px] text-gray-500 dark:text-white font-medium border px-2 py-0.5 rounded-md bg-white dark:bg-gray-700">
+                        {{ trans('messages.week') }} <span x-text="week"></span> •
                         <span x-text="'Days ' + ((week - 1) * 7 + 1) + '–' + (week * 7)"></span>
                     </span>
                 </div>
@@ -105,23 +107,23 @@
                     class="sticky top-0 z-30 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 text-xs font-semibold uppercase text-gray-600 dark:text-gray-50">
                     <tr>
                         <th
-                            class="sticky left-0 z-40 px-4 py-3 text-left bg-gray-100 dark:bg-gray-200 flex items-center gap-2">
+                            class="sticky left-0 z-40 px-4 py-3 text-left bg-gray-100 dark:bg-gray-800 flex dark:text-white items-center gap-2">
                             <input type="checkbox" x-model="selectAll" @change="toggleAll()"
                                 class="rounded text-indigo-600 focus:ring-indigo-500" />
                             Student Profile
                         </th>
                         <template x-for="day in 30" :key="day">
                             <th x-show="Math.ceil(day / 7) === week"
-                                class="px-3 py-3 border-l font-semibold text-gray-700 dark:text-gray-100"
+                                class="px-3 py-3 border-l font-semibold text-gray-700 dark:text-white dark:bg-gray-600"
                                 x-text="'Day ' + day"></th>
                         </template>
                     </tr>
                 </thead>
 
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-200">
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-100">
                     <template x-for="student in students" :key="student.id">
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                            <td class="flex items-center gap-3 px-4 py-3 sticky left-0 z-20 bg-white dark:bg-gray-200">
+                            <td class="flex items-center gap-3 px-4 py-3 sticky left-0 z-20 bg-white dark:bg-gray-100">
                                 <input type="checkbox" x-model="student.selected"
                                     class="rounded text-indigo-600 focus:ring-indigo-500" />
                                 <img :src="'{{ asset('tailadmin/src/images/user/user-0') }}' + student.id + '.jpg'"

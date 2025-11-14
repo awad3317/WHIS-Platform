@@ -17,4 +17,14 @@ return [
     'Student Register'=>'التسجيل للطالب',
     'Student List'=>'قائمة الطلاب',
     'Attendance'=>'الحضور',
+    'day' => 'اليوم',
+    'week' => 'الاسبوع',
+    'Attendance Overview'=>'ملخص الحضور',
+    'Student Attendance'=>'الحضور للطالب',
+    'Holiday'=>'الإجازة',
+    'On time'=>'على الوقت',
+    'Late'=>'متاخر',
+    'Absent'=>'غياب',
+    
+    
 ];
