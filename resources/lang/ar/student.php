@@ -104,6 +104,9 @@ return  [
     'Previous' => 'السابق',
     'Next' => 'التالي',
     'Student Register' => 'تسجيل الطالب',
+    'Medical fitness form' => 'نموذج ملائمة الطالب',
+    'Enter The Subject He Studies' => 'أدخل المادة التي يدرسها',
+    'Enter Medical fitness form' => 'أدخل نموذج ملائمة الطالب',
 
 
 ];

@@ -25,6 +25,10 @@ return [
     'On time'=>'على الوقت',
     'Late'=>'متاخر',
     'Absent'=>'غياب',
+    'Mark Attendance'=>'تسجيل الحضور',
+    'Class'=>'الصف',
+    'Section'=>'القسم',
+    'Period'=>'الفترة',
     
     
 ];

@@ -26,5 +26,11 @@ return [
     'On time'=>'On time',
     'Late'=>'Late',
     'Absent'=>'Absent',
+    'Mark Attendance'=>'Mark Attendance',
+    'Class'=>'Class',
+    'Section'=>'Section',
+    'Period'=>'Period',
+    
+    
     
 ];

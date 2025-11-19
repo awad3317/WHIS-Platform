@@ -104,4 +104,7 @@ return [
     'Previous' => 'Previous',
     'Next' => 'Next',
     'Student Register' => 'Student Register',
+    'Medical fitness form' => 'Medical fitness form',
+    'Enter The Subject He Studies' => 'Enter The Subject He Studies',
+    'Enter Medical fitness form' => 'Enter Medical fitness form',
 ];

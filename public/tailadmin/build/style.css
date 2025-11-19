@@ -349,6 +349,7 @@ svg{-ms-touch-action:none;touch-action:none}image,text,.jvm-zoomin,.jvm-zoomout{
     display: none !important;
   }
 }
+
 @layer utilities {
   .pointer-events-none {
     pointer-events: none;

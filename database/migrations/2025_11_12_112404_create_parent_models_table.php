@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('parent_models', function (Blueprint $table) {
             $table->id();
-            $table->string('id', 50)->primary();
-            $table->string('user_id', 50)->unique();
             $table->string('name_ar', 100);
             $table->string('name_en', 100)->nullable();
             $table->string('email', 100)->nullable();
@@ -23,7 +21,6 @@ return new class extends Migration
             $table->string('job_title', 100)->nullable(); 
             $table->string('workplace', 150)->nullable(); 
             $table->string('mobile', 20)->nullable();
-            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
