@@ -22,7 +22,7 @@ class Employee extends Model
         'graduation_year',
         'phone',
         'salary',
-        'id_type',
+        'national_id_type',
         'weekly_classes',
         'subjects',
         'is_active',

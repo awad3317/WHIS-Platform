@@ -23,7 +23,7 @@ return new class extends Migration
             $table->year('graduation_year')->nullable();
             $table->string('phone', 20)->nullable();
             $table->decimal('salary', 10, 2)->nullable();
-            $table->enum('id_type', ['national_id', 'passport', 'residence_id'])->default('national_id'); // نوع الهوية
+            $table->enum('national_id_type', ['national_id', 'passport', 'residence_id'])->default('national_id');
             $table->integer('weekly_classes')->default(0);
             $table->json('subjects')->nullable();
             $table->boolean('is_active')->default(true);
