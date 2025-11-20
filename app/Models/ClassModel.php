@@ -13,6 +13,10 @@ class ClassModel extends Model
         'name_ar',
         'name_en',
         'grade_level',
+        'section',
+        'capacity',
+        'academic_year',
+        'is_active',
     ];
     public function students()
     {
@@ -33,7 +37,7 @@ class ClassModel extends Model
 
     public function enrollments()
     {
-        return $this->hasMany(Class_student::class, 'class_id');
+        return $this->hasMany(class_student::class, 'class_id');
     }
 
 
