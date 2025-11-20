@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->string('academic_no', 50)->primary();
+            $table->id();
+            $table->string('academic_no', 50)->unique();
             $table->string('name_ar', 100);
             $table->string('name_en', 100)->nullable();
             $table->date('birth_date')->nullable();
@@ -21,8 +22,6 @@ return new class extends Migration
             $table->date('enrollment_date');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
-            $table->foreign('class_id')->references('id')->on('classes');
-            $table->foreign('parent_id')->references('id')->on('parents');
         });
     }
 

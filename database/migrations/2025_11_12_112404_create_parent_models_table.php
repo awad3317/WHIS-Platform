@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name_en', 100)->nullable();
             $table->string('email', 100)->nullable();
             $table->string('national_id', 20)->unique();
-            $table->enum('relationship', ['father', 'mother', 'guardian']);
             $table->string('job_title', 100)->nullable(); 
             $table->string('workplace', 150)->nullable(); 
             $table->string('mobile', 20)->nullable();
