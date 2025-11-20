@@ -80,7 +80,7 @@ trait HasUserAccount
 
         $user = $this->user;
         return [
-            'username' => $user->phone,
+            'phone' => $user->phone,
             'user_type' => $user->user_type,
             'is_active' => $user->is_active,
             'created_at' => $user->created_at
