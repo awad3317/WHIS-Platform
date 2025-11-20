@@ -17,7 +17,7 @@ class ClassModel extends Model
     public function students()
     {
         return $this->belongsToMany(Student::class, 'class_student')
-                    ->using(Class_student::class)
+                    ->using(class_student::class)
                     ->withPivot('academic_year', 'status', 'enrollment_date', 'leave_date', 'notes')
                     ->withTimestamps();
     }

@@ -21,14 +21,14 @@ class Student extends Model
     public function classes()
     {
         return $this->belongsToMany(ClassModel::class, 'class_student')
-                    ->using(Class_student::class)
+                    ->using(class_student::class)
                     ->withPivot('academic_year', 'status', 'enrollment_date', 'leave_date', 'notes')
                     ->withTimestamps();
     }
 
     public function files()
     {
-        return $this->hasMany(Student_file::class);
+        return $this->hasMany(student_file::class);
     }
 
     public function parents()
@@ -67,7 +67,7 @@ class Student extends Model
     // }
     public function enrollmentHistory()
     {
-        return $this->hasMany(Class_student::class);
+        return $this->hasMany(class_student::class);
     }
 
 }
