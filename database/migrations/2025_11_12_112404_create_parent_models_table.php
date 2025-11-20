@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name_ar', 100);
             $table->string('name_en', 100)->nullable();
+            $table->string('phone', 20)->unique();    
             $table->string('email', 100)->nullable();
             $table->string('national_id', 20)->unique();
             $table->string('job_title', 100)->nullable(); 
             $table->string('workplace', 150)->nullable(); 
             $table->string('mobile', 20)->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('weekly_classes')->default(0);
             $table->json('subjects')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->softDeletes(); 
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

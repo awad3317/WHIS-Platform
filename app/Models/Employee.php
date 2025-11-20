@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HasUserAccount;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Employee extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, HasUserAccount;
     protected $table = 'employees';
     protected $fillable = [
         'name_ar',
@@ -64,7 +66,7 @@ class Employee extends Model
     }
     public function scopeActive($query)
     {
-        return $query->where('is_active', true);
+        return $query->where('is_active', true)->whereNull('deleted_at');
     }
     public function scopeInDepartment($query, $department)
     {
@@ -86,6 +88,25 @@ class Employee extends Model
             unset($subjects[$key]);
             $this->update(['subjects' => array_values($subjects)]);
         }
+    }
+
+    protected function createUserData(): array
+    {
+        return [
+            'name'=>$this->name_ar,
+            'phone' => $this->phone,
+            'user_type' => 'employee',
+            'is_active' => $this->is_active,
+            'password' => $this->phone,
+        ];
+    }
+    protected function updateUserData(): array
+    {
+        return [
+            'name'=>$this->name_ar,
+            'phone' => $this->phone,
+            'is_active' => $this->is_active,
+        ];
     }
 
 }
