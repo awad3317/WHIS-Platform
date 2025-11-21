@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('parent_models', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name_ar', 100);
             $table->string('name_en', 100)->nullable();
             $table->string('phone', 20)->unique();    
@@ -23,7 +24,7 @@ return new class extends Migration
             $table->string('mobile', 20)->nullable();
             $table->boolean('is_active')->default(true);
             $table->softDeletes();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

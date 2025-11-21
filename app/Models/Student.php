@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Student extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $table = 'students';
     protected $fillable = [
         'academic_no',
@@ -71,6 +72,10 @@ class Student extends Model
     public function enrollmentHistory()
     {
         return $this->hasMany(class_student::class);
+    }
+    public function scopeActive($query)
+    {
+        return $query->whereNull('deleted_at');
     }
 
 }
