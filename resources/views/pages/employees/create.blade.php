@@ -128,8 +128,8 @@
                                 class="{{ $inputClass }}">
                         </div>
 
-                        
-                   
+
+
                         <div>
                             <label
                                 class="{{ $labelClass }}">{{ trans('student.The academic level he studies') }}</label>
@@ -137,7 +137,7 @@
                                 placeholder="{{ trans('student.Enter The The academic level he studies') }}"
                                 class="{{ $inputClass }}">
                         </div>
-     <div class="relative">
+                        <div class="relative">
                             <label class="{{ $labelClass }}">{{ trans('student.Graduation date') }}</label>
 
                             <input type="date" placeholder="Select date"

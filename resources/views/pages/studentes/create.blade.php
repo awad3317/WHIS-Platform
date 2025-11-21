@@ -1,387 +1,342 @@
 @extends('layouts.app')
 @section('title', __('Register Student'))
 
-
 @section('content')
 
-    <div x-data="{ step: 1 }" class="space-y-8">
+    <div x-data="{
+        errors: {},
+    
+        student: { editable: true, approved: false },
+        father: { editable: true, approved: false },
+        mother: { editable: true, approved: false },
+        files: { editable: true, approved: false },
+    
+        /* ========== Student ========== */
+        approveStudent() {
+            this.errors = {}
+    
+            if (!this.$refs.name_en?.value.trim())
+                this.errors.name_en = '{{ trans('student.Full Name in English') }} {{ trans('validation.required') }}'
+    
+            if (!this.$refs.name_ar?.value.trim())
+                this.errors.name_ar = '{{ trans('student.Full Name in Arabic') }} {{ trans('validation.required') }}'
+    
+            if (!this.$refs.birth_date?.value)
+                this.errors.birth_date = '{{ trans('student.Date of Birth') }} {{ trans('validation.required') }}'
+    
+            if (!this.$refs.nationality?.value.trim())
+                this.errors.nationality = '{{ trans('student.Nationality') }} {{ trans('validation.required') }}'
+    
+            if (!this.$refs.previous_school?.value.trim())
+                this.errors.previous_school = '{{ trans('student.Present School') }} {{ trans('validation.required') }}'
+    
+            if (!this.$refs.class_id?.value.trim())
+                this.errors.class_id = '{{ trans('student.Class') }} {{ trans('validation.required') }}'
+    
+            if (Object.keys(this.errors).length === 0) {
+                this.student.editable = false
+                this.student.approved = true
+            }
+        },
+    
+        /* ========== Father ========== */
+        approveFather() {
+            this.errors = {}
+    
+            if (!this.$refs.father_name?.value.trim())
+                this.errors.father_name = '{{ trans('student.Father/Guardians’s Name') }} {{ trans('validation.required') }}'
+    
+            if (!this.$refs.father_phone?.value.trim())
+                this.errors.father_phone = '{{ trans('student.Mobile Phone') }} {{ trans('validation.required') }}'
+    
+            if (Object.keys(this.errors).length === 0) {
+                this.father.editable = false
+                this.father.approved = true
+            }
+        },
+    
+        /* ========== Mother ========== */
+        approveMother() {
+            this.errors = {}
+    
+            if (!this.$refs.mother_name?.value.trim())
+                this.errors.mother_name = '{{ trans('student.Mother’s Name in Arabic') }} {{ trans('validation.required') }}'
+    
+            if (!this.$refs.mother_phone?.value.trim())
+                this.errors.mother_phone = '{{ trans('student.Mobile Phone') }} {{ trans('validation.required') }}'
+    
+            if (Object.keys(this.errors).length === 0) {
+                this.mother.editable = false
+                this.mother.approved = true
+            }
+        },
+    
+        /* ========== Files ========== */
+        approveFiles() {
+            this.errors = {}
+            if (!this.$refs.files?.files || this.$refs.files.files.length === 0)
+                this.errors.files = '{{ trans('student.StudentRegistrationRequirements') }} {{ trans('validation.required') }}'
+    
+            if (Object.keys(this.errors).length === 0) {
+                this.files.editable = false
+                this.files.approved = true
+            }
+        },
+    
+    
+    }">
+        <form class="space-y-8">
 
-        <!-- شريط الخطوات -->
-        <div class="w-full flex items-center justify-center mt-4">
-            <div class="flex items-center space-x-6 rtl:space-x-reverse">
+            <!-- ==================== Student Card ==================== -->
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
+                <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800">
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+                        {{ trans('student.Student’sDetails') }}
+                    </h2>
+                </div>
 
-                <template x-for="i in 4">
-                    <div class="flex items-center space-x-4 rtl:space-x-reverse my-6">
+                <div class="p-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Name EN -->
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+                            {{ trans('student.Full Name in English') }}
+                        </label>
 
-                        <!-- الدائرة -->
-                        <div class="flex items-center justify-center w-12 h-12 rounded-full text-lg font-semibold transition-all duration-300"
-                            :class="step === i ?
-                                'bg-brand-500 text-white shadow-lg' :
-                                (step > i ?
-                                    'bg-success-500  text-white shadow' :
-                                    'bg-gray-300 dark:bg-gray-100 text-gray-700 dark:text-gray-300')">
-                            <span x-text="i"></span>
+                        <div x-show="student.editable">
+                            <input x-ref="name_en" name="name_en"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-700 bg-white dark:bg-dark-900" />
+                            <p x-show="errors.name_en" class="text-error-500 text-sm mt-1" x-text="errors.name_en"></p>
                         </div>
 
-                        <!-- الخط -->
-                        <template x-if="i < 4">
-                            <div class="w-16 h-1 rounded-full transition-all duration-300"
-                                :class="step > i ? 'bg-success-500' : 'bg-gray-300 dark:bg-gray-700'"></div>
-                        </template>
-
+                        <div x-show="student.approved">
+                            <p class="bg-gray-100 p-3 rounded-lg text-gray-800" x-text="$refs.name_en?.value"></p>
+                        </div>
                     </div>
-                </template>
+                    <!-- Name AR -->
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+                            {{ trans('student.Full Name in Arabic') }}
+                        </label>
+
+                        <div x-show="student.editable">
+                            <input x-ref="name_ar" name="name_ar"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-700 bg-white dark:bg-dark-900" />
+                            <p x-show="errors.name_ar" class="text-error-500 text-sm mt-1" x-text="errors.name_ar"></p>
+                        </div>
+
+                        <div x-show="student.approved">
+                            <p class="bg-gray-100 p-3 rounded-lg text-gray-800" x-text="$refs.name_en?.value"></p>
+                        </div>
+                    </div>
+
+                    <!-- Birth Date -->
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+                            {{ trans('student.Date of Birth') }}
+                        </label>
+
+                        <div x-show="student.editable">
+                            <input x-ref="birth_date" type="date"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-700" />
+                            <p x-show="errors.birth_date" class="text-error-500 text-sm mt-1" x-text="errors.birth_date">
+                            </p>
+                        </div>
+
+                        <div x-show="student.approved">
+                            <p class="bg-gray-100 p-3 rounded-lg text-gray-800" x-text="$refs.birth_date?.value"></p>
+                        </div>
+                    </div>
+
+                    <!-- Nationality -->
+                    <div>
+                        <label
+                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Nationality') }}</label>
+
+                        <div x-show="student.editable">
+                            <input x-ref="nationality"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-700" />
+                            <p x-show="errors.nationality" class="text-error-500 text-sm mt-1" x-text="errors.nationality">
+                            </p>
+                        </div>
+
+                        <div x-show="student.approved">
+                            <p class="bg-gray-100 p-3 rounded-lg text-gray-800" x-text="$refs.nationality?.value"></p>
+                        </div>
+                    </div>
+
+                    <!-- School -->
+                    <div>
+                        <label
+                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Present School') }}</label>
+
+                        <div x-show="student.editable">
+                            <input x-ref="previous_school"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-700" />
+                            <p x-show="errors.previous_school" class="text-error-500 text-sm mt-1"
+                                x-text="errors.previous_school"></p>
+                        </div>
+
+                        <div x-show="student.approved">
+                            <p class="bg-gray-100 p-3 rounded-lg text-gray-800" x-text="$refs.previous_school?.value"></p>
+                        </div>
+                    </div>
+
+                    <!-- Grade -->
+                    <div>
+                        <label
+                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Grade at Present School') }}</label>
+
+                        <div x-show="student.editable">
+                            <input x-ref="class_id"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-700" />
+                            <p x-show="errors.class_id" class="text-error-500 text-sm mt-1" x-text="errors.class_id"></p>
+                        </div>
+
+                        <div x-show="student.approved">
+                            <p class="bg-gray-100 p-3 rounded-lg text-gray-800" x-text="$refs.class_id?.value"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end p-6 gap-3">
+                    <button type="button" x-show="student.editable" @click="approveStudent()"
+                        class="px-6 py-2 rounded-lg bg-success-500 text-white">
+                        اعتماد
+                    </button>
+
+                    <button type="button" x-show="student.approved" @click="student.approved=false; student.editable=true"
+                        class="px-6 py-2 rounded-lg bg-warning-500 text-white">
+                        تعديل
+                    </button>
+                </div>
+            </div>
+
+            <!-- ==================== Father Card ==================== -->
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
+
+                <div class="px-6 py-5 border-b">
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+                        {{ trans('student.Father’sDetails') }}
+                    </h2>
+                    <button @click="openFatherModal()"
+    class="px-4 py-2 bg-brand-500 rounded-lg text-white text-sm">
+    + إضافة / بحث عن الأب
+</button>
+
+                </div>
+
+                <div class="p-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    <div>
+                        <label
+                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Father/Guardians’s Name') }}</label>
+
+                        <div x-show="father.editable">
+                            <input x-ref="father_name"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-700" />
+                            <p x-show="errors.father_name" class="text-error-500" x-text="errors.father_name"></p>
+                        </div>
+
+                        <div x-show="father.approved">
+                            <p class="bg-gray-100 p-3 rounded-lg" x-text="$refs.father_name?.value"></p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label
+                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Mobile Phone') }}</label>
+
+                        <div x-show="father.editable">
+                            <input x-ref="father_phone"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-700" />
+                            <p x-show="errors.father_phone" class="text-error-500" x-text="errors.father_phone"></p>
+                        </div>
+
+                        <div x-show="father.approved">
+                            <p class="bg-gray-100 p-3 rounded-lg" x-text="$refs.father_phone?.value"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end p-6 gap-3">
+                    <button type="button" x-show="father.editable" @click="approveFather()"
+                        class="px-6 py-2 rounded-lg bg-success-500 text-white">
+                        اعتماد
+                    </button>
+                    <button type="button" x-show="father.approved" @click="father.approved=false; father.editable=true"
+                        class="px-6 py-2 rounded-lg bg-warning-500 text-white">
+                        تعديل
+                    </button>
+                </div>
 
             </div>
-        </div>
 
-        <!-- صندوق المحتوى -->
-        <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl">
+            <!-- ==================== Mother Card ==================== -->
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
 
-            <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800">
-                <h2 class="text-lg font-semibold text-gray-800 dark:text-white/90">
-                    {{ trans('student.Student Register') }}
-                </h2>
+                <div class="px-6 py-5 border-b">
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+                        {{ trans('student.Mother’sDetails') }}
+                    </h2>
+                </div>
+
+                <div class="p-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
+
+                    <div>
+                        <label
+                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Mother’s Name in Arabic') }}</label>
+
+                        <div x-show="mother.editable">
+                            <input x-ref="mother_name"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-700" />
+                            <p x-show="errors.mother_name" class="text-error-500" x-text="errors.mother_name"></p>
+                        </div>
+
+                        <div x-show="mother.approved">
+                            <p class="bg-gray-100 p-3 rounded-lg" x-text="$refs.mother_name?.value"></p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label
+                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Mobile Phone') }}</label>
+
+                        <div x-show="mother.editable">
+                            <input x-ref="mother_phone"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-700" />
+                            <p x-show="errors.mother_phone" class="text-error-500" x-text="errors.mother_phone"></p>
+                        </div>
+
+                        <div x-show="mother.approved">
+                            <p class="bg-gray-100 p-3 rounded-lg" x-text="$refs.mother_phone?.value"></p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex justify-end p-6 gap-3">
+                    <button type="button" x-show="mother.editable" @click="approveMother()"
+                        class="px-6 py-2 rounded-lg bg-success-500 text-white">
+                        اعتماد
+                    </button>
+
+                    <button type="button" x-show="mother.approved" @click="mother.approved=false; mother.editable=true"
+                        class="px-6 py-2 rounded-lg bg-warning-500 text-white">
+                        تعديل
+                    </button>
+                </div>
+
             </div>
 
+            <!-- ==================== Files Card ==================== -->
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
 
-
-            <form class="p-6 space-y-8">
-
-                {{-- ---------------------- الخطوة 1: بيانات الطالب ---------------------- --}}
-                <div x-show="step === 1" x-transition>
-                    <h3 class="text-base dark:text-white font-medium mb-4">{{ trans('student.Student’sDetails') }}</h3>
-
-                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Full Name in Arabic') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.EnterFullNameInArabic') }}">
-                        </div>
-
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Full Name in English') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.EnterFullNameInEnglish') }}">
-                        </div>
-
-
-                        <div class="relative">
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Date of Birth') }}</label>
-
-                            <input type="date" placeholder="Select date"
-                                placeholder="{{ trans('student.Enter The Graduation Date') }}"
-                                class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 pl-4 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
-                                onclick="this.showPicker()" />
-                            <span
-                                class="pointer-events-none absolute  right-3 -translate-y-1/2 text-gray-700 dark:text-gray-400"
-                                style="top: 65% !important">
-                                <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M6.66659 1.5415C7.0808 1.5415 7.41658 1.87729 7.41658 2.2915V2.99984H12.5833V2.2915C12.5833 1.87729 12.919 1.5415 13.3333 1.5415C13.7475 1.5415 14.0833 1.87729 14.0833 2.2915V2.99984L15.4166 2.99984C16.5212 2.99984 17.4166 3.89527 17.4166 4.99984V7.49984V15.8332C17.4166 16.9377 16.5212 17.8332 15.4166 17.8332H4.58325C3.47868 17.8332 2.58325 16.9377 2.58325 15.8332V7.49984V4.99984C2.58325 3.89527 3.47868 2.99984 4.58325 2.99984L5.91659 2.99984V2.2915C5.91659 1.87729 6.25237 1.5415 6.66659 1.5415ZM6.66659 4.49984H4.58325C4.30711 4.49984 4.08325 4.7237 4.08325 4.99984V6.74984H15.9166V4.99984C15.9166 4.7237 15.6927 4.49984 15.4166 4.49984H13.3333H6.66659ZM15.9166 8.24984H4.08325V15.8332C4.08325 16.1093 4.30711 16.3332 4.58325 16.3332H15.4166C15.6927 16.3332 15.9166 16.1093 15.9166 15.8332V8.24984Z"
-                                        fill="" />
-                                </svg>
-                            </span>
-                        </div>
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Nationality') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Nationality') }}">
-                        </div>
-
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Present School') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Present School') }}">
-                        </div>
-
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Grade at Present School') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Grade at Present School') }}">
-                        </div>
-
-                    </div>
-
-                    <div class="flex justify-end mt-6">
-                        <button @click="step = 2" type="button"
-                            class="px-6 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white shadow transition">
-                            {{ trans('student.Next') }}
-                        </button>
-                    </div>
-                </div>
-
-
-                {{-- ---------------------- الخطوة 2: بيانات الأب ---------------------- --}}
-                <div x-show="step === 2" x-transition>
-                    <h3 class="text-base font-medium mb-4 dark:text-white ">{{ trans('student.Father’sDetails') }}</h3>
-
-                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-
-
-
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Father/Guardians’s Name') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Father/Guardians’s Name') }}">
-                        </div>
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Occupation') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Occupation') }}">
-                        </div>
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Place of Work') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Place of Work') }}">
-                        </div>
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Mobile Phone') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Mobile Phone') }}">
-                        </div>
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Email') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Email') }}">
-                        </div>
-
-                    </div>
-
-                    <div class="flex justify-between mt-6">
-                        <button @click="step = 1" type="button"
-                            class="px-6 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white shadow transition">
-                            {{ trans('student.Previous') }}
-                        </button>
-
-                        <button @click="step = 3" type="button"
-                            class="px-6 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white shadow transition">
-                            {{ trans('student.Next') }}
-                        </button>
-                    </div>
-                </div>
-
-
-                {{-- ---------------------- الخطوة 3: بيانات الأم ---------------------- --}}
-                <div x-show="step === 3" x-transition>
-                    <h3 class="text-base font-medium mb-4 dark:text-white ">{{ trans('student.Mother’sDetails') }}</h3>
-
-                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                 
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Mother’s Name in Arabic') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Mother’s Name in Arabic') }}">
-                        </div>
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Mother’s Name in English') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Mother’s Name in English') }}">
-                        </div>
-                            <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Occupation') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Occupation') }}">
-                        </div>
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Place of Work') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Place of Work') }}">
-                        </div>
-                        <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Mobile Phone') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Mobile Phone') }}">
-                        </div>
-
-                            <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Work Phone') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Work Phone') }}">
-                        </div>
-                               <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Home phone') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Home phone') }}">
-                        </div>
-                               <div>
-                            <label
-                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Email') }}</label>
-                            <input
-                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
-                border-gray-300 dark:border-gray-700
-                bg-white dark:bg-dark-900
-                focus:border-brand-500 focus:ring-2 focus:ring-brand-400/20
-                text-gray-800 dark:text-gray-500
-                placeholder:text-gray-400 dark:placeholder:text-gray-500
-                transition-all shadow-sm"
-                                placeholder="{{ trans('student.Email') }}">
-                        </div>
-                        
-
-                    </div>
-
-
-                    <div class="flex justify-between mt-6">
-                        <button @click="step = 2" type="button"
-                            class="px-6 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white shadow transition">
-                            {{ trans('student.Previous') }}
-                        </button>
-
-                        <button @click="step = 4" type="button"
-                            class="px-6 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white shadow transition">
-                            {{ trans('student.Next') }}
-                        </button>
-                    </div>
-
-                </div>
-
-                {{-- ---------------------- الخطوة 4: متطلبات تسجيل الطالب ---------------------- --}}
-                <div x-show="step === 4" x-transition>
-                    <h3 class="text-base font-medium mb-4 dark:text-white">
+                <div class="px-6 py-5 border-b">
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white/90">
                         {{ trans('student.StudentRegistrationRequirements') }}
-                    </h3>
+                    </h2>
+                </div>
 
-                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                  <div class="p-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
 
                         @foreach (['Personal photo', 'birth certificate', 'Vaccination certificate', 'Student’s previous and current certificates', 'A copy of the passport', 'Certificate from the Yemeni Ministry of Foreign Affairs and Consulate', 'Expatriate form', 'Medical fitness form'] as $field)
                             <div class="space-y-6">
@@ -427,27 +382,31 @@
                             </div>
                         @endforeach
 
+                    <div x-show="files.approved">
+                        <p class="bg-gray-100 p-3 rounded-lg text-gray-800">
+                            {{ __('Files Approved') }}
+                        </p>
                     </div>
-
-                    <div class="flex justify-between mt-6">
-                        <button @click="step = 3" type="button"
-                            class="px-6 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white shadow transition">
-                            {{ trans('student.Previous') }}
-                        </button>
-
-                        <button type="submit"
-                            class="px-6 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white shadow transition">
-                            {{ trans('student.Save Data') }}
-                        </button>
-                    </div>
-
                 </div>
 
+                <div class="flex justify-end p-6 gap-3">
+                    <button type="button" x-show="files.editable" @click="approveFiles()"
+                        class="px-6 py-2 rounded-lg bg-success-500 text-white">
+                        اعتماد
+                    </button>
+                    <button type="button" x-show="files.approved" @click="files.approved=false; files.editable=true"
+                        class="px-6 py-2 rounded-lg bg-warning-500 text-white">
+                        تعديل
+                    </button>
 
-            </form>
+                    <button type="submit" class="px-6 py-2 rounded-lg bg-brand-500 text-white">
+                        {{ trans('student.Save Data') }}
+                    </button>
+                </div>
 
-        </div>
+            </div>
 
+        </form>
     </div>
 
 @endsection

@@ -17,7 +17,7 @@
                         <div>
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
                                 {{ trans('student.StudentsList') }}
-                             </h3>
+                            </h3>
                         </div>
 
                         <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -575,6 +575,267 @@
             </div>
         </div>
 
+    </div>
+
+@endsection
+@extends('layouts.app')
+@section('title', __('Register Student'))
+
+@section('content')
+
+    <div x-data="{
+        step: 1,
+        errors: {},
+    
+        validateStep1() {
+            this.errors = {}
+            if (!this.$refs.name_ar.value.trim()) this.errors.name_ar = '{{ trans('student.Full Name in Arabic') }} {{ trans('validation.requierror') }}'
+            if (!this.$refs.birth_date.value) this.errors.birth_date = '{{ trans('student.Date of Birth') }} {{ trans('validation.requierror') }}'
+            if (!this.$refs.nationality.value.trim()) this.errors.nationality = '{{ trans('student.Nationality') }} {{ trans('validation.requierror') }}'
+            if (!this.$refs.grade.value.trim()) this.errors.grade = '{{ trans('student.Grade at Present School') }} {{ trans('validation.requierror') }}'
+    
+            if (Object.keys(this.errors).length === 0) this.step = 2
+        },
+    
+        validateStep2() {
+            this.errors = {}
+            if (!this.$refs.father_name.value.trim()) this.errors.father_name = '{{ trans('student.Father/Guardians’s Name') }} {{ trans('validation.requierror') }}'
+            if (!this.$refs.father_phone.value.trim()) this.errors.father_phone = '{{ trans('student.Mobile Phone') }} {{ trans('validation.requierror') }}'
+    
+            if (Object.keys(this.errors).length === 0) this.step = 3
+        },
+    
+        validateStep3() {
+            this.errors = {}
+            if (!this.$refs.mother_name.value.trim()) this.errors.mother_name = '{{ trans('student.Mother’s Name in Arabic') }} {{ trans('validation.requierror') }}'
+            if (!this.$refs.mother_phone.value.trim()) this.errors.mother_phone = '{{ trans('student.Mobile Phone') }} {{ trans('validation.requierror') }}'
+    
+            if (Object.keys(this.errors).length === 0) this.step = 4
+        },
+    
+        validateStep4() {
+            this.errors = {}
+            if (this.$refs.files.files.length === 0) this.errors.files = '{{ trans('student.StudentRegistrationRequirements') }} {{ trans('validation.requierror') }}'
+    
+            if (Object.keys(this.errors).length === 0) {
+                this.$el.querySelector('form').submit()
+            }
+        }
+    
+    }" class="space-y-8">
+
+        <!-- شريط الخطوات -->
+        <div class="w-full flex items-center justify-center mt-4">
+            <div class="flex items-center space-x-6 rtl:space-x-reverse">
+                <template x-for="i in 4">
+                    <div class="flex items-center space-x-4 rtl:space-x-reverse my-6">
+                        <div class="flex items-center justify-center w-12 h-12 rounded-full text-lg font-semibold transition-all duration-300"
+                            :class="step === i ? 'bg-brand-500 text-white shadow-lg' :
+                                (step > i ? 'bg-success-500 text-white' :
+                                    'bg-gray-300 dark:bg-gray-100 text-gray-700 dark:text-gray-300')">
+                            <span x-text="i"></span>
+                        </div>
+
+                        <template x-if="i < 4">
+                            <div class="w-16 h-1 rounded-full transition-all duration-300"
+                                :class="step > i ? 'bg-success-500' : 'bg-gray-300 dark:bg-gray-700'"></div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl">
+
+            <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800">
+                <h2 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+                    {{ trans('student.Student Register') }}
+                </h2>
+            </div>
+
+            <form method="POST" action="{{ route('students.store') }}" enctype="multipart/form-data"
+                class="p-6 space-y-8">
+                @csrf
+
+                {{-- ========================================================
+STEP 1 - Student Details
+========================================================= --}}
+                <div x-show="step === 1" x-transition>
+                    <h3 class="text-base dark:text-white font-medium mb-4">{{ trans('student.Student’sDetails') }}</h3>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+
+                        <div>
+                            <label
+                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Full Name in Arabic') }}</label>
+                            <input x-ref="name_ar" name="name_ar"
+                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm
+border-gray-300 dark:border-gray-700 bg-white dark:bg-dark-900">
+                            <p x-show="errors.name_ar" class="text-error-500 text-sm mt-1" x-text="errors.name_ar"></p>
+                        </div>
+
+                        <div>
+                            <label
+                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Full Name in English') }}</label>
+                            <input name="name_en" class="h-12 w-full rounded-xl border px-4 py-2 text-sm border-gray-300">
+                        </div>
+
+                        <div>
+                            <label
+                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Date of Birth') }}</label>
+                            <input x-ref="birth_date" type="date" name="birth_date"
+                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm border-gray-300">
+                            <p x-show="errors.birth_date" class="text-error-500 text-sm mt-1" x-text="errors.birth_date">
+                            </p>
+                        </div>
+
+                        <div>
+                            <label
+                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Nationality') }}</label>
+                            <input x-ref="nationality" name="nationality"
+                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm border-gray-300">
+                            <p x-show="errors.nationality" class="text-error-500 text-sm mt-1"
+                                x-text="errors.nationality">
+                            </p>
+                        </div>
+
+                        <div>
+                            <label
+                                class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Grade at Present School') }}</label>
+                            <input x-ref="grade" name="grade"
+                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm border-gray-300">
+                            <p x-show="errors.grade" class="text-error-500 text-sm mt-1" x-text="errors.grade"></p>
+                        </div>
+
+                    </div>
+
+                    <div class="flex justify-end mt-6">
+                        <button type="button" @click="validateStep1()"
+                            class="px-6 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white shadow transition">
+                            {{ trans('student.Next') }}
+                        </button>
+                    </div>
+                </div>
+
+
+                {{-- ========================================================
+STEP 2 - Father Details
+========================================================= --}}
+                <div x-show="step === 2" x-transition>
+                    <h3 class="text-base font-medium mb-4 dark:text-white">{{ trans('student.Father’sDetails') }}</h3>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+                                {{ trans('student.Father/Guardians’s Name') }}
+                            </label>
+                            <input x-ref="father_name" name="father_name"
+                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm border-gray-300">
+                            <p x-show="errors.father_name" class="text-error-500 text-sm mt-1"
+                                x-text="errors.father_name">
+                            </p>
+                        </div>
+
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+                                {{ trans('student.Mobile Phone') }}
+                            </label>
+                            <input x-ref="father_phone" name="father_phone"
+                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm border-gray-300">
+                            <p x-show="errors.father_phone" class="text-error-500 text-sm mt-1"
+                                x-text="errors.father_phone">
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="flex justify-between mt-6">
+                        <button @click="step=1" type="button" class="px-6 py-2 rounded-lg bg-gray-500 text-white">
+                            {{ trans('student.Previous') }}
+                        </button>
+
+                        <button @click="validateStep2()" type="button"
+                            class="px-6 py-2 rounded-lg bg-brand-500 text-white">
+                            {{ trans('student.Next') }}
+                        </button>
+                    </div>
+                </div>
+
+
+                {{-- ========================================================
+STEP 3 - Mother Details
+========================================================= --}}
+                <div x-show="step === 3" x-transition>
+                    <h3 class="text-base font-medium mb-4 dark:text-white">{{ trans('student.Mother’sDetails') }}</h3>
+
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+                                {{ trans('student.Mother’s Name in Arabic') }}
+                            </label>
+                            <input x-ref="mother_name" name="mother_name"
+                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm border-gray-300">
+                            <p x-show="errors.mother_name" class="text-error-500 text-sm mt-1"
+                                x-text="errors.mother_name">
+                            </p>
+                        </div>
+
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+                                {{ trans('student.Mobile Phone') }}
+                            </label>
+                            <input x-ref="mother_phone" name="mother_phone"
+                                class="h-12 w-full rounded-xl border px-4 py-2 text-sm border-gray-300">
+                            <p x-show="errors.mother_phone" class="text-error-500 text-sm mt-1"
+                                x-text="errors.mother_phone">
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="flex justify-between mt-6">
+                        <button @click="step=2" type="button" class="px-6 py-2 rounded-lg bg-gray-500 text-white">
+                            {{ trans('student.Previous') }}
+                        </button>
+
+                        <button @click="validateStep3()" type="button"
+                            class="px-6 py-2 rounded-lg bg-brand-500 text-white">
+                            {{ trans('student.Next') }}
+                        </button>
+                    </div>
+                </div>
+
+
+                {{-- ========================================================
+STEP 4 - Files
+========================================================= --}}
+                <div x-show="step === 4" x-transition>
+                    <h3 class="text-base font-medium mb-4 dark:text-white">
+                        {{ trans('student.StudentRegistrationRequirements') }}
+                    </h3>
+
+                    <input x-ref="files" type="file" name="files[]" multiple
+                        class="w-full border border-dashed border-gray-300 p-6 rounded-xl bg-gray-50">
+
+                    <p x-show="errors.files" class="text-error-500 text-sm mt-2" x-text="errors.files"></p>
+
+                    <div class="flex justify-between mt-6">
+                        <button @click="step=3" type="button" class="px-6 py-2 rounded-lg bg-gray-500 text-white">
+                            {{ trans('student.Previous') }}
+                        </button>
+
+                        <button type="button" @click="validateStep4()"
+                            class="px-6 py-2 rounded-lg bg-success-500 text-white">
+                            {{ trans('student.Save Data') }}
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
     </div>
 
 @endsection

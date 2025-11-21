@@ -18,52 +18,52 @@ class Student extends Model
         'gender',
         'national_id',
         'national_id_type',
-        'nationality',  
+        'nationality',
         'enrollment_date',
         'is_active',
     ];
     public function classes()
     {
         return $this->belongsToMany(ClassModel::class, 'class_student')
-                    ->using(class_student::class)
-                    ->withPivot('academic_year', 'status', 'enrollment_date', 'leave_date', 'notes')
-                    ->withTimestamps();
+            ->using(ClassStudent::class)
+            ->withPivot('academic_year', 'status', 'enrollment_date', 'leave_date', 'notes')
+            ->withTimestamps();
     }
 
     public function files()
     {
-        return $this->hasMany(student_file::class);
+        return $this->hasMany(StudentFile::class);
     }
 
     public function parents()
     {
         return $this->belongsToMany(ParentModel::class, 'student_parents')
-                    ->withPivot('relationship', 'is_primary')
-                    ->withTimestamps();
+            ->withPivot('relationship', 'is_primary')
+            ->withTimestamps();
     }
     public function primaryParent()
     {
         return $this->parents()
-                    ->wherePivot('is_primary', true)
-                    ->first();
+            ->wherePivot('is_primary', true)
+            ->first();
     }
     public function father()
     {
         return $this->parents()
-                    ->wherePivot('relationship', 'father')
-                    ->first();
+            ->wherePivot('relationship', 'father')
+            ->first();
     }
     public function mother()
     {
         return $this->parents()
-                    ->wherePivot('relationship', 'mother')
-                    ->first();
+            ->wherePivot('relationship', 'mother')
+            ->first();
     }
     // public function currentClass()
     // {
     //     $currentYear = now()->year;
     //     $academicYear = "{$currentYear}-" . ($currentYear + 1);
-        
+
     //     return $this->classes()
     //                 ->wherePivot('academic_year', $academicYear)
     //                 ->wherePivot('status', 'active')
@@ -71,11 +71,10 @@ class Student extends Model
     // }
     public function enrollmentHistory()
     {
-        return $this->hasMany(class_student::class);
+        return $this->hasMany(ClassStudent::class);
     }
     public function scopeActive($query)
     {
         return $query->whereNull('deleted_at');
     }
-
 }

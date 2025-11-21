@@ -21,7 +21,7 @@ class ClassModel extends Model
     public function students()
     {
         return $this->belongsToMany(Student::class, 'class_student')
-                    ->using(class_student::class)
+                    ->using(ClassStudent::class)
                     ->withPivot('academic_year', 'status', 'enrollment_date', 'leave_date', 'notes')
                     ->withTimestamps();
     }
@@ -37,7 +37,7 @@ class ClassModel extends Model
 
     public function enrollments()
     {
-        return $this->hasMany(class_student::class, 'class_id');
+        return $this->hasMany(ClassStudent::class, 'class_id');
     }
 
 

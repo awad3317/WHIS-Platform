@@ -107,6 +107,9 @@ return  [
     'Medical fitness form' => 'نموذج ملائمة الطالب',
     'Enter The Subject He Studies' => 'أدخل المادة التي يدرسها',
     'Enter Medical fitness form' => 'أدخل نموذج ملائمة الطالب',
+    'Class' => 'الفصل الدراسي',
+    'Enter The Class' => 'أدخل الفصل الدراسي',
+    'Job Title'=>'المسمى الوظيفي',
 
 
 ];

@@ -107,4 +107,7 @@ return [
     'Medical fitness form' => 'Medical fitness form',
     'Enter The Subject He Studies' => 'Enter The Subject He Studies',
     'Enter Medical fitness form' => 'Enter Medical fitness form',
+    'Class' => 'Class',
+    'Enter The Class' => 'Enter The Class',
+    'Job Title'=>'Job Title',
 ];
