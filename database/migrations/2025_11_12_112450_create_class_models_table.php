@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('grade_level', ['1', '2', '3', '4', '5', '6']);
             $table->string('section', 10)->nullable();
             $table->integer('capacity')->default(30);
-            $table->year('academic_year');
+            $table->string('academic_year');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
