@@ -21,6 +21,7 @@ class ParentModelSeeder extends Seeder
                 'job_title' => 'مهندس',
                 'workplace' => 'شركة التقنية المحدودة',
                 'mobile' => '966501234567',
+                'gender' => 'male',
                 'is_active' => true,
             ],
             [
@@ -32,6 +33,7 @@ class ParentModelSeeder extends Seeder
                 'job_title' => 'مدرسة',
                 'workplace' => 'شركة التقنية المحدودة',
                 'mobile' => '966501234564',
+                'gender' => 'female',
                 'is_active' => true,
                 
             ],
