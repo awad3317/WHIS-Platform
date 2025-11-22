@@ -54,7 +54,7 @@
                                </svg>
 
                                <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                                   {{ trans('messages.dashboard') }}
+                                   {{ trans('sidebar.Dashboard') }}
                                </span>
 
                                <svg class="menu-item-arrow"
@@ -88,7 +88,7 @@
                                </svg>
 
                                <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                                   {{ trans('messages.Register') }}
+                                   {{ trans('sidebar.Students') }}
                                </span>
 
                                <svg class="menu-item-arrow absolute right-2.5 top-1/2 -translate-y-1/2 stroke-current"
@@ -108,27 +108,29 @@
                                <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'"
                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
                                    <li>
-                                       <a href="{{route('students.create')}}" class="menu-dropdown-item group"
-                                           :class="page === 'Student Register' ? 'menu-dropdown-item-active' :
+                                       <a href="{{ route('students.index') }}" class="menu-dropdown-item group"
+                                           :class="page === 'Student List' ? 'menu-dropdown-item-active' :
                                                'menu-dropdown-item-inactive'">
-                                           {{ trans('messages.Student Register') }}
+                                           {{ trans('sidebar.List') }}
                                        </a>
                                    </li>
                                </ul>
                            </div>
+
                            <div class="overflow-hidden transform translate"
                                :class="(selected === 'Register') ? 'block' : 'hidden'">
                                <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'"
                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
                                    <li>
-                                       <a href="{{ route('students.index') }}" class="menu-dropdown-item group"
-                                           :class="page === 'Student List' ? 'menu-dropdown-item-active' :
+                                       <a href="{{route('students.create')}}" class="menu-dropdown-item group"
+                                           :class="page === 'Student Register' ? 'menu-dropdown-item-active' :
                                                'menu-dropdown-item-inactive'">
-                                           {{ trans('messages.Student List') }}
+                                           {{ trans('sidebar.Register') }}
                                        </a>
                                    </li>
                                </ul>
                            </div>
+                           
 
                            <!-- Dropdown Menu End -->
                        </li>
@@ -155,7 +157,7 @@
                                </svg>
 
                                <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                                   {{ trans('student.RegisterEmployee') }}
+                                   {{ trans('sidebar.Employee') }}
                                </span>
                                <div class="flex justify-end">
                                    <svg class="menu-item-arrow absolute right-2.5 top-1/2 -translate-y-1/2 stroke-current"
@@ -178,27 +180,29 @@
                                <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'"
                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
                                    <li>
-                                       <a href="{{ url('employee_register') }}" class="menu-dropdown-item group"
+                                       <a href="{{ route('employees.index') }}" class="menu-dropdown-item group"
                                            :class="page === 'formElements' ? 'menu-dropdown-item-active' :
                                                'menu-dropdown-item-inactive'">
-                                           {{ trans('student.RegisterEmployee') }}
+                                           {{ trans('sidebar.List') }}
                                        </a>
                                    </li>
                                </ul>
                            </div>
+
                            <div class="overflow-hidden transform translate"
                                :class="(selected === 'RegisterEmployee') ? 'block' : 'hidden'">
                                <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'"
                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
                                    <li>
-                                       <a href="{{ url('employee_list') }}" class="menu-dropdown-item group"
+                                       <a href="{{ route('employees.create') }}" class="menu-dropdown-item group"
                                            :class="page === 'formElements' ? 'menu-dropdown-item-active' :
                                                'menu-dropdown-item-inactive'">
-                                           {{ trans('student.Employee List') }}
+                                           {{ trans('sidebar.Register') }}
                                        </a>
                                    </li>
                                </ul>
                            </div>
+                           
 
                            <!-- Dropdown Menu End -->
                        </li>
@@ -222,7 +226,7 @@
                                </svg>
 
                                <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                                   {{ trans('messages.Attendance') }}
+                                   {{ trans('sidebar.Attendance') }}
                                </span>
                                <div class="flex justify-end">
                                    <svg class="menu-item-arrow absolute right-2.5 top-1/2 -translate-y-1/2 stroke-current"
@@ -245,10 +249,23 @@
                                <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'"
                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
                                    <li>
-                                       <a href="{{ url('Attendance') }}" class="menu-dropdown-item group"
+                                       <a href="{{ route('Attendance.index') }}" class="menu-dropdown-item group"
                                            :class="page === 'formElements' ? 'menu-dropdown-item-active' :
                                                'menu-dropdown-item-inactive'">
-                                           {{ trans('messages.Attendance') }}
+                                           {{ trans('sidebar.Students') }}
+                                       </a>
+                                   </li>
+                               </ul>
+                           </div>
+                           <div class="overflow-hidden transform translate"
+                               :class="(selected === 'Attendance') ? 'block' : 'hidden'">
+                               <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'"
+                                   class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
+                                   <li>
+                                       <a href="{{ route('Attendance.index') }}" class="menu-dropdown-item group"
+                                           :class="page === 'formElements' ? 'menu-dropdown-item-active' :
+                                               'menu-dropdown-item-inactive'">
+                                           {{ trans('sidebar.Employee') }}
                                        </a>
                                    </li>
                                </ul>

@@ -39,30 +39,6 @@ class StudentRepository implements RepositoriesInterface
     {
         return Student::where('id', $id)->delete() > 0;
     }
-
-    public function getByUserIdAndDriverId($userId, $driverId): ?Student
-    {
-        return Student::where('user_id', $userId)
-            ->where('driver_id', $driverId)
-            ->first();
-    }
-    public function generateAcademicNumber(): string
-{
-    $currentYear = date('Y');
-    $currentMonth = date('m');
     
-    $lastStudent = Student::where('academic_no', 'like', "{$currentYear}{$currentMonth}%")
-                        ->orderBy('academic_no', 'desc')
-                        ->first();
-
-    if ($lastStudent) {
-        $lastNumber = (int)substr($lastStudent->academic_no, -4);
-        $sequence = $lastNumber + 1;
-    } else {
-        $sequence = 1;
-    }
-
-    return $currentYear . $currentMonth . str_pad($sequence, 4, '0', STR_PAD_LEFT);
-}
 
 }

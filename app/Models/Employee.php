@@ -26,6 +26,7 @@ class Employee extends Model
         'weekly_classes',
         'subjects',
         'is_active',
+        'image',
         'user_id'
     ];
     protected $hidden = [

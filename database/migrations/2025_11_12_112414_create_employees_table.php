@@ -27,6 +27,7 @@ return new class extends Migration
             $table->enum('national_id_type', ['national_id', 'passport', 'residence_id'])->default('national_id');
             $table->integer('weekly_classes')->default(0);
             $table->json('subjects')->nullable();
+            $table->string('image', 255)->nullable();
             $table->boolean('is_active')->default(true);
             $table->softDeletes(); 
             $table->timestamps();

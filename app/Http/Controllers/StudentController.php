@@ -6,15 +6,21 @@ use App\Models\Student;
 use App\Models\ClassModel;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Services\StudentService;
 use Illuminate\Support\Facades\DB;
 use App\Services\StudentFileService;
 use App\Repositories\StudentRepository;
 use Illuminate\Support\Facades\Validator;
+use App\Repositories\ClassModelRepository;
 
 
 class StudentController extends Controller
 {
-    public function __construct(private StudentFileService $studentFileService, private StudentRepository $studentRepository)
+    public function __construct(
+        private StudentFileService $studentFileService,
+        private StudentRepository $studentRepository,
+        private StudentService $studentService,
+        private ClassModelRepository $classModelRepository)
     {
         
     }
@@ -38,11 +44,21 @@ class StudentController extends Controller
         'name_ar' => ['required', 'string', 'max:255'],
         'birth_date' => ['required', 'date'],
         'nationality' => ['required', 'string', 'max:100'],
-        'national_id' => ['required', 'string', 'max:20', 'unique:students,national_id'],
+        'national_id' => ['required', 'string', 'max:20',Rule::unique('students','national_id')],
         'national_id_type'=> ['required', Rule::in(['national_id', 'passport', 'residence_id'])],
         'gender' => ['required', Rule::in(['male', 'female'])],
         'previous_school' => ['required', 'string', 'max:255'],
-        'class_id' => ['required',Rule::exists('class_models','id')],
+        'class_id' => ['required',Rule::exists('class_models','id'),
+                function ($attribute, $value, $fail) {
+                $class = $this->classModelRepository->getById($value);
+                if ($class) {
+                    $currentStudents = Student::where('class_id', $value)->count();
+                    if ($currentStudents >= $class->capacity) {
+                        $fail('هذا الفصل ممتلئ. لا يمكن إضافة المزيد من الطلاب.');
+                    }
+                }
+            }
+        ],
 
         // =====  Files Validation ===== //
         'Personal_photo'=> ['required', 'file', 'mimes:jpg,jpeg,png', 'max:2048'],
@@ -53,7 +69,7 @@ class StudentController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } 
-        $academic_no=$this->studentRepository->generateAcademicNumber();
+        $academic_no=$this->studentService->generateAcademicNumber();
         dd($academic_no);
         // $student = Student::create([
         //     'name_en' => $request->name_en,

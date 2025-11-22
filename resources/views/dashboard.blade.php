@@ -2,7 +2,7 @@
 @section('title')
 @section('content')
 <div class="grid grid-cols-12 gap-4 md:gap-6">
-        <div class="col-span-12 space-y-6 xl:col-span-7">
+        {{-- <div class="col-span-12 space-y-6 xl:col-span-7">
             <!-- Metric Group One -->
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6">
                 <!-- Metric Item Start -->
@@ -117,8 +117,8 @@
                 </div>
             </div>
             <!-- ====== Chart One End -->
-        </div>
-        <div class="col-span-12 xl:col-span-5">
+        </div> --}}
+        {{-- <div class="col-span-12 xl:col-span-5">
             <!-- ====== Chart Two Start -->
             <div class="rounded-2xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-white/[0.03]">
                 <div class="shadow-default rounded-2xl bg-white px-5 pb-11 pt-5 dark:bg-gray-900 sm:px-6 sm:pt-6">
@@ -220,9 +220,9 @@
                 </div>
             </div>
             <!-- ====== Chart Two End -->
-        </div>
+        </div> --}}
 
-        <div class="col-span-12">
+        {{-- <div class="col-span-12">
             <!-- ====== Chart Three Start -->
             <div
                 class="rounded-2xl border border-gray-200 bg-white px-5 pb-5 pt-5 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
@@ -282,9 +282,9 @@
                 </div>
             </div>
             <!-- ====== Chart Three End -->
-        </div>
+        </div> --}}
 
-        <div class="col-span-12 xl:col-span-5">
+        {{-- <div class="col-span-12 xl:col-span-5">
             <!-- ====== Map One Start -->
             <div
                 class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] sm:p-6">
@@ -388,9 +388,9 @@
                 </div>
             </div>
             <!-- ====== Map One End -->
-        </div>
+        </div> --}}
 
-        <div class="col-span-12 xl:col-span-7">
+        {{-- <div class="col-span-12 xl:col-span-7">
             <!-- ====== Table One Start -->
             <div
                 class="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
@@ -689,6 +689,6 @@
                 </div>
             </div>
             <!-- ====== Table One End -->
-        </div>
+        </div> --}}
     </div>
 @endsection

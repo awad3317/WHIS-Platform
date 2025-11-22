@@ -19,12 +19,13 @@ return new class extends Migration
             $table->string('phone', 20)->unique();    
             $table->string('email', 100)->nullable();
             $table->string('national_id', 20)->unique();
+            $table->enum('gender', ['male', 'female']);
             $table->string('job_title', 100)->nullable(); 
             $table->string('workplace', 150)->nullable(); 
             $table->string('mobile', 20)->nullable();
+            $table->string('image', 255)->nullable();
             $table->boolean('is_active')->default(true);
             $table->softDeletes();
-            
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class EmployeeRegisterController extends Controller
+class EmployeeController extends Controller
 {
     public function index()
     {
