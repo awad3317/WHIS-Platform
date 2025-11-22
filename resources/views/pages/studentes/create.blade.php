@@ -2,108 +2,113 @@
 @section('title', __('Register Student'))
 
 @section('content')
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    @endif
 
     <div x-data="{
-        errors: {},
-    
-        student: { editable: true, approved: false },
-        father: { editable: true, approved: false },
-        mother: { editable: true, approved: false },
-        files: { editable: true, approved: false },
-        isModalOpen: false,
-    
-        saveFather() {
-            this.errors = {}
-    
-            if (!this.$refs.modal_father_name?.value.trim())
-                this.errors.father_name = '{{ trans('student.Father/Guardians’s Name') }} {{ trans('validation.required') }}'
-    
-            if (!this.$refs.modal_father_phone?.value.trim())
-                this.errors.father_phone = '{{ trans('student.Mobile Phone') }} {{ trans('validation.required') }}'
-    
-            if (Object.keys(this.errors).length == 0) {
-                this.$refs.father_name.value = this.$refs.modal_father_name.value
-                this.$refs.father_phone.value = this.$refs.modal_father_phone.value
-                this.isModalOpen = false
-            }
-        },
-    
-        /* ========== Student ========== */
-        approveStudent() {
-            this.errors = {}
-    
-            if (!this.$refs.name_en?.value.trim())
-                this.errors.name_en = '{{ trans('student.Full Name in English') }} {{ trans('validation.required') }}'
-    
-            if (!this.$refs.name_ar?.value.trim())
-                this.errors.name_ar = '{{ trans('student.Full Name in Arabic') }} {{ trans('validation.required') }}'
-    
-            if (!this.$refs.birth_date?.value)
-                this.errors.birth_date = '{{ trans('student.Date of Birth') }} {{ trans('validation.required') }}'
-    
-            if (!this.$refs.nationality?.value.trim())
-                this.errors.nationality = '{{ trans('student.Nationality') }} {{ trans('validation.required') }}'
-    
-            if (!this.$refs.previous_school?.value.trim())
-                this.errors.previous_school = '{{ trans('student.Present School') }} {{ trans('validation.required') }}'
-    
-            if (!this.$refs.class_id?.value.trim())
-                this.errors.class_id = '{{ trans('student.Class') }} {{ trans('validation.required') }}'
-    
-            if (Object.keys(this.errors).length === 0) {
-                this.student.editable = false
-                this.student.approved = true
-            }
-        },
-    
-        /* ========== Father ========== */
-        approveFather() {
-            this.errors = {}
-    
-            if (!this.$refs.father_name?.value.trim())
-                this.errors.father_name = '{{ trans('student.Father/Guardians’s Name') }} {{ trans('validation.required') }}'
-    
-            if (!this.$refs.father_phone?.value.trim())
-                this.errors.father_phone = '{{ trans('student.Mobile Phone') }} {{ trans('validation.required') }}'
-    
-            if (Object.keys(this.errors).length === 0) {
-                this.father.editable = false
-                this.father.approved = true
-            }
-        },
-    
-        /* ========== Mother ========== */
-        approveMother() {
-            this.errors = {}
-    
-            if (!this.$refs.mother_name?.value.trim())
-                this.errors.mother_name = '{{ trans('student.Mother’s Name in Arabic') }} {{ trans('validation.required') }}'
-    
-            if (!this.$refs.mother_phone?.value.trim())
-                this.errors.mother_phone = '{{ trans('student.Mobile Phone') }} {{ trans('validation.required') }}'
-    
-            if (Object.keys(this.errors).length === 0) {
-                this.mother.editable = false
-                this.mother.approved = true
-            }
-        },
-    
-        /* ========== Files ========== */
-        approveFiles() {
-            this.errors = {}
-            if (!this.$refs.files?.files || this.$refs.files.files.length === 0)
-                this.errors.files = '{{ trans('student.StudentRegistrationRequirements') }} {{ trans('validation.required') }}'
-    
-            if (Object.keys(this.errors).length === 0) {
-                this.files.editable = false
-                this.files.approved = true
-            }
-        },
-    
-    
-    }">
-        <form class="space-y-8">
+                    errors: {},
 
+                    student: { editable: true, approved: false },
+                    father: { editable: true, approved: false },
+                    mother: { editable: true, approved: false },
+                    files: { editable: true, approved: false },
+                    isModalOpen: false,
+
+                    saveFather() {
+                        this.errors = {}
+
+                        if (!this.$refs.modal_father_name?.value.trim())
+                            this.errors.father_name = '{{ trans('student.Father/Guardians’s Name') }} {{ trans('validation.required') }}'
+
+                        if (!this.$refs.modal_father_phone?.value.trim())
+                            this.errors.father_phone = '{{ trans('student.Mobile Phone') }} {{ trans('validation.required') }}'
+
+                        if (Object.keys(this.errors).length == 0) {
+                            this.$refs.father_name.value = this.$refs.modal_father_name.value
+                            this.$refs.father_phone.value = this.$refs.modal_father_phone.value
+                            this.isModalOpen = false
+                        }
+                    },
+
+                    /* ========== Student ========== */
+                    approveStudent() {
+                        this.errors = {}
+
+                        if (!this.$refs.name_en?.value.trim())
+                            this.errors.name_en = '{{ trans('student.Full Name in English') }} {{ trans('validation.required') }}'
+
+                        if (!this.$refs.name_ar?.value.trim())
+                            this.errors.name_ar = '{{ trans('student.Full Name in Arabic') }} {{ trans('validation.required') }}'
+
+                        if (!this.$refs.birth_date?.value)
+                            this.errors.birth_date = '{{ trans('student.Date of Birth') }} {{ trans('validation.required') }}'
+
+                        if (!this.$refs.nationality?.value.trim())
+                            this.errors.nationality = '{{ trans('student.Nationality') }} {{ trans('validation.required') }}'
+
+                        if (!this.$refs.previous_school?.value.trim())
+                            this.errors.previous_school = '{{ trans('student.Present School') }} {{ trans('validation.required') }}'
+
+                        if (!this.$refs.class_id?.value.trim())
+                            this.errors.class_id = '{{ trans('student.Class') }} {{ trans('validation.required') }}'
+
+                        if (Object.keys(this.errors).length === 0) {
+                            this.student.editable = false
+                            this.student.approved = true
+                        }
+                    },
+
+                    /* ========== Father ========== */
+                    approveFather() {
+                        this.errors = {}
+
+                        if (!this.$refs.father_name?.value.trim())
+                            this.errors.father_name = '{{ trans('student.Father/Guardians’s Name') }} {{ trans('validation.required') }}'
+
+                        if (!this.$refs.father_phone?.value.trim())
+                            this.errors.father_phone = '{{ trans('student.Mobile Phone') }} {{ trans('validation.required') }}'
+
+                        if (Object.keys(this.errors).length === 0) {
+                            this.father.editable = false
+                            this.father.approved = true
+                        }
+                    },
+
+                    /* ========== Mother ========== */
+                    approveMother() {
+                        this.errors = {}
+
+                        if (!this.$refs.mother_name?.value.trim())
+                            this.errors.mother_name = '{{ trans('student.Mother’s Name in Arabic') }} {{ trans('validation.required') }}'
+
+                        if (!this.$refs.mother_phone?.value.trim())
+                            this.errors.mother_phone = '{{ trans('student.Mobile Phone') }} {{ trans('validation.required') }}'
+
+                        if (Object.keys(this.errors).length === 0) {
+                            this.mother.editable = false
+                            this.mother.approved = true
+                        }
+                    },
+
+                    /* ========== Files ========== */
+                    approveFiles() {
+                        this.errors = {}
+                        if (!this.$refs.files?.files || this.$refs.files.files.length === 0)
+                            this.errors.files = '{{ trans('student.StudentRegistrationRequirements') }} {{ trans('validation.required') }}'
+
+                        if (Object.keys(this.errors).length === 0) {
+                            this.files.editable = false
+                            this.files.approved = true
+                        }
+                    },
+
+
+                }">
+        <form class="space-y-8" method="POST" action="{{ route('students.store') }}" enctype="multipart/form-data">
+            @csrf
             <!-- ==================== Student Card ==================== -->
             <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
                 <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800">
@@ -121,7 +126,7 @@
 
                         <div x-show="student.editable">
                             <input x-ref="name_en" name="name_en"
-                                   class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white"/>
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
                             <p x-show="errors.name_en" class="text-error-500 text-sm mt-1" x-text="errors.name_en"></p>
                         </div>
 
@@ -137,7 +142,7 @@
 
                         <div x-show="student.editable">
                             <input x-ref="name_ar" name="name_ar"
-                                  class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
                             <p x-show="errors.name_ar" class="text-error-500 text-sm mt-1" x-text="errors.name_ar"></p>
                         </div>
 
@@ -153,7 +158,7 @@
                         </label>
 
                         <div x-show="student.editable">
-                            <input x-ref="birth_date" type="date"
+                            <input x-ref="birth_date" type="date" name="birth_date"
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
                             <p x-show="errors.birth_date" class="text-error-500 text-sm mt-1" x-text="errors.birth_date">
                             </p>
@@ -170,7 +175,7 @@
                             class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Nationality') }}</label>
 
                         <div x-show="student.editable">
-                            <input x-ref="nationality"
+                            <input x-ref="nationality" name="nationality"
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
                             <p x-show="errors.nationality" class="text-error-500 text-sm mt-1" x-text="errors.nationality">
                             </p>
@@ -187,7 +192,7 @@
                             class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Present School') }}</label>
 
                         <div x-show="student.editable">
-                            <input x-ref="previous_school"
+                            <input x-ref="previous_school" name="previous_school"
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
                             <p x-show="errors.previous_school" class="text-error-500 text-sm mt-1"
                                 x-text="errors.previous_school"></p>
@@ -200,17 +205,26 @@
 
                     <!-- Grade -->
                     <div>
-                        <label
-                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Grade at Present School') }}</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+                            {{ trans('student.Grade at Present School') }}
+                        </label>
 
                         <div x-show="student.editable">
-                            <input x-ref="class_id"
-                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
+                            <select name="class_id" x-ref="class_id"
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white dark:bg-gray-800">
+                                <option value="">{{ trans('student.Select Class') }}</option>
+                                @foreach($classes as $class)
+                                    <option value="{{ $class->id }}">
+                                        {{ $class->name_ar }} - {{ $class->section }} (الصف {{ $class->grade_level }})
+                                    </option>
+                                @endforeach
+                            </select>
                             <p x-show="errors.class_id" class="text-error-500 text-sm mt-1" x-text="errors.class_id"></p>
                         </div>
 
                         <div x-show="student.approved">
-                            <p class="bg-gray-100 p-3 rounded-lg text-gray-800" x-text="$refs.class_id?.value"></p>
+                            <p class="bg-gray-100 p-3 rounded-lg text-gray-800"
+                                x-text="$refs.class_id?.options[$refs.class_id?.selectedIndex]?.text"></p>
                         </div>
                     </div>
                 </div>
@@ -229,7 +243,8 @@
             </div>
 
             <!-- ==================== Father Card ==================== -->
-            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
+            {{-- <div
+                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
 
                 <!-- العنوان -->
                 <div class="px-6 py-5 border-b flex items-center justify-between">
@@ -388,11 +403,12 @@
                     </button>
                 </div>
 
-            </div>
+            </div> --}}
 
 
             <!-- ==================== Mother Card ==================== -->
-            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
+            {{-- <div
+                class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
 
                 <div class="px-6 py-5 border-b">
                     <h2 class="text-lg font-semibold text-gray-800 dark:text-white/90">
@@ -403,8 +419,8 @@
                 <div class="p-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
 
                     <div>
-                        <label
-                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Mother’s Name in Arabic') }}</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{
+                            trans('student.Mother’s Name in Arabic') }}</label>
 
                         <div x-show="mother.editable">
                             <input x-ref="mother_name"
@@ -418,8 +434,8 @@
                     </div>
 
                     <div>
-                        <label
-                            class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Mobile Phone') }}</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">{{ trans('student.Mobile
+                            Phone') }}</label>
 
                         <div x-show="mother.editable">
                             <input x-ref="mother_phone"
@@ -446,87 +462,86 @@
                     </button>
                 </div>
 
-            </div>
+            </div> --}}
 
             <!-- ==================== Files Card ==================== -->
             <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
-
                 <div class="px-6 py-5 border-b">
                     <h2 class="text-lg font-semibold text-gray-800 dark:text-white/90">
                         {{ trans('student.StudentRegistrationRequirements') }}
                     </h2>
                 </div>
 
-                <div class="p-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div class="p-6">
+                    @php
+                        $requirements = [
+                            'Personal_photo',
+                            'birth_certificate',
+                            // 'Vaccination certificate',
+                            // 'Student’s previous and current certificates',
+                            // 'A copy of the passport',
+                            // 'Certificate from the Yemeni Ministry of Foreign Affairs and Consulate',
+                            // 'Expatriate form',
+                            // 'Medical fitness form'
+                        ];
+                    @endphp
 
-                    @foreach (['Personal photo', 'birth certificate', 'Vaccination certificate', 'Student’s previous and current certificates', 'A copy of the passport', 'Certificate from the Yemeni Ministry of Foreign Affairs and Consulate', 'Expatriate form', 'Medical fitness form'] as $field)
-                        <div class="space-y-6">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-white">
-                                {{ trans('student.' . $field) }}
-                            </label>
-                            <div class="relative">
-                                <label for="fileUpload"
-                                    class="cursor-pointer block rounded-xl border border-dashed border-gray-300 bg-gray-50 p-7 lg:p-10 dark:border-gray-100 dark:text-white dark:bg-gray-900 hover:border-brand-500 dark:hover:border-brand-500">
-
-                                    <div class="dz-message m-0 text-center">
-                                        <div class="mb-[22px] flex justify-center">
-                                            <div
-                                                class="flex h-[68px] w-[68px] items-center justify-center rounded-full bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-400">
-                                                <svg class="fill-current" width="29" height="28"
-                                                    viewBox="0 0 29 28" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                                        d="M14.5019 3.91699C14.2852 3.91699 14.0899 2.00891 13.953 4.15589L8.57363 9.53186C8.28065 9.82466 8.2805 10.2995 8.5733 10.5925C8.8661 10.8855 9.34097 10.8857 9.63396 10.5929L13.7519 6.47752V18.667C13.7519 19.0812 14.0877 19.417 14.5019 19.417C14.9161 19.417 15.2519 19.0812 15.2519 18.667V6.48234L19.3653 10.5929C19.6583 10.8857 20.1332 10.8855 20.426 10.5925C20.7188 10.2995 20.7186 9.82463 20.4256 9.53184L15.0838 4.19378C14.9463 4.02488 14.7367 3.91699 14.5019 3.91699ZM5.91626 18.667C5.91626 18.2528 5.58047 17.917 5.16626 17.917C4.75205 17.917 4.41626 18.2528 4.41626 18.667V21.8337C4.41626 23.0763 5.42362 24.0837 6.66626 24.0837H22.3339C23.5766 24.0837 24.5839 23.0763 24.5839 21.8337V18.667C24.5839 18.2528 24.2482 17.917 23.8339 17.917C23.4197 17.917 23.0839 18.2528 23.0839 18.667V21.8337C23.0839 22.2479 22.7482 22.5837 22.3339 22.5837H6.66626C6.25205 22.5837 5.91626 22.2479 5.91626 21.8337V18.667Z"
-                                                        fill="" />
-                                                </svg>
-                                            </div>
-                                        </div>
-
-                                        <h4 class="text-theme-xl mb-3 font-semibold text-gray-800 dark:text-white/90">
-                                            Drop File Here
-                                        </h4>
-
-                                        <span
-                                            class="mx-auto mb-5 block w-full max-w-[290px] text-sm text-gray-700 dark:text-gray-400">
-                                            Drag and drop your PNG, JPG, WebP, SVG images here or browse
-                                        </span>
-
-                                        <span class="text-theme-sm text-brand-500 font-medium underline">
-                                            Browse File
-                                        </span>
-                                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        @foreach ($requirements as $field)
+                            <div class="space-y-3">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-white">
+                                    {{ trans('student.' . $field) }}
                                 </label>
 
-                                <!-- hidden file input -->
-                                <input id="fileUpload" type="file" class="hidden" />
-                            </div>
-                        </div>
-                    @endforeach
+                                <div class="relative">
+                                    <label for="fileUpload_{{ Str::slug($field) }}"
+                                        class="cursor-pointer flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-4 dark:border-gray-600 dark:bg-gray-800 hover:border-brand-500 dark:hover:border-brand-500 transition-colors duration-200 min-h-[120px]">
 
-                    <div x-show="files.approved">
-                        <p class="bg-gray-100 p-3 rounded-lg text-gray-800">
+                                        <div class="text-center">
+                                            <div class="mb-2 flex justify-center">
+                                                <div
+                                                    class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                                                    <svg class="fill-current w-5 h-5" viewBox="0 0 29 28" fill="none">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M14.5019 3.91699C14.2852 3.91699 14.0899 2.00891 13.953 4.15589L8.57363 9.53186C8.28065 9.82466 8.2805 10.2995 8.5733 10.5925C8.8661 10.8855 9.34097 10.8857 9.63396 10.5929L13.7519 6.47752V18.667C13.7519 19.0812 14.0877 19.417 14.5019 19.417C14.9161 19.417 15.2519 19.0812 15.2519 18.667V6.48234L19.3653 10.5929C19.6583 10.8857 20.1332 10.8855 20.426 10.5925C20.7188 10.2995 20.7186 9.82463 20.4256 9.53184L15.0838 4.19378C14.9463 4.02488 14.7367 3.91699 14.5019 3.91699ZM5.91626 18.667C5.91626 18.2528 5.58047 17.917 5.16626 17.917C4.75205 17.917 4.41626 18.2528 4.41626 18.667V21.8337C4.41626 23.0763 5.42362 24.0837 6.66626 24.0837H22.3339C23.5766 24.0837 24.5839 23.0763 24.5839 21.8337V18.667C24.5839 18.2528 24.2482 17.917 23.8339 17.917C23.4197 17.917 23.0839 18.2528 23.0839 18.667V21.8337C23.0839 22.2479 22.7482 22.5837 22.3339 22.5837H6.66626C6.25205 22.5837 5.91626 22.2479 5.91626 21.8337V18.667Z"
+                                                            fill="" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+
+                                            <span class="text-xs text-brand-500 font-medium">
+                                                Upload File
+                                            </span>
+                                        </div>
+                                    </label>
+
+                                    <input id="fileUpload_{{ Str::slug($field) }}" name="{{ $field }}"  type="file" class="hidden" />
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>  
+
+                    <div x-show="files.approved" class="mt-6">
+                        <p class="bg-success-50 text-success-700 p-3 rounded-lg text-center border border-success-200">
                             {{ __('Files Approved') }}
                         </p>
                     </div>
                 </div>
 
-                <div class="flex justify-end p-6 gap-3">
+                <div class="flex justify-end p-6 gap-3 border-t">
                     <button type="button" x-show="files.editable" @click="approveFiles()"
-                        class="px-6 py-2 rounded-lg bg-success-500 text-white">
+                        class="px-6 py-2 rounded-lg bg-success-500 text-white hover:bg-success-600 transition-colors duration-200">
                         اعتماد
                     </button>
                     <button type="button" x-show="files.approved" @click="files.approved=false; files.editable=true"
-                        class="px-6 py-2 rounded-lg bg-warning-500 text-white">
+                        class="px-6 py-2 rounded-lg bg-warning-500 text-white hover:bg-warning-600 transition-colors duration-200">
                         تعديل
                     </button>
-
-                    <button type="submit" class="px-6 py-2 rounded-lg bg-brand-500 text-white">
-                        {{ trans('student.Save Data') }}
-                    </button>
                 </div>
-
             </div>
-
+            <button type="submit" class="px-6 py-2 rounded-lg bg-brand-500 text-white">
+                {{ trans('student.Save Data') }}
+            </button>
         </form>
     </div>
 

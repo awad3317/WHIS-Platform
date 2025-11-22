@@ -110,6 +110,7 @@ return  [
     'Class' => 'الفصل الدراسي',
     'Enter The Class' => 'أدخل الفصل الدراسي',
     'Job Title'=>'المسمى الوظيفي',
+    'student.Select Class'=>'اختر الفصل الدراسي',
 
 
 ];

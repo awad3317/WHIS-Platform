@@ -9,12 +9,11 @@ trait HasUserAccount
 {
     public static function bootHasUserAccount()
     {
-
-        static::creating(function ($model) {
+        static::created(function ($model) {
             $model->createUserAccount();
         });
 
-        static::updating(function ($model) {
+        static::updated(function ($model) {
             $model->updateUserAccount();
         });
 
@@ -25,12 +24,12 @@ trait HasUserAccount
                 $model->deleteUserAccount();
             }
         });
+
         static::restoring(function ($model) {
             $model->toggleAccountStatus(true);
         });
     }
 
-    
     protected function createUserAccount()
     {
         if ($this->user_id) {
@@ -44,12 +43,14 @@ trait HasUserAccount
         }
 
         $user = User::create($userData);
-        $this->user_id = $user->id;
+        
+        $this->update(['user_id' => $user->id]);
     }
 
     protected function updateUserAccount()
     {
         if (!$this->user_id) {
+            $this->createUserAccount();
             return;
         }
 

@@ -108,7 +108,7 @@
                                <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'"
                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
                                    <li>
-                                       <a href="{{ url('student_register') }}" class="menu-dropdown-item group"
+                                       <a href="{{route('students.create')}}" class="menu-dropdown-item group"
                                            :class="page === 'Student Register' ? 'menu-dropdown-item-active' :
                                                'menu-dropdown-item-inactive'">
                                            {{ trans('messages.Student Register') }}
@@ -121,7 +121,7 @@
                                <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'"
                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
                                    <li>
-                                       <a href="{{ url('student_list') }}" class="menu-dropdown-item group"
+                                       <a href="{{ route('students.index') }}" class="menu-dropdown-item group"
                                            :class="page === 'Student List' ? 'menu-dropdown-item-active' :
                                                'menu-dropdown-item-inactive'">
                                            {{ trans('messages.Student List') }}

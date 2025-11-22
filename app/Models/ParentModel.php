@@ -21,6 +21,7 @@ class ParentModel extends Model
         'workplace',
         'mobile',
         'is_active',
+        'user_id'
     ];
     public function students()
     {
