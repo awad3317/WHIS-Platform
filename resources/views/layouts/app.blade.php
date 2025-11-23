@@ -37,6 +37,7 @@
     <link rel="manifest" href="{{ asset('favicons/site.webmanifest') }}">
     <meta name="msapplication-TileImage" content="{{ asset('favicons/favicon-96x96.png') }}">
     <meta name="msapplication-TileColor" content="#ffffff">
+@livewireStyles
 
 </head>
 
@@ -83,6 +84,8 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
     </div>
     <!-- ===== Page Wrapper End ===== -->
     <script defer src="{{ asset('tailadmin/build/bundle.js') }}"></script>
+    @livewireScripts
+
 </body>
 
 </html>
