@@ -34,9 +34,9 @@
                   <!-- Hamburger Toggle BTN -->
 
                   <a href="index.html" class="lg:hidden">
-                      <img class="dark:hidden" src="{{ asset('tailadmin/build/src/images/logo/logo.svg') }}"
+                      <img class="dark:hidden" src="{{ asset('tailadmin/src/images/logo.png') }}"
                           alt="Logo" />
-                      <img class="hidden dark:block" src="{{ asset('tailadmin/build/src/images/logo/logo-dark.svg') }}"
+                      <img class="hidden dark:block" src="{{ asset('tailadmin/src/images/logodark2.png') }}"
                           alt="Logo" />
                   </a>
 

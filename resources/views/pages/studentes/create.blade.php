@@ -756,17 +756,6 @@
 
             </div>
 
-
-
-
-
-
-
-
-
-
-
-
             <!-- ==================== Files Card ==================== -->
             <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
                 <div class="px-6 py-5 border-b">
