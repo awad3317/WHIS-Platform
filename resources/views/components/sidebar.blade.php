@@ -56,8 +56,8 @@
                                <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                    {{ trans('sidebar.Dashboard') }}
                                </span>
-
-                               <svg class="menu-item-arrow"
+                                <div class="flex justify-end items-center">
+                                     <svg class="menu-item-arrow"
                                    :class="[(selected === 'Dashboard') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive',
                                        sidebarToggle ? 'lg:hidden' : ''
                                    ]"
@@ -66,6 +66,8 @@
                                    <path d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585" stroke=""
                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                </svg>
+                                </div>
+                              
                            </a>
 
 
@@ -74,7 +76,7 @@
                        <li>
                            <a href="#" @click.prevent="selected = (selected === 'Register' ? '':'Register')"
                                class="menu-item group"
-                               :class="(selected === 'Register') || (page === 'StudentRegister' || page === 'Student List') ?
+                               :class="(selected === 'Register') || (page === 'Student Register' || page === 'Student List') ?
                                'menu-item-active' :
                                'menu-item-inactive'">
                                <svg :class="(selected === 'Register') || (page === 'Student Register' || page === 'Student List') ?
@@ -90,8 +92,8 @@
                                <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                    {{ trans('sidebar.Students') }}
                                </span>
-
-                               <svg class="menu-item-arrow absolute right-2.5 top-1/2 -translate-y-1/2 stroke-current"
+                               <div :class="app()->getLocale() == 'en' ? 'absolute right-0' : 'absolute left-0'">  
+                                   <svg 
                                    :class="[(selected === 'Register') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive',
                                        sidebarToggle ? 'lg:hidden' : ''
                                    ]"
@@ -99,7 +101,8 @@
                                    xmlns="http://www.w3.org/2000/svg">
                                    <path d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585" stroke=""
                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                               </svg>
+                               </svg></div>
+                          
                            </a>
 
                            <!-- Dropdown Menu Start -->
@@ -160,7 +163,9 @@
                                    {{ trans('sidebar.Employee') }}
                                </span>
                                <div class="flex justify-end">
-                                   <svg class="menu-item-arrow absolute right-2.5 top-1/2 -translate-y-1/2 stroke-current"
+                                
+                              <div :class="app()->getLocale() == 'ar' ? 'absolute right-0' : 'absolute left-0'">  
+                                   <svg class=" absolute  top-1/2 -translate-y-1/2 stroke-current"
                                        :class="[(selected === 'RegisterEmployee') ? 'menu-item-arrow-active' :
                                            'menu-item-arrow-inactive',
                                            sidebarToggle ? 'lg:hidden' : ''
@@ -170,6 +175,7 @@
                                        <path d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585" stroke=""
                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                    </svg>
+                               </div>
                                </div>
 
                            </a>
@@ -229,7 +235,8 @@
                                    {{ trans('sidebar.Attendance') }}
                                </span>
                                <div class="flex justify-end">
-                                   <svg class="menu-item-arrow absolute right-2.5 top-1/2 -translate-y-1/2 stroke-current"
+                              <div :class="app()->getLocale() == 'ar' ? 'absolute right-0' : 'absolute left-5'">  
+                                   <svg class=" absolute  top-1/2 -translate-y-1/2 stroke-current"
                                        :class="[(selected === 'Attendance') ? 'menu-item-arrow-active' :
                                            'menu-item-arrow-inactive',
                                            sidebarToggle ? 'lg:hidden' : ''
@@ -240,7 +247,7 @@
                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                    </svg>
                                </div>
-
+                                 </div>
                            </a>
 
                            <!-- Dropdown Menu Start -->
