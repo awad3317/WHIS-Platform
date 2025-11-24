@@ -769,16 +769,16 @@
                         $requirements = [
                             'Personal_photo',
                             'birth_certificate',
-                            // 'Vaccination certificate',
-                            // 'Student’s previous and current certificates',
-                            // 'A copy of the passport',
-                            // 'Certificate from the Yemeni Ministry of Foreign Affairs and Consulate',
+                            'Vaccination certificate',
+                            'Student’s previous and current certificates',
+                            'A copy of the passport',
+                            'Certificate from the Yemeni Ministry of Foreign Affairs and Consulate',
                             // 'Expatriate form',
                             // 'Medical fitness form'
                         ];
                     @endphp
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="p-6 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3  gap-6">
                         @foreach ($requirements as $field)
                             <div class="space-y-3">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-white">
