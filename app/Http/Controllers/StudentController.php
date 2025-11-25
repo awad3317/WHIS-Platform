@@ -52,10 +52,11 @@ class StudentController extends Controller
                 function ($attribute, $value, $fail) {
                 $class = $this->classModelRepository->getById($value);
                 if ($class) {
-                    $currentStudents = Student::where('class_id', $value)->count();
+                    $currentStudents = $class->students()->wherePivot('status', 'active') ->count();
                     if ($currentStudents >= $class->capacity) {
                         $fail('هذا الفصل ممتلئ. لا يمكن إضافة المزيد من الطلاب.');
                     }
+
                 }
             }
         ],
@@ -65,23 +66,41 @@ class StudentController extends Controller
         'birth_certificate'=> ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:2048'],
     ]);
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        } 
+        $firstError = $validator->errors()->first();
+        return redirect()->back()
+                    ->withInput()
+                    ->withErrors($validator)
+                    ->with('error', true)
+                    ->with('error_title', 'حدث خطأ!')
+                    ->with('error_message', $firstError)
+                    ->with('error_buttonText', 'حسناً');
+    }
         $academic_no=$this->studentService->generateAcademicNumber();
-        dd($academic_no);
-        // $student = Student::create([
-        //     'name_en' => $request->name_en,
-        //     'name_ar' => $request->name_ar,
-        //     'academic_no' => $academic_no,
-        //     'birth_date' => $request->birth_date,
-        //     'nationality' => $request->nationality,
-        //     'previous_school' => $request->previous_school,
-        //     'class_id' => $request->class_id,
-        //     'is_active' => true,
-        //     'registration_date' => now(),
-        // ]);
+        $student = Student::create([
+            'name_en' => $request->name_en,
+            'name_ar' => $request->name_ar,
+            'academic_no' => $academic_no,
+            'birth_date' => $request->birth_date,
+            'gender' => $request->gender,
+            'national_id' => $request->national_id,
+            'national_id_type' => $request->national_id_type,
+            'nationality' => $request->nationality,
+            'previous_school' => $request->previous_school,
+            'is_active' => true,
+        ]);
+        if($request->filled('parent_id')){
+            $student->parents()->attach($request->parent_id, [
+                'relationship' => 'father',
+                'is_primary' => true
+            ]);
+        }
+        if($request->filled('mother_id')){
+            $student->parents()->attach($request->mother_id, [
+                'relationship' => 'mother',
+                'is_primary' => false
+            ]);
+        }
+        
 
         // $filepath=$this->studentFileService->createStudentFolder($request->student);
         // dd($filepath);

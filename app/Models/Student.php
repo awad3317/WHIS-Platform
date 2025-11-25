@@ -19,6 +19,7 @@ class Student extends Model
         'national_id',
         'national_id_type',
         'nationality',
+        'previous_school',
         'enrollment_date',
         'is_active',
     ];
