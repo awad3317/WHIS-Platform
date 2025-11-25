@@ -57,16 +57,16 @@ class StudentFileService
 
     public function getStudentFolderPath(Student $student): string
     {
-        return $this->getBasePath() . "/{$student->academic_no}";
+        return $this->getBasePath() . "/{$student->folder_name}";
     }
-    public function uploadFile(Student $student, UploadedFile $file, string $fileType, string $name, $uploadedBy, ?string
+    public function uploadFile(Student $student, UploadedFile $file, string $fileType, string $name, $uploadedBy,
     $description = null): StudentFile
     {
         $this->validateFileType($file, $fileType);
 
         $folderPath = $this->createStudentFolder($student);
 
-        $fileName = $this->generateSecureFileName($file, $fileType);
+        $fileName = $this->generateSecureFileName($file, $fileType,$student->academic_no);
         $filePath = $folderPath . '/' . $fileName;
 
         Storage::disk($this->disk)->putFileAs($folderPath, $file, $fileName);
@@ -102,14 +102,14 @@ class StudentFileService
         }
     }
 
-    private function generateSecureFileName(UploadedFile $file, string $fileType): string
+    private function generateSecureFileName(UploadedFile $file, string $fileType,$academic_no)
     {
         $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $extension = $file->getClientOriginalExtension();
         $timestamp = time();
         $random = Str::random(8);
 
-        return Str::slug($fileType) . '_' . Str::slug($originalName) . '_' . $timestamp . '_' . $random . '.' . $extension;
+        return Str::slug($fileType) . '_' . Str::slug($originalName) . '_' . $academic_no . '_' . $timestamp . '_' . $random . '.' . $extension;
     }
 
     public function downloadFile(StudentFile $studentFile)

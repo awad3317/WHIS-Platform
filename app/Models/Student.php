@@ -22,10 +22,11 @@ class Student extends Model
         'previous_school',
         'enrollment_date',
         'is_active',
+        'folder_name',
     ];
     public function classes()
     {
-        return $this->belongsToMany(ClassModel::class, 'class_student')
+        return $this->belongsToMany(ClassModel::class, 'class_students')
             ->using(ClassStudent::class)
             ->withPivot('academic_year', 'status', 'enrollment_date', 'leave_date', 'notes')
             ->withTimestamps();

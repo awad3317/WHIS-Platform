@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('previous_school', 200)->nullable();
             $table->string('transfer_reason', 300)->nullable(); 
             $table->date('enrollment_date');
+            $table->string('folder_name', 100)->nullable();
             $table->softDeletes();
             $table->boolean('is_active')->default(true);
             $table->timestamps();

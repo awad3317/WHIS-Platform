@@ -2,6 +2,7 @@
 
 return [
     'register_student' => 'تسجيل الطالب',
+    'students' => 'الطلاب',
     'new_student_register' => 'تسجيل طالب جديد',
     'open_form_student_register' => 'فتح نموذج تسجيل الطالب',
     'student_details' => 'بيانات الطالب',

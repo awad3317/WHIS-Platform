@@ -1,5 +1,9 @@
 @extends('layouts.app')
-@section('title')
+@section('title', __('student.students'))
+@section('Breadcrumb', __('student.students'))
+@section('addButton')
+    <x-modals.success-modal />
+@endsection
 @section('content')
     <div class="space-y-5 sm:space-y-6">
 
