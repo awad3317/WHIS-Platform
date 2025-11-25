@@ -29,6 +29,10 @@ return [
     'Class'=>'الصف',
     'Section'=>'القسم',
     'Period'=>'الفترة',
+    'gender' => [
+        'male' => 'ذكر',
+        'female' => 'أنثى'
+    ],
     
     
     

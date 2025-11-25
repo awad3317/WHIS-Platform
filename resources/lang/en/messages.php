@@ -30,6 +30,11 @@ return [
     'Class'=>'Class',
     'Section'=>'Section',
     'Period'=>'Period',
+    'gender' => [
+        'male' => 'Male',
+        'female' => 'Female'
+    ],
+
     
     
     

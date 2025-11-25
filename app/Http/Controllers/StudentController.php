@@ -26,7 +26,8 @@ class StudentController extends Controller
     }
     public function index()
     {
-        return view('pages.studentes.index');
+        $students = $this->studentRepository->index();
+        return view('pages.studentes.index', compact('students'));
     }
 
     public function create()

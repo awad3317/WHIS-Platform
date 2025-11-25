@@ -14,10 +14,10 @@ class StudentRepository implements RepositoriesInterface
     {
         //
     }
-    public function index(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
-    {
-        return Student::paginate(10);
-    }
+        public function index(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+        {
+            return Student::with(['classes','parents'])->paginate(10);
+        }
 
     public function getById($id): Student
     {

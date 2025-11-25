@@ -24,13 +24,15 @@ class Student extends Model
         'is_active',
         'folder_name',
     ];
+    
     public function classes()
     {
-        return $this->belongsToMany(ClassModel::class, 'class_students')
+        return $this->belongsToMany(ClassModel::class, 'class_students', 'student_id', 'class_id')
             ->using(ClassStudent::class)
             ->withPivot('academic_year', 'status', 'enrollment_date', 'leave_date', 'notes')
             ->withTimestamps();
     }
+    
 
     public function files()
     {
@@ -39,7 +41,7 @@ class Student extends Model
 
     public function parents()
     {
-        return $this->belongsToMany(ParentModel::class, 'student_parents')
+        return $this->belongsToMany(ParentModel::class, 'student_parents', 'student_id', 'parent_id')
             ->withPivot('relationship', 'is_primary')
             ->withTimestamps();
     }
@@ -60,6 +62,10 @@ class Student extends Model
         return $this->parents()
             ->wherePivot('relationship', 'mother')
             ->first();
+    }
+    public function getGenderAttribute($value)
+    {
+        return trans("messages.gender.{$value}");
     }
     // public function currentClass()
     // {
