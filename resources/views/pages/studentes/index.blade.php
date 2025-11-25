@@ -207,8 +207,11 @@
                                     </td>
                                     <td class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <p
-                                                class="bg-success-50 text-theme-xs text-success-600 dark:bg-success-500/15 dark:text-success-500 rounded-full px-2 py-0.5 font-medium">
+                                            <p @class([
+                                                    'text-theme-xs rounded-full px-2 py-0.5 font-medium',
+                                                    'bg-success-50 text-success-600 dark:bg-success-500/15 dark:text-success-500' => $student->gender == 'ذكر',
+                                                    'bg-warning-50 text-warning-600 dark:bg-warning-500/15 dark:text-warning-500' => $student->gender == 'أنثى'
+                                                ])>
                                                 {{ $student->gender }}
                                             </p>
                                         </div>
