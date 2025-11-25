@@ -139,6 +139,7 @@
                     </div>
                 </div>
             </div>
+            
 
             <button type="submit" class="px-6 py-2 rounded-lg bg-brand-500 text-white">
                 {{ trans('student.save_data') }}
