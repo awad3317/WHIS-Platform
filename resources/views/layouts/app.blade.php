@@ -12,7 +12,7 @@
     <link rel="icon" href="{{ asset('tailadmin/build/favicon.ico') }}">
     <link href="{{ asset('tailadmin/build/style.css') }}" rel="stylesheet">
     @yield('style')
-
+    @livewireStyles
 </head>
 
 <body
@@ -64,7 +64,8 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
     </div>
     <!-- ===== Page Wrapper End ===== -->
     @yield('script')
-    <script defer src="{{ asset('tailadmin/build/bundle.js') }}"></script>
+    {{-- <script defer src="{{ asset('tailadmin/build/bundle.js') }}"></script> --}}
+    @livewireScripts
 </body>
 
 </html>
