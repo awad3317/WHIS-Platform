@@ -6,7 +6,8 @@
     <x-modals.error-modal />
 @endsection
 @section('content')
-    <div>
+    <div x-data="{
+        isParentModalOpen:false,}">
         <form class="space-y-8" method="POST" action="{{ route('students.store') }}" enctype="multipart/form-data">
             @csrf
             <!-- ==================== Student Card ==================== -->
@@ -78,8 +79,7 @@
                             <select name="national_id_type"
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white dark:bg-gray-800">
                                 <option value="">{{ trans('student.select_type') }}</option>
-                                <option value="national_id"
-                                    {{ old('national_id_type') == 'national_id' ? 'selected' : '' }}>
+                                <option value="national_id" {{ old('national_id_type') == 'national_id' ? 'selected' : '' }}>
                                     {{ trans('student.national_id') }}
                                 </option>
                                 <option value="passport" {{ old('national_id_type') == 'passport' ? 'selected' : '' }}>
@@ -135,8 +135,7 @@
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white dark:bg-gray-800">
                                 <option value="">{{ trans('student.select_class') }}</option>
                                 @foreach ($classes as $class)
-                                    <option value="{{ $class->id }}"
-                                        {{ old('class_id') == $class->id ? 'selected' : '' }}>
+                                    <option value="{{ $class->id }}" {{ old('class_id') == $class->id ? 'selected' : '' }}>
                                         {{ $class->name_ar }} - {{ $class->section }} (الصف {{ $class->grade_level }})
                                     </option>
                                 @endforeach
@@ -147,6 +146,45 @@
             </div>
 
             <!-- ==================== Parent Card ==================== -->
+
+            <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-700 shadow-xl my-6">
+                <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+                        {{ trans('student.parent_details') }}
+                    </h2>
+
+                    <!-- زر إضافة ولي أمر جديد - خارج المودال -->
+                    <button type="button" @click="isParentModalOpen = true"
+                        class="inline-flex items-center px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white text-sm font-medium rounded-lg transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        إضافة ولي أمر جديد
+                    </button>
+                </div>
+
+                <div class="p-6 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- اختيار ولي الأمر -->
+                    <div class="col-span-1">
+                        <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
+                            ولي الأمر
+                        </label>
+                        <div class="flex gap-2">
+                            <select id="parent_id" name="parent_id" required
+                                class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white dark:bg-gray-800">
+                                <option value="">اختر ولي الأمر</option>
+                                {{-- @foreach($parents as $parent)
+                                <option value="{{ $parent->id }}" {{ old('parent_id')==$parent->id ? 'selected' : '' }}>
+                                    {{ $parent->name_ar }} - {{ $parent->phone }}
+                                </option>
+                                @endforeach --}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- ==================== Files Card ==================== -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
@@ -261,8 +299,8 @@
 
                         <button type="button" @click="additionalFiles.push({ file: null, name: '' })"
                             class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-black bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
@@ -270,13 +308,14 @@
                         </button>
                     </div>
 
+
                     {{-- <template x-for="(fileItem, index) in additionalFiles" :key="index">
                         <div class="flex items-center space-x-3 mb-3 space-x-reverse">
                             <div class="flex-1">
-                                <input type="text" :name="'additional_files_name[' + index + ']'"
-                                    x-model="fileItem.name" placeholder="اسم الملف"
+                                <input type="text" :name="'additional_files_name[' + index + ']'" x-model="fileItem.name"
+                                    placeholder="اسم الملف"
                                     class="block w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm
-                    focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200">
+                                focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200">
                             </div>
 
                             <div class="relative flex-1">
@@ -290,15 +329,15 @@
                                     </svg>
                                 </label>
 
-                                <input :id="'additionalFile_' + index" :name="'additional_files[' + index + ']'"
-                                    type="file" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                <input :id="'additionalFile_' + index" :name="'additional_files[' + index + ']'" type="file"
+                                    class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                                     @change="fileItem.file = $event.target.files[0]">
                             </div>
 
                             <button type="button" @click="additionalFiles.splice(index, 1)"
                                 class="text-error-500 hover:text-error-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                 </svg>
@@ -312,10 +351,10 @@
                             class="relative bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition mb-6">
 
                             <!-- زر حذف -->
-                           <button type="button" @click="additionalFiles.splice(index, 1)"
+                            <button type="button" @click="additionalFiles.splice(index, 1)"
                                 class="text-error-500 hover:text-error-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                 </svg>
@@ -325,44 +364,42 @@
 
                                 <!-- اسم الملف -->
                                 <div>
-                                    <label  class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
                                         اسم الملف
                                     </label>
 
                                     <input type="text" :name="'additional_files_name[' + index + ']'"
-                                    x-model="fileItem.name" placeholder="اسم الملف"
+                                        x-model="fileItem.name" placeholder="اسم الملف"
                                         class="block w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm
-                              focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200">
-                                                                  <span x-text="fileItem.file ? fileItem.file.name : 'اختر ملف'"></span>
+                                          focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200">
+                                    <span x-text="fileItem.file ? fileItem.file.name : 'اختر ملف'"></span>
 
                                 </div>
 
                                 <!-- رفع الملف -->
                                 <div>
-                                    <label :for="'additionalFile_' + index" class="block text-sm font-semibold text-gray-700 mb-2">
-                                                                            <span x-text="fileItem.file ? fileItem.file.name : 'اختر ملف'"></span>
-                                    
+                                    <label :for="'additionalFile_' + index"
+                                        class="block text-sm font-semibold text-gray-700 mb-2">
+                                        <span x-text="fileItem.file ? fileItem.file.name : 'اختر ملف'"></span>
+
                                     </label>
 
-                                    <label :for="'additionalFile_' + index"
-                                        class="cursor-pointer h-[54px] flex items-center justify-between gap-3 px-4
-                           rounded-xl border-2 border-dashed border-gray-300 bg-gray-50
-                           hover:bg-white hover:border-brand-500 transition">
+                                    <label :for="'additionalFile_' + index" class="cursor-pointer h-[54px] flex items-center justify-between gap-3 px-4
+                                       rounded-xl border-2 border-dashed border-gray-300 bg-gray-50
+                                       hover:bg-white hover:border-brand-500 transition">
 
                                         <div class="flex items-center gap-3">
-                                            <div
-                                                class="w-10 h-10 flex items-center justify-center
-                                    rounded-full bg-brand-50 text-brand-600">
+                                            <div class="w-10 h-10 flex items-center justify-center
+                                                rounded-full bg-brand-50 text-brand-600">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                     viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M9 12h6m-3-3v6m5 5H7a2 2 0
-                                             01-2-2V5a2 2 0
-                                             012-2h5.586a1 1
-                                             0 01.707.293l5.414
-                                             5.414a1 1 0
-                                             01.293.707V19a2
-                                             2 0 01-2 2z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6m5 5H7a2 2 0
+                                                         01-2-2V5a2 2 0
+                                                         012-2h5.586a1 1
+                                                         0 01.707.293l5.414
+                                                         5.414a1 1 0
+                                                         01.293.707V19a2
+                                                         2 0 01-2 2z" />
                                                 </svg>
                                             </div>
 
@@ -376,9 +413,9 @@
                                         </span>
                                     </label>
 
-                                <input :id="'additionalFile_' + index" :name="'additional_files[' + index + ']'"
-                                    type="file" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                                    @change="fileItem.file = $event.target.files[0]">
+                                    <input :id="'additionalFile_' + index" :name="'additional_files[' + index + ']'"
+                                        type="file" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                                        @change="fileItem.file = $event.target.files[0]">
 
                                 </div>
 
@@ -398,5 +435,7 @@
                 {{ trans('student.save_data') }}
             </button>
         </form>
+        @include('pages.parents.create-model')
     </div>
+
 @endsection

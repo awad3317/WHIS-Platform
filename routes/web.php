@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\ParentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\EmployeeController;
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('Attendance', AttendanceController::class);
     Route::resource('students', StudentController::class);
     Route::resource('employees', EmployeeController::class);
+    Route::resource('parents', ParentController::class);
     
 });
 
