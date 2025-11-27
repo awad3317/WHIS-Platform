@@ -11,7 +11,10 @@
             <h3 class="font-semibold text-lg text-gray-800 dark:text-white mb-4">
                 بيانات  
             </h3>
-            <div> @livewire('parent-modal')</div>
+            <div>
+                 @livewire('parent-modal', ['type' => 'father'], key('father-modal'))
+
+                </div>
         </div>
 
             <!-- مربع البحث عن الأب -->
@@ -78,7 +81,9 @@
             <h3 class="font-semibold text-lg text-gray-800 dark:text-white mb-4">
                 بيانات الأم
             </h3>
-            <div> @livewire('parent-modal')</div>
+            <div>
+                @livewire('parent-modal', ['type' => 'mother'], key('mother-modal'))
+            </div>
         </div>
 
 

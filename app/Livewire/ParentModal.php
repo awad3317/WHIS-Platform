@@ -4,26 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\ParentModel;
-use App\Models\Student;
 
 class ParentModal extends Component
 {
     public $isParentModalOpen = false;
     public $isLoading = false;
-public $type = 'father'; // father | mother
-
-public function mount($type = 'father')
-{
-    $this->type = $type;
-
-    if ($this->type === 'mother') {
-        $this->parentForm['gender'] = 'female';
-        $this->parentForm['relationship'] = 'mother';
-    } else {
-        $this->parentForm['gender'] = 'male';
-        $this->parentForm['relationship'] = 'father';
-    }
-}
+    public $type = 'father';
 
     public $parentForm = [
         'name_ar'     => '',
@@ -39,37 +25,51 @@ public function mount($type = 'father')
     ];
 
     protected $rules = [
-        'parentForm.name_ar' => 'required|string|max:255',
-        'parentForm.name_en' => 'required|string|max:255',
-        'parentForm.phone'   => 'required|string|max:20',
-        'parentForm.email'   => 'nullable|email',
+        'parentForm.name_ar'     => 'required|string|max:255',
+        'parentForm.name_en'     => 'required|string|max:255',
+        'parentForm.phone'       => 'required|string|max:20',
+        'parentForm.email'       => 'nullable|email',
         'parentForm.national_id' => 'nullable|string|max:20',
-        'parentForm.relationship' => 'required|string',
-        'parentForm.job_title' => 'nullable|string|max:255',
-        'parentForm.workplace' => 'nullable|string|max:255',
-        'parentForm.mobile' => 'nullable|string|max:20',
-        'parentForm.gender' => 'required|string',
+        'parentForm.relationship'=> 'required|string',
+        'parentForm.job_title'   => 'nullable|string|max:255',
+        'parentForm.workplace'   => 'nullable|string|max:255',
+        'parentForm.mobile'      => 'nullable|string|max:20',
+        'parentForm.gender'      => 'required|string',
     ];
 
- public function addParent()
-{
-    $this->validate();
+    public function mount($type = 'father')
+    {
+        $this->type = $type;
 
-    $this->isLoading = true;
+        if ($type === 'mother') {
+            $this->parentForm['gender'] = 'female';
+            $this->parentForm['relationship'] = 'mother';
+        } else {
+            $this->parentForm['gender'] = 'male';
+            $this->parentForm['relationship'] = 'father';
+        }
+    }
 
-    $parent = ParentModel::create($this->parentForm);
+    public function addParent()
+    {
+        $this->validate();
 
-    // نرسل نوع الأب / الأم + البيانات
-    $this->dispatch('parentAdded', [
-        'type'   => $this->type,
-        'parent' => $parent
-    ]);
+        $this->isLoading = true;
 
-    $this->resetForm();
+        $parent = ParentModel::create($this->parentForm);
 
-    $this->isParentModalOpen = false;
-    $this->isLoading = false;
-}
+        $this->dispatch('parentAdded', [
+            'type'   => $this->type,
+            'parent' => $parent,
+        ]);
+
+        $this->resetForm();
+
+        $this->isParentModalOpen = false;
+        $this->isLoading = false;
+
+        session()->flash('success', 'تمت إضافة ولي الأمر بنجاح');
+    }
 
     public function resetForm()
     {
@@ -79,14 +79,13 @@ public function mount($type = 'father')
             'phone'       => '',
             'email'       => '',
             'national_id' => '',
-            'relationship' => 'father',
+            'relationship' => $this->type === 'mother' ? 'mother' : 'father',
             'job_title'   => '',
             'workplace'   => '',
             'mobile'      => '',
-            'gender'      => 'male',
+            'gender'      => $this->type === 'mother' ? 'female' : 'male',
         ];
     }
-
 
     public function render()
     {
