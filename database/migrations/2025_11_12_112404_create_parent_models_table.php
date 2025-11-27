@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('workplace', 150)->nullable(); 
             $table->string('mobile', 20)->nullable();
             $table->string('image', 255)->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

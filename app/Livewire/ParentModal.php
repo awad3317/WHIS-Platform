@@ -22,6 +22,7 @@ class ParentModal extends Component
         'workplace'   => '',
         'mobile'      => '',
         'gender'      => 'male',
+        'is_active'   => false
     ];
 
     protected $rules = [
