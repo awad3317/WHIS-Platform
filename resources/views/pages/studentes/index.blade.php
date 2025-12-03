@@ -187,14 +187,14 @@
                                     <td class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <p class="text-gray-700 text-theme-sm dark:text-gray-400">
-                                                {{ $student->classes->first()->name_en ?? 'N/A' }}
+                                                {{ $student->classes->first()->name ?? 'N/A' }}
                                             </p>
                                         </div>
                                     </td>
                                     <td class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <p class="text-gray-700 text-theme-sm dark:text-gray-400">
-                                                {{ $student->date_of_birth }}
+                                               {{ \Carbon\Carbon::parse($student->birth_date)->locale('ar')->translatedFormat('Y/m/d') }}
                                             </p>
                                         </div>
                                     </td>

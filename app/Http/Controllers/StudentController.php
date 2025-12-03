@@ -63,6 +63,8 @@ class StudentController extends Controller
                 }
             }
         ],
+        'father_id'=>['required',Rule::exists('parent_models','id')],
+        'mother_id'=>['required',Rule::exists('parent_models','id')],
 
         // =====  Files Validation ===== //
         'student_image'=> ['required', 'file', 'mimes:jpg,jpeg,png', 'max:2048'],
@@ -98,18 +100,14 @@ class StudentController extends Controller
             'is_active' => true,
             'folder_name' => $academic_no,
         ]);
-        if($request->filled('parent_id')){
-            $student->parents()->attach($request->parent_id, [
-                'relationship' => 'father',
-                'is_primary' => true
-            ]);
-        }
-        if($request->filled('mother_id')){
-            $student->parents()->attach($request->mother_id, [
-                'relationship' => 'mother',
-                'is_primary' => false
-            ]);
-        }
+        $student->parents()->attach($request->father_id, [
+            'relationship' => 'father',
+            'is_primary' => true 
+        ]);
+        $student->parents()->attach($request->mother_id, [
+            'relationship' => 'father',
+            'is_primary' => false 
+        ]);
         if ($request->hasFile('student_image')) {
             $this->studentFileService->uploadFile(
                 $student,
