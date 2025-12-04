@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class EmployeeController extends Controller
 {
@@ -21,26 +23,39 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
 {
-    $validated = $request->validate([
-        'name_ar' => 'required|string|max:100',
-        'name_en' => 'nullable|string|max:100',
-        'email' => 'nullable|email|max:100|unique:employees,email',
-        'national_id' => 'required|string|max:20|unique:employees,national_id',
-        'national_id_type' => 'required|in:national_id,passport,residence_id',
-        'job_title' => 'required|string|max:100',
-        'department' => 'required|in:admin,teaching,support',
-        'qualification' => 'nullable|string|max:100',
-        'graduation_year' => 'nullable|integer|min:1900|max:' . date('Y'),
-        'phone' => 'nullable|string|max:20',
-        'salary' => 'nullable|numeric|min:0|max:99999999.99',
-        'is_active' => 'boolean',
-    
-        'weekly_classes' => 'nullable|integer|min:0',
-        'subjects' => 'nullable|array',
-        'subjects.*' => 'nullable|string',
-    ], );
+    $validator = Validator::make($request->all(), [
+    'name_ar' => ['required', 'string', 'max:100'],
+    'name_en' => ['nullable', 'string', 'max:100'],
+    'email' => ['nullable', 'email', 'max:100', Rule::unique('employees', 'email')],
+    'national_id' => ['required', 'string', 'max:20', Rule::unique('employees', 'national_id')],
+    'national_id_type' => ['required', Rule::in(['national_id', 'passport', 'residence_id'])],
+    'job_title' => ['required', 'string', 'max:100'],
+    'department' => ['required', Rule::in(['admin', 'teaching', 'support'])],
+    'qualification' => ['nullable', 'string', 'max:100'],
+    'graduation_year' => ['nullable', 'integer', 'min:1900', 'max:' . date('Y')],
+    'phone' => ['nullable', 'string', 'max:20'],
+    'salary' => ['nullable', 'numeric', 'min:0', 'max:99999999.99'],
+    'is_active' => ['boolean'],
+    'weekly_classes' => ['nullable', 'integer', 'min:0'],
+    'subjects' => ['nullable', 'array'],
+    'subjects.*' => ['nullable', 'string'],
+]);
+
+if ($validator->fails()) {
+    $firstError = $validator->errors()->first();
+    return redirect()->back()
+                ->withInput()
+                ->withErrors($validator)
+                ->with('error', true)
+                ->with('error_title', 'حدث خطأ!')
+                ->with('error_message', $firstError)
+                ->with('error_buttonText', 'حسناً');
+}
+
+
 
     try {
+        $validated = $validator->validated();
         $employeeData = [
             'name_ar' => $validated['name_ar'],
             'name_en' => $validated['name_en'] ?? null,
@@ -66,17 +81,21 @@ class EmployeeController extends Controller
             $employeeData['weekly_classes'] = 0;
             $employeeData['subjects'] = null;
         }
-
         $employee = Employee::create($employeeData);
-
         return redirect()->route('employees.index')
-            ->with('success', trans('employee.EmployeeAdded'));
+            ->with('success', true)
+            ->with('success_title', 'تمت العملية بنجاح!')
+            ->with('success_message', 'تم إضافة الموظف بنجاح.')
+            ->with('success_buttonText', 'حسناً');
 
     } catch (\Exception $e) {
-        return back()
-            ->withInput()
-            ->withErrors(['error' => 'حدث خطأ أثناء حفظ البيانات: ' . $e->getMessage()])
-            ->with('error', 'حدث خطأ أثناء حفظ البيانات.');
+        
+        return redirect()->back()
+                    ->withInput()
+                    ->with('error', true)
+                    ->with('error_title', 'حدث خطأ!')
+                    ->with('error_message', $e->getMessage())
+                    ->with('error_buttonText', 'حسناً');
     }
 }
 
