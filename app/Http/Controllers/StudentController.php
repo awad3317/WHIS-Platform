@@ -7,8 +7,10 @@ use App\Models\ClassModel;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Services\StudentService;
+use App\Classes\WebResponseClass;
 use Illuminate\Support\Facades\DB;
 use App\Services\StudentFileService;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\StudentRepository;
 use Illuminate\Support\Facades\Validator;
 use App\Repositories\ClassModelRepository;
@@ -25,13 +27,37 @@ class StudentController extends Controller
         
     }
     public function index()
-    {
-        $students = $this->studentRepository->index();
-        return view('pages.studentes.index', compact('students'));
+{
+    if(!Auth::user()->hasPermission('view_students')) {
+        return WebResponseClass::sendError('ليس لديك صلاحية عرض الطلاب.', 'صلاحية مفقودة!');
     }
+    $students = $this->studentRepository->index();
+    
+    $photos = [];
+    foreach ($students as $student) {
+        $photo = $student->files->where('file_type', 'photo')->first();
+        
+        if ($photo) {
+            
+                $fileData = $this->studentFileService->downloadFile($photo);
+                $imageContent = file_get_contents($fileData['path']);
+                $base64 = 'data:image/jpeg;base64,' . base64_encode($imageContent);
+                
+                $photos[$student->id] = [
+                    'data' => $base64,
+                    'has_photo' => true,
+                ];
+        } 
+    }
+    
+    return view('pages.studentes.index', compact('students', 'photos'));
+}
 
     public function create()
     {
+        if(!Auth::user()->hasPermission('create_student')) {
+            return WebResponseClass::sendError('ليس لديك صلاحية إضافة طالب جديد.', 'صلاحية مفقودة!');
+        }
         $classes = ClassModel::where('is_active', 1)->get();
 
         return view('pages.studentes.create', compact('classes'));
@@ -76,14 +102,7 @@ class StudentController extends Controller
 
     ]);
         if ($validator->fails()) {
-        $firstError = $validator->errors()->first();
-        return redirect()->back()
-                    ->withInput()
-                    ->withErrors($validator)
-                    ->with('error', true)
-                    ->with('error_title', 'حدث خطأ!')
-                    ->with('error_message', $firstError)
-                    ->with('error_buttonText', 'حسناً');
+        return WebResponseClass::sendValidationError($validator);
     }
         $academic_no=$this->studentService->generateAcademicNumber();
         $student = Student::create([
@@ -144,17 +163,8 @@ class StudentController extends Controller
                 }
             }
         }
-
-        return redirect()->route('students.index')
-            ->with('success', true)
-            ->with('success_title', 'تمت العملية بنجاح!')
-            ->with('success_message', 'تم إضافة الطالب بنجاح.')
-            ->with('success_buttonText', 'حسناً');
-        
-
-        // $filepath=$this->studentFileService->createStudentFolder($request->student);
-        // dd($filepath);
-
+        return WebResponseClass::sendResponse('تمت العملية بنجاح!' ,'تم إضافة الطالب بنجاح.',);
         
     }
+    
 }

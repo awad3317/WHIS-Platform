@@ -22,21 +22,11 @@ Route::post('/lang', function (\Illuminate\Http\Request $request) {
     return Redirect::back();
 })->name('switch.lang');
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/Dashboard',[DashboardController::class,'index'])->name('Dashboard.index');
-    Route::get('/Dashboard', [DashboardController::class, 'index'])->name('Dashboard.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('Attendance', AttendanceController::class);
     Route::resource('students', StudentController::class);
     Route::resource('employees', EmployeeController::class);

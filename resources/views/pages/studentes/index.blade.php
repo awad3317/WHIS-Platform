@@ -2,6 +2,12 @@
 @section('title', __('student.students'))
 @section('Breadcrumb', __('student.students'))
 @section('addButton')
+    @if (Auth::user()->hasPermission('create_student'))
+        <a href="{{ route('students.create') }}"
+            class="bg-brand-500 hover:bg-brand-50 h-10 rounded-lg px-6 py-2 text-sm font-medium text-white min-w-[100px] inline-flex items-center justify-center">
+            تسجيل طالب جديد
+        </a>
+    @endif
     <x-modals.success-modal />
 @endsection
 @section('content')
@@ -69,19 +75,8 @@
                                 <tr>
                                     <th class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <div x-data="{ checked: false }" class="flex items-center gap-3">
-                                                <div @click="checked = !checked"
-                                                    class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-md border-[1.25px] bg-white dark:bg-white/0 border-gray-300 dark:border-gray-700"
-                                                    :class="checked ? 'border-brand-500 dark:border-brand-500 bg-brand-500' :
-                                                        'bg-white dark:bg-white/0 border-gray-300 dark:border-gray-700'">
-                                                    <svg :class="checked ? 'block' : 'hidden'" width="14" height="14"
-                                                        viewBox="0 0 14 14" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg" class="hidden">
-                                                        <path d="M11.6668 3.5L5.25016 9.91667L2.3335 7" stroke="white"
-                                                            stroke-width="1.94437" stroke-linecap="round"
-                                                            stroke-linejoin="round"></path>
-                                                    </svg>
-                                                </div>
+                                            <div class="flex items-center gap-3">
+
                                                 <div>
                                                     <span
                                                         class="block font-medium text-gray-500 text-theme-xs dark:text-gray-400">
@@ -136,45 +131,41 @@
                                 </tr>
                             </thead>
                             <!-- table header end -->
-                            
+
                             <!-- table body start -->
                             <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
                                 @foreach ($students as $student)
-                                    <tr>
-                                    <td class="px-6 py-3 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div x-data="{ checked: false }" class="flex items-center gap-3">
-                                                <div @click="checked = !checked"
-                                                    class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-md border-[1.25px] bg-white dark:bg-white/0 border-gray-300 dark:border-gray-700"
-                                                    :class="checked ? 'border-brand-500 dark:border-brand-500 bg-brand-500' :
-                                                        'bg-white dark:bg-white/0 border-gray-300 dark:border-gray-700'">
-                                                    <svg :class="checked ? 'block' : 'hidden'" width="14" height="14"
-                                                        viewBox="0 0 14 14" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg" class="hidden">
-                                                        <path d="M11.6668 3.5L5.25016 9.91667L2.3335 7" stroke="white"
-                                                            stroke-width="1.94437" stroke-linecap="round"
-                                                            stroke-linejoin="round"></path>
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <span
-                                                        class="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-                                                        {{ $student->academic_no }}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                <tr>
+                                                    <td class="px-6 py-3 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <divclass="flex items-center gap-3">
+
+                                                                <div>
+                                                                    <span
+                                                                        class="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
+                                                                        {{ $student->academic_no }}
+                                                                    </span>
+                                                                </div>
+                                                        </div>
+                                    </div>
                                     </td>
                                     <td class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="flex items-center gap-3">
-                                                <div
-                                                    class="flex items-center justify-center w-10 h-10 rounded-full bg-brand-100">
-                                                    <span class="text-xs font-semibold text-brand-500"> JD </span>
+                                                <div class="flex items-center justify-center w-10 h-10 rounded-full bg-brand-100">
+                                                    @if(isset($photos[$student->id]['has_photo']) && $photos[$student->id]['has_photo'])
+                                                        <div class="flex-shrink-0">
+                                                            <div
+                                                                class="flex items-center justify-center w-10 h-10 rounded-full overflow-hidden bg-brand-100">
+                                                                <img src="{{ $photos[$student->id]['data'] }}" alt="{{ $student->name_ar }}"
+                                                                    class="w-full h-full object-cover">
+                                                            </div>
+                                                        </div>
+                                                    @endif
+
                                                 </div>
                                                 <div>
-                                                    <span
-                                                        class="text-theme-sm mb-0.5 block font-medium text-gray-700 dark:text-gray-400">
+                                                    <span class="text-theme-sm mb-0.5 block font-medium text-gray-700 dark:text-gray-400">
                                                         {{ $student->name_ar }}
                                                     </span>
                                                     <span class="text-gray-500 text-theme-sm dark:text-gray-400">
@@ -194,7 +185,7 @@
                                     <td class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <p class="text-gray-700 text-theme-sm dark:text-gray-400">
-                                               {{ \Carbon\Carbon::parse($student->birth_date)->locale('ar')->translatedFormat('Y/m/d') }}
+                                                {{ \Carbon\Carbon::parse($student->birth_date)->locale('ar')->translatedFormat('Y/m/d') }}
                                             </p>
                                         </div>
                                     </td>
@@ -208,10 +199,10 @@
                                     <td class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <p @class([
-                                                    'text-theme-xs rounded-full px-2 py-0.5 font-medium',
-                                                    'bg-success-50 text-success-600 dark:bg-success-500/15 dark:text-success-500' => $student->gender == 'ذكر',
-                                                    'bg-warning-50 text-warning-600 dark:bg-warning-500/15 dark:text-warning-500' => $student->gender == 'أنثى'
-                                                ])>
+                                                'text-theme-xs rounded-full px-2 py-0.5 font-medium',
+                                                'bg-success-50 text-success-600 dark:bg-success-500/15 dark:text-success-500' => $student->gender == 'ذكر',
+                                                'bg-warning-50 text-warning-600 dark:bg-warning-500/15 dark:text-warning-500' => $student->gender == 'أنثى'
+                                            ])>
                                                 {{ $student->gender }}
                                             </p>
                                         </div>
@@ -219,110 +210,92 @@
                                     <td class="px-6 py-3 whitespace-nowrap">
                                         <div class="flex items-center justify-center">
                                             <svg class="cursor-pointer hover:fill-error-500 dark:hover:fill-error-500 fill-gray-700 dark:fill-gray-400"
-                                                width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
+                                                width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                     d="M6.54142 3.7915C6.54142 2.54886 7.54878 1.5415 8.79142 1.5415H11.2081C12.4507 1.5415 13.4581 2.54886 13.4581 3.7915V4.0415H15.6252H16.666C17.0802 4.0415 17.416 4.37729 17.416 4.7915C17.416 5.20572 17.0802 5.5415 16.666 5.5415H16.3752V8.24638V13.2464V16.2082C16.3752 17.4508 15.3678 18.4582 14.1252 18.4582H5.87516C4.63252 18.4582 3.62516 17.4508 3.62516 16.2082V13.2464V8.24638V5.5415H3.3335C2.91928 5.5415 2.5835 5.20572 2.5835 4.7915C2.5835 4.37729 2.91928 4.0415 3.3335 4.0415H4.37516H6.54142V3.7915ZM14.8752 13.2464V8.24638V5.5415H13.4581H12.7081H7.29142H6.54142H5.12516V8.24638V13.2464V16.2082C5.12516 16.6224 5.46095 16.9582 5.87516 16.9582H14.1252C14.5394 16.9582 14.8752 16.6224 14.8752 16.2082V13.2464ZM8.04142 4.0415H11.9581V3.7915C11.9581 3.37729 11.6223 3.0415 11.2081 3.0415H8.79142C8.37721 3.0415 8.04142 3.37729 8.04142 3.7915V4.0415ZM8.3335 7.99984C8.74771 7.99984 9.0835 8.33562 9.0835 8.74984V13.7498C9.0835 14.1641 8.74771 14.4998 8.3335 14.4998C7.91928 14.4998 7.5835 14.1641 7.5835 13.7498V8.74984C7.5835 8.33562 7.91928 7.99984 8.3335 7.99984ZM12.4168 8.74984C12.4168 8.33562 12.081 7.99984 11.6668 7.99984C11.2526 7.99984 10.9168 8.33562 10.9168 8.74984V13.7498C10.9168 14.1641 11.2526 14.4998 11.6668 14.4998C12.081 14.4998 12.4168 14.1641 12.4168 13.7498V8.74984Z"
                                                     fill=""></path>
                                             </svg>
                                         </div>
                                     </td>
-                                </tr>
+                                    </tr>
                                 @endforeach
-                                <tr>
-                                    <td class="px-6 py-3 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div x-data="{ checked: false }" class="flex items-center gap-3">
-                                                <div @click="checked = !checked"
-                                                    class="flex h-5 w-5 cursor-pointer items-center justify-center rounded-md border-[1.25px] bg-white dark:bg-white/0 border-gray-300 dark:border-gray-700"
-                                                    :class="checked ? 'border-brand-500 dark:border-brand-500 bg-brand-500' :
-                                                        'bg-white dark:bg-white/0 border-gray-300 dark:border-gray-700'">
-                                                    <svg :class="checked ? 'block' : 'hidden'" width="14"
-                                                        height="14" viewBox="0 0 14 14" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg" class="hidden">
-                                                        <path d="M11.6668 3.5L5.25016 9.91667L2.3335 7" stroke="white"
-                                                            stroke-width="1.94437" stroke-linecap="round"
-                                                            stroke-linejoin="round"></path>
-                                                    </svg>
-                                                </div>
-                                                <div>
-                                                    <span
-                                                        class="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-                                                        DE124321
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-3 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="flex items-center gap-3">
-                                                <div
-                                                    class="flex h-10 w-10 items-center justify-center rounded-full bg-[#f0f9ff]">
-                                                    <span class="text-xs font-semibold text-[#0086c9]"> EW </span>
-                                                </div>
+                    </tbody>
+                    <!-- table body end -->
+                    </table>
+                    @if($students->hasPages())
+                        <div class="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0">
 
-                                                <div>
-                                                    <span
-                                                        class="text-theme-sm mb-0.5 block font-medium text-gray-700 dark:text-gray-400">
-                                                        Emerson Workman
-                                                    </span>
-                                                    <span class="text-gray-500 text-theme-sm dark:text-gray-400">
-                                                        emerson@gmail.com
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-3 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">
-                                                Software License
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-3 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">
-                                                $18,50.34
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-3 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <p class="text-gray-700 text-theme-sm dark:text-gray-400">
-                                                2024-06-15
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-3 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <p
-                                                class="bg-warning-50 text-theme-xs text-warning-600 dark:bg-warning-500/15 dark:text-warning-400 rounded-full px-2 py-0.5 font-medium">
-                                                Pending
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-3 whitespace-nowrap">
-                                        <div class="flex items-center justify-center">
-                                            <svg class="cursor-pointer hover:fill-error-500 dark:hover:fill-error-500 fill-gray-700 dark:fill-gray-400"
-                                                width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M6.54142 3.7915C6.54142 2.54886 7.54878 1.5415 8.79142 1.5415H11.2081C12.4507 1.5415 13.4581 2.54886 13.4581 3.7915V4.0415H15.6252H16.666C17.0802 4.0415 17.416 4.37729 17.416 4.7915C17.416 5.20572 17.0802 5.5415 16.666 5.5415H16.3752V8.24638V13.2464V16.2082C16.3752 17.4508 15.3678 18.4582 14.1252 18.4582H5.87516C4.63252 18.4582 3.62516 17.4508 3.62516 16.2082V13.2464V8.24638V5.5415H3.3335C2.91928 5.5415 2.5835 5.20572 2.5835 4.7915C2.5835 4.37729 2.91928 4.0415 3.3335 4.0415H4.37516H6.54142V3.7915ZM14.8752 13.2464V8.24638V5.5415H13.4581H12.7081H7.29142H6.54142H5.12516V8.24638V13.2464V16.2082C5.12516 16.6224 5.46095 16.9582 5.87516 16.9582H14.1252C14.5394 16.9582 14.8752 16.6224 14.8752 16.2082V13.2464ZM8.04142 4.0415H11.9581V3.7915C11.9581 3.37729 11.6223 3.0415 11.2081 3.0415H8.79142C8.37721 3.0415 8.04142 3.37729 8.04142 3.7915V4.0415ZM8.3335 7.99984C8.74771 7.99984 9.0835 8.33562 9.0835 8.74984V13.7498C9.0835 14.1641 8.74771 14.4998 8.3335 14.4998C7.91928 14.4998 7.5835 14.1641 7.5835 13.7498V8.74984C7.5835 8.33562 7.91928 7.99984 8.3335 7.99984ZM12.4168 8.74984C12.4168 8.33562 12.081 7.99984 11.6668 7.99984C11.2526 7.99984 10.9168 8.33562 10.9168 8.74984V13.7498C10.9168 14.1641 11.2526 14.4998 11.6668 14.4998C12.081 14.4998 12.4168 14.1641 12.4168 13.7498V8.74984Z"
-                                                    fill=""></path>
-                                            </svg>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <!-- table body end -->
-                        </table>
-                    </div>
+                                <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                                    @if($students->onFirstPage())
+                                        <button disabled
+                                            class="px-3 py-1.5 text-sm font-medium text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600 rounded-md cursor-not-allowed">
+                                            السابق
+                                        </button>
+                                    @else
+                                        <a href="{{ $students->previousPageUrl() }}"
+                                            class="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white dark:bg-gray-800 dark:text-gray-400 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors hover:text-brand-400 hover:border-brand-400">
+                                            السابق
+                                        </a>
+                                    @endif
+
+                                    @php
+                                        $current = $students->currentPage();
+                                        $last = $students->lastPage();
+                                        $start = max(1, $current - 2);
+                                        $end = min($last, $current + 2);
+
+                                        if ($end - $start < 4) {
+                                            $start = max(1, $end - 4);
+                                            $end = min($last, $start + 4);
+                                        }
+                                    @endphp
+
+                                    @if($start > 1)
+                                        <span class="px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-gray-400">
+                                            ...
+                                        </span>
+                                    @endif
+
+                                    @for($page = $start; $page <= $end; $page++)
+                                        @if($page == $students->currentPage())
+                                            <span class="p-3 py-1.5 text-sm font-medium bg-brand-500 dark:bg-brand-500 rounded-md">
+                                                {{ $page }}
+                                            </span>
+                                        @else
+                                            <a href="{{ $students->url($page) }}"
+                                                class="p-3 py-1.5 text-sm font-medium text-brand-400 dark:text-brand-400 bg-brand-400 dark:bg-gray-800 rounded-md">
+                                                {{ $page }}
+                                            </a>
+                                        @endif
+                                    @endfor
+
+                                    @if($end < $last)
+                                        <span class="px-3 py-1.5 text-sm font-medium text-gray-500 dark:text-gray-400">
+                                            ...
+                                        </span>
+                                    @endif
+
+                                    @if($students->hasMorePages())
+                                        <a href="{{ $students->nextPageUrl() }}"
+                                            class="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white dark:bg-gray-800 dark:text-gray-400 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors hover:text-brand-400 hover:border-brand-400">
+                                            التالي
+                                        </a>
+                                    @else
+                                        <button disabled
+                                            class="px-3 py-1.5 text-sm font-medium text-gray-400 bg-gray-100 dark:bg-gray-800 dark:text-gray-600 rounded-md cursor-not-allowed">
+                                            التالي
+                                        </button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
-                <!-- Table Four -->
             </div>
+            <!-- Table Four -->
         </div>
+    </div>
 
     </div>
 

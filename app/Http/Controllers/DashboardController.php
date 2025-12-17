@@ -15,6 +15,6 @@ class DashboardController extends Controller
             'growth' => 25.3
         ];
         
-        return view('dashboard', compact('stats'));
+        return view('pages.dashboard.index', compact('stats'));
     }
 }

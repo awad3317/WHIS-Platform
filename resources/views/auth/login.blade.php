@@ -7,7 +7,7 @@
 
         <!-- Phone Address -->
         <div>
-            <x-input-label for="phone" :value="__('رقم الجوال')" />
+            <x-input-label for="phone" dir="rtl" :value="__('رقم الجوال')" />
             <div class="flex mt-1">
                 <!-- رمز الدولة -->
                 <select id="country_code" name="country_code"
@@ -25,9 +25,9 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('كلمة المرور')" />
+            <x-input-label for="password" dir="rtl" :value="__('كلمة المرور')" />
 
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
+            <x-text-input id="password" dir="rtl" class="block mt-1 w-full" type="password" name="password" required
                 autocomplete="current-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />

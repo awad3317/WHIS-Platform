@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -43,7 +44,14 @@ trait HasUserAccount
         }
 
         $user = User::create($userData);
-        
+        if($userData['user_type']=='parent'){
+            $Role=Role::where('name','Parent')->first();
+            $user->addRole($Role);
+        }
+        elseif($userData['user_type']=='employee'){
+            $Role=Role::where('name','Employee')->first();
+            $user->addRole($Role);
+        }
         $this->update(['user_id' => $user->id]);
     }
 
