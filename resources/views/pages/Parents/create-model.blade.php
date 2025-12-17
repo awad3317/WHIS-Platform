@@ -14,7 +14,7 @@
         gender: 'male'
     },
     isLoading: false,
-
+    isParentModalOpen: false,
     async addParent() {
         this.isLoading = true;
 
@@ -102,7 +102,7 @@
 
         <div @click.outside="isParentModalOpen = false"
             class="relative w-full max-w-[800px] rounded-3xl bg-white p-6 dark:bg-gray-900 lg:p-10">
-            <form @submit.prevent="addParent()">
+            <form @submit.prevent>
                 @csrf
                 <h4 class="mb-6 text-lg font-medium text-gray-800 dark:text-white/90">
                     إضافة ولي أمر جديد
@@ -156,7 +156,7 @@
                     </div>
 
                     <!-- صلة القرابة -->
-                    <input type="hidden" name="relationship" value="father">
+                    {{-- <input type="hidden" name="relationship" value="father"> --}}
                     <!-- المسمى الوظيفي -->
                     <div class="col-span-1">
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
@@ -185,7 +185,7 @@
                     </div>
 
                     <!-- الجنس -->
-                    <input type="hidden" x-model="parentForm.gender" value="male">
+                    {{-- <input type="hidden" x-model="parentForm.gender" value="male"> --}}
                 </div>
 
                 <div class="flex items-center justify-end w-full gap-3 mt-6">
@@ -193,10 +193,13 @@
                         class="hover:border-brand-500 flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 sm:w-auto">
                         إغلاق
                     </button>
-                    <button type="submit" :disabled="isLoading"
-                        class="flex justify-center hover:bg-brand-600 w-full px-4 py-3 text-sm font-medium text-white rounded-lg bg-brand-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    <button type="button" @click="addParent()" :disabled="isLoading"
+                        class="flex justify-center w-full px-4 py-3 text-sm font-medium text-white rounded-lg bg-brand-500 disabled:bg-gray-400"
                         x-text="isLoading ? 'جاري الإضافة...' : 'إضافة ولي الأمر'">
                     </button>
+
+
+
                 </div>
             </form>
         </div>
