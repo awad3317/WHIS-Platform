@@ -26,16 +26,29 @@ class ParentModal extends Component
     ];
 
     protected $rules = [
-        'parentForm.name_ar'     => 'required|string|max:255',
-        'parentForm.name_en'     => 'required|string|max:255',
-        'parentForm.phone'       => 'required|string|max:20',
-        'parentForm.email'       => 'nullable|email',
-        'parentForm.national_id' => 'nullable|string|max:20',
-        'parentForm.relationship'=> 'required|string',
-        'parentForm.job_title'   => 'nullable|string|max:255',
-        'parentForm.workplace'   => 'nullable|string|max:255',
-        'parentForm.mobile'      => 'nullable|string|max:20',
-        'parentForm.gender'      => 'required|string',
+        'parentForm.name_ar'      => 'required|string|max:255',
+        'parentForm.name_en'      => 'required|string|max:255',
+        'parentForm.phone'        => 'required|string|max:20',
+        'parentForm.email'        => 'nullable|email',
+        'parentForm.national_id'  => 'nullable|string|max:20',
+        'parentForm.relationship' => 'required|string',
+        'parentForm.job_title'    => 'nullable|string|max:255',
+        'parentForm.workplace'    => 'nullable|string|max:255',
+        'parentForm.mobile'       => 'nullable|string|max:20',
+        'parentForm.gender'       => 'required|string',
+    ];
+
+    protected $messages = [
+        'parentForm.name_ar.required'      => 'الاسم بالعربية مطلوب',
+        'parentForm.name_en.required'      => 'الاسم بالإنجليزية مطلوب',
+        'parentForm.phone.required'        => 'رقم الهاتف مطلوب',
+        'parentForm.email.email'            => 'البريد الإلكتروني غير صحيح',
+        'parentForm.national_id.max'        => 'رقم الهوية طويل جداً',
+        'parentForm.relationship.required' => 'صلة القرابة مطلوبة',
+        'parentForm.job_title.string'       => 'المسمى الوظيفي غير صحيح',
+        'parentForm.workplace.string'       => 'جهة العمل غير صحيحة',
+        'parentForm.mobile.max'             => 'رقم الجوال غير صحيح',
+        'parentForm.gender.required'        => 'الجنس مطلوب',
     ];
 
     public function mount($type = 'father')

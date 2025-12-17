@@ -2,11 +2,12 @@
 @section('title', __('student.register_student'))
 @section('Breadcrumb', __('student.new_student_register'))
 @section('addButton')
-    <x-modals.success-modal />
-    <x-modals.error-modal />
+
 @endsection
 @section('content')
-    <div >
+    <x-modals.success-modal />
+    <x-modals.error-modal />
+    <div>
         <form class="space-y-8" method="POST" action="{{ route('students.store') }}" enctype="multipart/form-data">
             @csrf
             <!-- ==================== Student Card ==================== -->
@@ -24,8 +25,13 @@
                         </label>
                         <div>
                             <input value="{{ old('name_en') }}" name="name_en"
+                                placeholder="{{ trans('student.enter_full_name_in_english') }}"
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
                         </div>
+                        @error('name_en')
+                            <span class="text-error-500 text-sm">{{ $message }}</span>
+                        @enderror
+
                     </div>
 
                     <!-- Name AR -->
@@ -35,8 +41,12 @@
                         </label>
                         <div>
                             <input value="{{ old('name_ar') }}" name="name_ar"
+                                placeholder="{{ trans('student.enter_full_name_in_arabic') }}"
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
                         </div>
+                        @error('name_ar')
+                            <span class="text-error-500 text-sm">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Birth Date -->
@@ -44,10 +54,28 @@
                         <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">
                             {{ trans('student.date_of_birth') }}
                         </label>
-                        <div>
+                        {{-- <div>
                             <input value="{{ old('birth_date') }}" type="date" name="birth_date"
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
+                        </div> --}}
+                        <div class="relative">
+                            <input value="{{ old('birth_date') }}" type="date" name="birth_date"
+                                placeholder="Select date"
+                                class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 pl-4 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
+                                onclick="this.showPicker()" />
+                            <span
+                                class="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                                <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M6.66659 1.5415C7.0808 1.5415 7.41658 1.87729 7.41658 2.2915V2.99984H12.5833V2.2915C12.5833 1.87729 12.919 1.5415 13.3333 1.5415C13.7475 1.5415 14.0833 1.87729 14.0833 2.2915V2.99984L15.4166 2.99984C16.5212 2.99984 17.4166 3.89527 17.4166 4.99984V7.49984V15.8332C17.4166 16.9377 16.5212 17.8332 15.4166 17.8332H4.58325C3.47868 17.8332 2.58325 16.9377 2.58325 15.8332V7.49984V4.99984C2.58325 3.89527 3.47868 2.99984 4.58325 2.99984L5.91659 2.99984V2.2915C5.91659 1.87729 6.25237 1.5415 6.66659 1.5415ZM6.66659 4.49984H4.58325C4.30711 4.49984 4.08325 4.7237 4.08325 4.99984V6.74984H15.9166V4.99984C15.9166 4.7237 15.6927 4.49984 15.4166 4.49984H13.3333H6.66659ZM15.9166 8.24984H4.08325V15.8332C4.08325 16.1093 4.30711 16.3332 4.58325 16.3332H15.4166C15.6927 16.3332 15.9166 16.1093 15.9166 15.8332V8.24984Z"
+                                        fill="" />
+                                </svg>
+                            </span>
                         </div>
+                        @error('birth_date')
+                            <span class="text-error-500 text-sm">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Gender -->
@@ -67,6 +95,9 @@
                                 </option>
                             </select>
                         </div>
+                        @error('gender')
+                            <span class="text-error-500 text-sm">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- National ID Type -->
@@ -90,6 +121,9 @@
                                 </option>
                             </select>
                         </div>
+                        @error('national_id_type')
+                            <span class="text-error-500 text-sm">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- National ID -->
@@ -99,8 +133,12 @@
                         </label>
                         <div>
                             <input value="{{ old('national_id') }}" name="national_id"
+                                placeholder="{{ trans('student.Enter The National ID Number') }}"
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
                         </div>
+                        @error('national_id')
+                            <span class="text-error-500 text-sm">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Nationality -->
@@ -110,8 +148,12 @@
                         </label>
                         <div>
                             <input value="{{ old('nationality') }}" name="nationality"
+                                placeholder="{{ trans('student.Enter The Nationality') }}"
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
                         </div>
+                        @error('nationality')
+                            <span class="text-error-500 text-sm">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- School -->
@@ -121,8 +163,12 @@
                         </label>
                         <div>
                             <input value="{{ old('previous_school') }}" name="previous_school"
+                                placeholder="{{ trans('student.Enter The Previous School') }}"
                                 class="h-12 w-full rounded-xl border px-4 text-sm border-gray-300 dark:border-gray-100 dark:text-white" />
                         </div>
+                        @error('previous_school')
+                            <span class="text-error-500 text-sm">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Grade -->
@@ -142,7 +188,11 @@
                                 @endforeach
                             </select>
                         </div>
+                        @error('class_id')
+                            <span class="text-error-500 text-sm">{{ $message }}</span>
+                        @enderror
                     </div>
+
                 </div>
             </div>
 
@@ -190,13 +240,15 @@
 
             <!-- ==================== Files Card ==================== -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
-                <h2 class="text-xl font-bold text-gray-800 mb-6">ملفات الطالب</h2>
+                <h2 class="text-xl font-bold text-gray-800 mb-6">
+                    {{ trans('student.student_files') }}
+                </h2>
                 <!-- قسم صورة الطالب -->
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
 
                     <div class="mb-8">
                         <label class="block text-sm font-medium text-gray-700 mb-3">
-                            صورة الطالب
+                            {{ trans('student.student_image') }}
                         </label>
                         <div x-data="{ imagePreview: null }" class="relative">
                             <label for="studentImage"
@@ -206,7 +258,7 @@
                                     <div class="flex justify-center items-center w-full">
                                         <img :src="imagePreview"
                                             class="h-20 w-20 rounded-lg object-cover border border-gray-200"
-                                            alt="معاينة صورة الطالب">
+                                            alt="معاينة {{ trans('student.student_image') }}">
                                     </div>
                                 </template>
 
@@ -224,21 +276,21 @@
                                         </div>
 
                                         <span class="text-xs text-brand-500 font-medium">
-                                            اضغط لرفع صورة الطالب
+                                            {{ trans('student.upload_student_image') }}
                                         </span>
                                     </div>
                                 </template>
                             </label>
 
-                            <input id="studentImage" name="student_image" type="file" class="hidden" accept="image/*"
-                                @change="imagePreview = URL.createObjectURL($event.target.files[0])" />
+                            <input id="studentImage" name="student_image" type="file" class="hidden"
+                                accept="image/*" @change="imagePreview = URL.createObjectURL($event.target.files[0])" />
                         </div>
                     </div>
 
                     <!-- قسم شهادة الطالب -->
                     <div class="mb-8">
                         <label class="block text-sm font-medium text-gray-700 mb-3">
-                            شهادة الطالب
+                            {{ trans('student.student_certificate') }}
                         </label>
 
                         <div x-data="{ certificatePreview: null }" class="relative">
@@ -279,7 +331,7 @@
                                         </div>
 
                                         <span class="text-xs text-brand-500 font-medium">
-                                            اضغط لرفع شهادة الطالب
+                                            {{ trans('student.upload_student_certificate') }}
                                         </span>
                                     </div>
                                 </template>
@@ -294,7 +346,9 @@
                 <!-- قسم الملفات الإضافية -->
                 <div x-data="{ additionalFiles: [] }" class="mb-6">
 
-                    <h2 class="text-xl font-bold text-gray-800 mb-6">ملفات إضافية</h2>
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">
+                        {{ trans('student.additional_files') }}
+                    </h2>
 
                     <div class="flex justify-between items-center mb-4">
 
@@ -306,7 +360,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
-                            إضافة ملف
+                            {{ trans('student.add_file') }}
                         </button>
                     </div>
 
@@ -367,14 +421,16 @@
                                 <!-- اسم الملف -->
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                        اسم الملف
+                                        {{ trans('student.file_name') }}
                                     </label>
 
                                     <input type="text" :name="'additional_files_name[' + index + ']'"
-                                        x-model="fileItem.name" placeholder="اسم الملف"
+                                        x-model="fileItem.name"
+                                        placeholder="{{ trans('student.file_name_placeholder') }}"
                                         class="block w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm
                                           focus:border-brand-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-200">
-                                    <span x-text="fileItem.file ? fileItem.file.name : 'اختر ملف'"></span>
+                                    <span
+                                        x-text="fileItem.file ? fileItem.file.name : trans('student.choose_file')"></span>
 
                                 </div>
 
@@ -382,7 +438,8 @@
                                 <div>
                                     <label :for="'additionalFile_' + index"
                                         class="block text-sm font-semibold text-gray-700 mb-2">
-                                        <span x-text="fileItem.file ? fileItem.file.name : 'اختر ملف'"></span>
+                                        <span
+                                            x-text="fileItem.file ? fileItem.file.name : trans('student.choose_file')"></span>
 
                                     </label>
 
@@ -399,22 +456,22 @@
                                                     viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M9 12h6m-3-3v6m5 5H7a2 2 0
-                                                             01-2-2V5a2 2 0
-                                                             012-2h5.586a1 1
-                                                             0 01.707.293l5.414
-                                                             5.414a1 1 0
-                                                             01.293.707V19a2
-                                                             2 0 01-2 2z" />
+                                                                         01-2-2V5a2 2 0
+                                                                         012-2h5.586a1 1
+                                                                         0 01.707.293l5.414
+                                                                         5.414a1 1 0
+                                                                         01.293.707V19a2
+                                                                         2 0 01-2 2z" />
                                                 </svg>
                                             </div>
 
                                             <span class="text-sm text-gray-700 truncate max-w-[220px]"
-                                                x-text="fileItem.file ? fileItem.file.name : 'اضغط لاختيار ملف'">
+                                                x-text="fileItem.file ? fileItem.file.name : trans('student.choose_file')">
                                             </span>
                                         </div>
 
                                         <span class="text-xs text-brand-500 font-semibold">
-                                            تصفح
+                                            {{ trans('student.browse') }}
                                         </span>
                                     </label>
 
@@ -441,7 +498,7 @@
             </button>
         </form>
         {{-- @include('pages.parents.create-model') --}}
-        
+
     </div>
 
 @endsection

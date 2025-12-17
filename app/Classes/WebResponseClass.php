@@ -44,4 +44,5 @@ class WebResponseClass
             ->with('error_message', $e->getMessage())
             ->with('error_buttonText', $buttonText);
     }
+    
 }

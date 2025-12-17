@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('title', __('student.students'))
-@section('Breadcrumb', __('student.students'))
+@section('title', __('student.StudentsList'))
+@section('Breadcrumb', __('student.StudentsList'))
 @section('addButton')
     @if (Auth::user()->hasPermission('create_student'))
         <a href="{{ route('students.create') }}"
             class="bg-brand-500 hover:bg-brand-50 h-10 rounded-lg px-6 py-2 text-sm font-medium text-white min-w-[100px] inline-flex items-center justify-center">
-            تسجيل طالب جديد
+      {{ __('student.register_new_student') }}
         </a>
     @endif
     <x-modals.success-modal />
