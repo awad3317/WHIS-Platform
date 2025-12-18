@@ -217,5 +217,15 @@ return [
     'full_name' => 'Full Name',
     'class' => 'Class',
     'action' => 'Action',
+    'student_show' => 'Student Show',
+    'personal_info' => 'Personal Info',
+    'parents_info' => 'Parents Info',
+    'basic_info' => 'Basic Info',
+    'registration_info' => 'Registration Info',
+    'enrollment_date' => 'Enrollment Date',
+    'open'=>'Open',
+    'father'=>'Father',
+    'mother'=>'Mother',
+    'download'=>'Download',
 
 ];

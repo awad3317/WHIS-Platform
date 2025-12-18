@@ -83,7 +83,6 @@ return [
     'Search' => 'بحث...',
     'Filter' => 'تصفية',
     'student_id' => 'رقم الطالب',
-    'full_name' => 'الاسم الكامل',
     'grade' => 'الصف الدراسي',
     'date_of_birth_table' => 'تاريخ الميلاد',
     'status' => 'الحالة',
@@ -183,6 +182,24 @@ return [
     'enter_parent_job_title' => 'أدخل عنوان الوظيفة ولي الأمر',
     'register_new_student' => 'تسجيل طالب جديد',
     'academic_no' => 'رقم الطالب',
+    'student_show' => 'عرض طالب ',
+    'personal_info' => 'معلومات شخصية',
+    'parents_info' => 'معلومات ولي الأمر',
+    'basic_info' => 'معلومات أساسية',
+    'registration_info' => 'معلومات التسجيل',
+    'enrollment_date' => 'تاريخ التسجيل',
+    'open'=>'فتح',
+    'father'=>'أب',
+    'mother'=>'أم',
+    'download'=>'تحميل',
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

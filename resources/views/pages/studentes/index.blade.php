@@ -216,6 +216,11 @@
                                                     fill=""></path>
                                             </svg>
                                         </div>
+                                          <a href="{{ route('students.show', $student->id) }}" class="text-gray-500 hover:text-gray-800 dark:hover:text-white/90">
+                                        <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20">
+                                            <path d="M15 2l3 3-9.5 9.5H5V11.5L15 2z" />
+                                        </svg>
+                                    </a>
                                     </td>
                                     </tr>
                                 @endforeach
