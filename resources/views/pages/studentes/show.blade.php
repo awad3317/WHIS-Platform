@@ -79,17 +79,17 @@
                     {{ __('student.basic_info') }}
                 </h3>
                 <div class="grid grid-cols-1 gap-y-5">
-                    <div class="flex flex-col border-b border-gray-50 dark:border-gray-800 pb-2">
+                    <div class="flex flex-col  border-gray-50 dark:border-gray-800 pb-2">
                         <span class="text-[10px] font-black text-gray-400 dark:text-white uppercase tracking-widest">{{ __('student.full_name') }}</span> 
                         <span class="text-base font-semibold text-gray-800 dark:text-gray-400">
                             {{ app()->getLocale() == 'ar' ? $student->name_ar : $student->name_en }}
                         </span>
                     </div>
-                    <div class="flex flex-col border-b border-gray-50 dark:border-gray-800 pb-2">
+                    <div class="flex flex-col  border-gray-50 dark:border-gray-800 pb-2">
                         <span class="text-[10px] font-black text-gray-400 dark:text-white uppercase tracking-widest">{{ __('student.date_of_birth') }}</span> 
                         <span class="text-base font-semibold text-gray-800 dark:text-gray-400">{{ $student->birth_date }}</span>            
                     </div>
-                    <div class="flex flex-col border-b border-gray-50 dark:border-gray-800 pb-2">
+                    <div class="flex flex-col  border-gray-50 dark:border-gray-800 pb-2">
                         <span class="text-[10px] font-black text-gray-400 dark:text-white uppercase tracking-widest">{{ __('student.gender') }}</span> 
                         <span class="text-base font-semibold text-gray-800 dark:text-gray-400">{{ $student->gender }}</span>    
                     </div>
@@ -98,19 +98,19 @@
             
             <div class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800">
                 <h3 class="text-lg font-black text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                    <span class="h-5 border-s-4 border-brand-500 rounded-full"></span>
+                    <span class="h-5 border-s-4 rand-500 rounded-full"></span>
                     {{ __('student.registration_info') }}
                 </h3>
                 <div class="grid grid-cols-1 gap-y-5">
-                    <div class="flex flex-col border-b border-gray-50 dark:border-gray-800 pb-2">
+                    <div class="flex flex-col  border-gray-50 dark:border-gray-800 pb-2">
                         <span class="text-[10px] font-black text-gray-400 dark:text-white uppercase tracking-widest">{{ __('student.national_id') }}</span> 
                         <span class="text-base font-semibold text-gray-800 dark:text-gray-400">{{ $student->national_id }}</span>
                     </div>
-                    <div class="flex flex-col border-b border-gray-50 dark:border-gray-800 pb-2">
+                    <div class="flex flex-col  border-gray-50 dark:border-gray-800 pb-2">
                         <span class="text-[10px] font-black text-gray-400 dark:text-white uppercase tracking-widest">{{ __('student.present_school') }}</span> 
                         <span class="text-base font-semibold text-gray-800 dark:text-gray-400">{{ $student->previous_school ?? '---' }}</span>  
                     </div>
-                    <div class="flex flex-col border-b border-gray-50 dark:border-gray-800 pb-2">
+                    <div class="flex flex-col  border-gray-50 dark:border-gray-800 pb-2">
                         <span class="text-[10px] font-black text-gray-400 dark:text-white uppercase tracking-widest">{{ __('student.enrollment_date') }}</span> 
                         <span class="text-base font-semibold text-gray-800 dark:text-gray-400">{{ $student->enrollment_date }}</span>
                     </div>
