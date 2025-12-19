@@ -227,5 +227,8 @@ return [
     'father'=>'Father',
     'mother'=>'Mother',
     'download'=>'Download',
+    'active'=>'Active',
+    'inactive'=>'Inactive',
+    'edit_data'=>'Edit Data',
 
 ];

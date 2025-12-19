@@ -192,6 +192,8 @@ return [
     'father'=>'أب',
     'mother'=>'أم',
     'download'=>'تحميل',
+ 'edit_data'=>'تعديل البيانات',
+    
     
     
     
