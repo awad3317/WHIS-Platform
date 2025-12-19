@@ -182,4 +182,17 @@ class StudentFileService
     {
         return Storage::disk($this->disk)->exists($studentFile->file_path);
     }
+
+    public function getFileBase64(StudentFile $studentFile): string
+    {
+        if (!$this->fileExists($studentFile)) {
+            throw new \Exception('الملف غير موجود');
+        }
+
+        $filePath = Storage::disk($this->disk)->path($studentFile->file_path);
+        $fileContent = file_get_contents($filePath);
+        $base64Content = base64_encode($fileContent);
+
+        return $base64Content;
+    }
 }

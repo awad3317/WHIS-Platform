@@ -34,18 +34,13 @@ class StudentController extends Controller
         $photos = [];
         foreach ($students as $student) {
             $photo = $student->files->where('file_type', 'photo')->first();
-
-            if ($photo) {
-
-                $fileData = $this->studentFileService->downloadFile($photo);
-                $imageContent = file_get_contents($fileData['path']);
-                $base64 = 'data:image/jpeg;base64,' . base64_encode($imageContent);
-
-                $photos[$student->id] = [
-                    'data' => $base64,
-                    'has_photo' => true,
-                ];
-            }
+            $studentFile = $student->files->where('file_type', 'photo')->first();
+            $base64 = 'data:image/jpeg;base64,' . $this->studentFileService->getFileBase64($studentFile);
+            $photos[$student->id] = [
+                'data' => $base64,
+                'has_photo' => true,
+            ];
+            
         }
 
         return view('pages.studentes.index', compact('students', 'photos'));
@@ -167,15 +162,12 @@ class StudentController extends Controller
 
     public function show($id)
     {
-        // جلب بيانات الطالب مع العلاقات (Eager Loading) لتحسين الأداء
         $student = $this->studentRepository->getById($id);
-
         if (!$student) {
-            // في حال عدم الوجود، نعود للخلف مع رسالة خطأ
             return redirect()->back()->with('error', 'الطالب غير موجود!');
         }
-
-        // عرض ملف Blade وتمرير متغير الطالب
-        return view('pages.studentes.show', compact('student'));
+        $studentFile = $student->files->where('file_type', 'photo')->first();
+        $photo= 'data:image/jpeg;base64,' . $this->studentFileService->getFileBase64($studentFile);
+        return view('pages.studentes.show', compact('student', 'photo'));
     }
 }

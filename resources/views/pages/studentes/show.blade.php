@@ -4,7 +4,6 @@
 @section('Breadcrumb', __('student.student_show'))
 
 @section('content')
-    {{-- ملاحظة: تم استبدال text-right بـ text-start ليدعم الاتجاهين --}}
     <div class="space-y-6 max-w-[1200px] mx-auto text-start px-4 sm:px-0">
 
         <div
@@ -13,7 +12,7 @@
                 <div class="flex items-center gap-5">
                     <div
                         class="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-2xl border-2 border-white dark:border-gray-700 shadow-xl">
-                        <img src="{{ $student->photo_url ?? asset('tailadmin/src/images/user/user-01.jpg') }}" alt="student"
+                        <img src="{{ $photo }}" alt="student"
                             class="h-full w-full object-cover">
                         @if ($student->is_active)
                             <span
@@ -193,8 +192,8 @@
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="text-sm font-bold text-gray-900 dark:text-white truncate"
-                                    title="{{ basename($file->file_path) }}">
-                                    {{ basename($file->file_path) }}
+                                    title="{{ basename($file->file_name) }}">
+                                    {{ basename($file->file_name) }}
                                 </p>
                                 <div class="flex gap-4 mt-2">
                                     <a href="{{ asset('storage/' . $file->file_path) }}" target="_blank"
