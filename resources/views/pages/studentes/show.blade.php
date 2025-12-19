@@ -56,17 +56,17 @@
     <div x-data="{ activeTab: 'personal' }" class="space-y-6">
         <div class="flex items-center p-1 bg-gray-100/50 dark:bg-gray-800 rounded-2xl w-fit backdrop-blur-sm shadow-inner overflow-x-auto">
             <button @click="activeTab = 'personal'" 
-                :class="activeTab === 'personal' ? 'bg-white text-brand-500 shadow-md dark:bg-brand-500 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
+                :class="activeTab === 'personal' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
                 class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap">
                 {{ __('student.personal_info') }}
             </button>
             <button @click="activeTab = 'parents'" 
-                :class="activeTab === 'parents' ? 'bg-white text-brand-500 shadow-md dark:bg-brand-500 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
+                :class="activeTab === 'parents' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
                 class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap">
                 {{ __('student.parents_info') }}
             </button>
             <button @click="activeTab = 'files'" 
-                :class="activeTab === 'files' ? 'bg-white text-brand-500 shadow-md dark:bg-brand-500 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
+                :class="activeTab === 'files' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
                 class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap">
                 {{ __('student.student_files') }} <span class="ms-1 opacity-60">({{ $student->files->count() }})</span>
             </button>
