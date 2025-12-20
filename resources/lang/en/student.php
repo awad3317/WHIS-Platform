@@ -230,5 +230,6 @@ return [
     'active'=>'Active',
     'inactive'=>'Inactive',
     'edit_data'=>'Edit Data',
+    'file_type'=>'File Type',
 
 ];

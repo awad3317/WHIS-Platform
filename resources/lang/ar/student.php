@@ -193,6 +193,7 @@ return [
     'mother'=>'أم',
     'download'=>'تحميل',
  'edit_data'=>'تعديل البيانات',
+    'file_type'=>'نوع الملف',
     
     
     

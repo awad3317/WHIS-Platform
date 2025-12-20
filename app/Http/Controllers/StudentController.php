@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Repositories\StudentRepository;
 use Illuminate\Support\Facades\Validator;
 use App\Repositories\ClassModelRepository;
+use App\Models\ParentModel;
+
 
 
 class StudentController extends Controller
@@ -40,7 +42,6 @@ class StudentController extends Controller
                 'data' => $base64,
                 'has_photo' => true,
             ];
-            
         }
 
         return view('pages.studentes.index', compact('students', 'photos'));
@@ -167,7 +168,7 @@ class StudentController extends Controller
             return redirect()->back()->with('error', 'الطالب غير موجود!');
         }
         $studentFile = $student->files->where('file_type', 'photo')->first();
-        $photo= 'data:image/jpeg;base64,' . $this->studentFileService->getFileBase64($studentFile);
+        $photo = 'data:image/jpeg;base64,' . $this->studentFileService->getFileBase64($studentFile);
         return view('pages.studentes.show', compact('student', 'photo'));
     }
 
@@ -180,11 +181,118 @@ class StudentController extends Controller
         $classes = ClassModel::where('is_active', 1)->get();
         return view('pages.studentes.edit', compact('student', 'classes'));
     }
+    public function update(Request $request, $id)
+    {
+
+        $student = $this->studentRepository->getById($id);
+        if (!$student) {
+            return WebResponseClass::sendError('الطالب غير موجود!', 'خطأ!');
+        }
+
+        $validator = Validator::make($request->all(), [
+            // =====  Student Info Validation ===== //
+            'name_en' => ['required', 'string', 'max:255', Rule::unique('students', 'name_en')->ignore($student->id)],
+            'name_ar' => ['required', 'string', 'max:255', Rule::unique('students', 'name_ar')->ignore($student->id)],
+            'birth_date' => ['required', 'date'],
+            'nationality' => ['required', 'string', 'max:100'],
+            'national_id' => ['required', 'string', 'max:20', Rule::unique('students', 'national_id')->ignore($student->id)],
+            'national_id_type' => ['required', Rule::in(['national_id', 'passport', 'residence_id'])],
+            'gender' => ['required', Rule::in(['male', 'female'])],
+            'previous_school' => ['required', 'string', 'max:255'],
+            'enrollment_date' => ['required', 'date'],
+            'is_active' => ['required', Rule::in([0, 1])],
+        ]);
+
+        if ($validator->fails()) {
+            return WebResponseClass::sendError('خطأ في إدخال البيانات!', $validator->errors()->first());
+        }
+
+        $this->studentRepository->update($request->all(), $id);
+
+        return WebResponseClass::sendResponse('تم تحديث البيانات بنجاح!', 'تم تحديث بيانات الطالب بنجاح.');
+    }
+
+
+public function updateParent(Request $request, Student $student, ParentModel $parent)
+{
+    // ✅ تحقق أنه مرتبط بهذا الطالب
+    if (!$student->parents()->whereKey($parent->id)->exists()) {
+        return WebResponseClass::sendError('ولي الأمر غير مرتبط بهذا الطالب!', 'خطأ!');
+    }
+
+    $validator = Validator::make($request->all(), [
+        'name_ar'      => ['required', 'string', 'max:255'],
+        'name_en'      => ['nullable', 'string', 'max:255'],
+        'phone'        => ['required', 'string', 'max:50'],
+        'email'        => ['nullable', 'email', 'max:255'],
+        'national_id'  => ['nullable', 'string', 'max:50'],
+        'job_title'    => ['nullable', 'string', 'max:255'],
+        'workplace'    => ['nullable', 'string', 'max:255'],
+        'mobile'       => ['nullable', 'string', 'max:50'],
+        'relationship' => ['nullable', Rule::in(['father','mother','guardian'])],
+        'gender'       => ['nullable', Rule::in(['male','female'])],
+    ]);
+
+    if ($validator->fails()) {
+        return WebResponseClass::sendError('خطأ في إدخال البيانات!', $validator->errors()->first());
+    }
+
+    // ✅ تحديث بيانات ولي الأمر
+    $parent->update($request->only([
+        'name_ar','name_en','phone','email','national_id','job_title','workplace','mobile','gender'
+    ]));
+
+    // ✅ تحديث العلاقة في pivot (اختياري)
+    if ($request->filled('relationship')) {
+        $student->parents()->updateExistingPivot($parent->id, [
+            'relationship' => $request->relationship
+        ]);
+    }
+
+    return WebResponseClass::sendResponse('تم تحديث ولي الأمر بنجاح!', 'تم التحديث بنجاح.');
+}
+
+
+// public function updateFile(Request $request, Student $student, StudentFile $file)
+// {
+//     if ((int) $file->student_id !== (int) $student->id) {
+//         return WebResponseClass::sendError('هذا الملف لا يتبع هذا الطالب!', 'خطأ!');
+//     }
+
+//     $validator = Validator::make($request->all(), [
+//         'file_type'    => ['nullable','string','max:100'],
+//         'description'  => ['nullable','string','max:255'],
+//         'new_file'     => ['nullable','file','max:10240'], // 10MB
+//     ]);
+
+//     if ($validator->fails()) {
+//         return WebResponseClass::sendError('خطأ في إدخال البيانات!', $validator->errors()->first());
+//     }
+
+//     // تحديث البيانات النصية
+//     $file->file_type   = $request->file_type;
+//     $file->description = $request->description;
+
+//     // استبدال الملف
+//     if ($request->hasFile('new_file')) {
+//         $uploaded = $request->file('new_file');
+//         $path = $uploaded->store('students/files', 'public');
+
+//         // أنت عندك file_name و file_path، اختر واحد
+//         $file->file_name = basename($path);
+//         $file->file_path = $path;
+//     }
+
+//     $file->save();
+
+//     return WebResponseClass::sendResponse('تم تحديث الملف بنجاح!', 'تم التحديث بنجاح.');
+// }
+
     public function downloadStudentFile($fileId)
     {
         try {
             $studentFile = $this->studentFileService->getById($fileId);
-        
+
             return $this->studentFileService->downloadFile($studentFile);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'حدث خطأ أثناء تنزيل الملف: ' . $e->getMessage());
@@ -192,16 +300,15 @@ class StudentController extends Controller
     }
     public function viewStudentFile($fileId)
     {
-    try {
-        $studentFile = $this->studentFileService->getById($fileId);
-        if (!$studentFile) {
-            return redirect()->back()->with('error', 'الملف غير موجود!');
+        try {
+            $studentFile = $this->studentFileService->getById($fileId);
+            if (!$studentFile) {
+                return redirect()->back()->with('error', 'الملف غير موجود!');
+            }
+
+            return $this->studentFileService->viewFile($studentFile);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'حدث خطأ أثناء عرض الملف: ' . $e->getMessage());
         }
-
-        return $this->studentFileService->viewFile($studentFile);
-
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'حدث خطأ أثناء عرض الملف: ' . $e->getMessage());
     }
-    }   
 }
