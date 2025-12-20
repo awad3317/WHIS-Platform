@@ -179,7 +179,10 @@ class StudentController extends Controller
             return redirect()->back()->with('error', 'الطالب غير موجود!');
         }
         $classes = ClassModel::where('is_active', 1)->get();
-        return view('pages.studentes.edit', compact('student', 'classes'));
+        return redirect()->back()
+                ->with('openModalEdit',true)
+                ->with('student', $student);
+        // return view('pages.studentes.edit', compact('student', 'classes'));
     }
     public function update(Request $request, $id)
     {
