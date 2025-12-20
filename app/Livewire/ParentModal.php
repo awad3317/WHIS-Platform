@@ -5,70 +5,47 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\ParentModel;
 
+
 class ParentModal extends Component
 {
     public $isParentModalOpen = false;
     public $isLoading = false;
-    public $type = 'father';
+    public $type = 'father'; 
 
-    public $parentForm = [
-        'name_ar'     => '',
-        'name_en'     => '',
-        'phone'       => '',
-        'email'       => '',
-        'national_id' => '',
-        'relationship' => 'father',
-        'job_title'   => '',
-        'workplace'   => '',
-        'mobile'      => '',
-        'gender'      => 'male',
-        'is_active'   => false
-    ];
+    public $parentForm = []; 
 
-    protected $rules = [
-        'parentForm.name_ar'      => 'required|string|max:255',
-        'parentForm.name_en'      => 'required|string|max:255',
-        'parentForm.phone'        => 'required|string|max:20',
-        'parentForm.email'        => 'nullable|email',
-        'parentForm.national_id'  => 'nullable|string|max:20',
-        'parentForm.relationship' => 'required|string',
-        'parentForm.job_title'    => 'nullable|string|max:255',
-        'parentForm.workplace'    => 'nullable|string|max:255',
-        'parentForm.mobile'       => 'nullable|string|max:20',
-        'parentForm.gender'       => 'required|string',
-    ];
+    protected function rules()
+    {
+        return [
+            'parentForm.name_ar'      => 'required|string|max:255',
+            'parentForm.name_en'      => 'required|string|max:255',
+            'parentForm.phone'        => 'required|string|max:20',
+            'parentForm.email'        => 'nullable|email',
+            'parentForm.national_id'  => 'nullable|string|max:20',
+            'parentForm.relationship' => 'required|string',
+            'parentForm.job_title'    => 'nullable|string|max:255',
+            'parentForm.workplace'    => 'nullable|string|max:255',
+            'parentForm.mobile'       => 'nullable|string|max:20',
+            'parentForm.gender'       => 'required|string',
+            'parentForm.is_active'    => 'boolean',
+        ];
+    }
 
-    protected $messages = [
-        'parentForm.name_ar.required'      => 'الاسم بالعربية مطلوب',
-        'parentForm.name_en.required'      => 'الاسم بالإنجليزية مطلوب',
-        'parentForm.phone.required'        => 'رقم الهاتف مطلوب',
-        'parentForm.email.email'            => 'البريد الإلكتروني غير صحيح',
-        'parentForm.national_id.max'        => 'رقم الهوية طويل جداً',
-        'parentForm.relationship.required' => 'صلة القرابة مطلوبة',
-        'parentForm.job_title.string'       => 'المسمى الوظيفي غير صحيح',
-        'parentForm.workplace.string'       => 'جهة العمل غير صحيحة',
-        'parentForm.mobile.max'             => 'رقم الجوال غير صحيح',
-        'parentForm.gender.required'        => 'الجنس مطلوب',
-    ];
 
     public function mount($type = 'father')
     {
         $this->type = $type;
-
-        if ($type === 'mother') {
-            $this->parentForm['gender'] = 'female';
-            $this->parentForm['relationship'] = 'mother';
-        } else {
-            $this->parentForm['gender'] = 'male';
-            $this->parentForm['relationship'] = 'father';
-        }
+        $this->resetForm(); 
     }
 
     public function addParent()
     {
         $this->validate();
-
         $this->isLoading = true;
+
+        $this->parentForm['relationship'] = ($this->type === 'mother' ? 'mother' : 'father');
+        $this->parentForm['gender'] = ($this->type === 'mother' ? 'female' : 'male');
+        $this->parentForm['is_active'] = true; 
 
         $parent = ParentModel::create($this->parentForm);
 
@@ -78,11 +55,14 @@ class ParentModal extends Component
         ]);
 
         $this->resetForm();
-
         $this->isParentModalOpen = false;
         $this->isLoading = false;
 
-        session()->flash('success', 'تمت إضافة ولي الأمر بنجاح');
+        $this->dispatch('swal:modal', [
+            'icon'  => 'success',
+            'title' => 'تمت العملية بنجاح!',
+            'text'  => 'تم إضافة ولي الأمر بنجاح بنوع: ' . ($this->type == 'mother' ? 'أم' : 'أب'),
+        ]);
     }
 
     public function resetForm()
@@ -93,11 +73,12 @@ class ParentModal extends Component
             'phone'       => '',
             'email'       => '',
             'national_id' => '',
-            'relationship' => $this->type === 'mother' ? 'mother' : 'father',
-            'job_title'   => '',
-            'workplace'   => '',
-            'mobile'      => '',
-            'gender'      => $this->type === 'mother' ? 'female' : 'male',
+            'relationship' => ($this->type === 'mother' ? 'mother' : 'father'),
+            'gender'       => ($this->type === 'mother' ? 'female' : 'male'),
+            'job_title'    => '',
+            'workplace'    => '',
+            'mobile'       => '',
+            'is_active'    => true,
         ];
     }
 

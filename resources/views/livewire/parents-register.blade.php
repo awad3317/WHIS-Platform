@@ -13,7 +13,6 @@
                 </h3>
                 <div>
                     @livewire('parent-modal', ['type' => 'father'], key('father-modal'))
-
                 </div>
             </div>
 

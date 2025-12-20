@@ -118,7 +118,7 @@ class StudentController extends Controller
             'is_primary' => true
         ]);
         $student->parents()->attach($request->mother_id, [
-            'relationship' => 'father',
+            'relationship' => 'mother',
             'is_primary' => false
         ]);
         if ($request->hasFile('student_image')) {

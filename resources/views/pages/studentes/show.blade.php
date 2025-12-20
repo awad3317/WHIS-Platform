@@ -62,20 +62,24 @@
         <div x-data="{ activeTab: 'personal' }" class="space-y-6">
             <div
                 class="flex items-center p-1 bg-gray-100 dark:bg-gray-800 rounded-2xl w-fit backdrop-blur-sm shadow-inner overflow-x-auto">
-                <button @click="activeTab = 'personal'" :class="activeTab === 'personal' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
-                            'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
+                <button @click="activeTab = 'personal'"
+                    :class="activeTab === 'personal' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
+                        'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
                     class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap">
                     {{ __('student.personal_info') }}
                 </button>
-                <button @click="activeTab = 'parents'" :class="activeTab === 'parents' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
-                            'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
+                <button @click="activeTab = 'parents'"
+                    :class="activeTab === 'parents' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
+                        'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
                     class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap">
                     {{ __('student.parents_info') }}
                 </button>
-                <button @click="activeTab = 'files'" :class="activeTab === 'files' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
-                            'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
+                <button @click="activeTab = 'files'"
+                    :class="activeTab === 'files' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
+                        'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
                     class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap">
-                    {{ __('student.student_files') }} <span class="ms-1 opacity-60">({{ $student->files->count() }})</span>
+                    {{ __('student.student_files') }} <span
+                        class="ms-1 opacity-60">({{ $student->files->count() }})</span>
                 </button>
             </div>
 
@@ -84,8 +88,10 @@
                 <div
                     class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800">
                     <h3 class="text-lg font-black text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                        <span class="h-5 border-s-4 border-brand-500 rounded-full"></span>
-                        {{ __('student.basic_info') }}
+                        <span class="h-5 border-s-4 border-brand-500 text-brand-500 rounded-full">
+                            {{ __('student.basic_info') }}
+
+                        </span>
                     </h3>
                     <div class="grid grid-cols-1 gap-y-5">
                         <div class="flex flex-col  border-gray-50 dark:border-gray-800 pb-2">
@@ -113,8 +119,10 @@
                 <div
                     class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-800">
                     <h3 class="text-lg font-black text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                        <span class="h-5 border-s-4 rand-500 rounded-full"></span>
-                        {{ __('student.registration_info') }}
+                        <span class="h-5 border-s-4 text-brand-500 rounded-full">
+                            {{ __('student.registration_info') }}
+
+                        </span>
                     </h3>
                     <div class="grid grid-cols-1 gap-y-5">
                         <div class="flex flex-col  border-gray-50 dark:border-gray-800 pb-2">
@@ -197,7 +205,7 @@
                                         class="text-[10px] font-black uppercase text-success-500 dark:text-success-400">
                                         {{ __('student.download') }}
                                     </a>
-                                    
+
                                 </span>
                             </div>
                         </div>
@@ -205,15 +213,15 @@
                         <div>
                             <span class="mb-1 block text-right text-sm text-gray-500 dark:text-gray-400">
                                 <a href="{{ route('student.viewFiles', $file->id) }}" target="_blank"
-                                        class="text-[10px] font-black uppercase text-blue-500 dark:text-blue-400 hover:underline">
-                                        {{ __('student.open') }}
-                                    </a>
+                                    class="text-[10px] font-black uppercase text-blue-500 dark:text-blue-400 hover:underline">
+                                    {{ __('student.open') }}
+                                </a>
                             </span>
                             <span class="block text-right text-sm text-gray-500 dark:text-gray-400">
                                 <a href="{{ route('student.viewFiles', $file->id) }}" target="_blank"
-                                        class="text-[10px] font-black uppercase text-blue-500 dark:text-blue-400 hover:underline">
-                                        {{ __('student.edit') }}
-                                    </a>
+                                    class="text-[10px] font-black uppercase text-blue-500 dark:text-blue-400 hover:underline">
+                                    {{ __('student.edit') }}
+                                </a>
                             </span>
                         </div>
                     </div>

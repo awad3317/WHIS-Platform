@@ -44,7 +44,7 @@
                         <div>
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                 {{ __('student.parent_phone') }} <span class="text-error-500">*</span></label>
-                            <input type="tel" placeholder="05XXXXXXXX" wire:model.lazy="parentForm.phone" 
+                            <input type="tel" placeholder="05XXXXXXXX" wire:model.lazy="parentForm.phone"           
                                 class="hover:border-brand-500 dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-gray-600 dark:text-white">
                             @error('parentForm.phone')
                                 <span class="text-error-500 text-sm">{{ $message }}</span>
@@ -127,10 +127,21 @@
         </div>
     @endif
 
-    <!-- رسالة نجاح -->
-    @if (session()->has('success'))
-        <div class="mt-4 text-success-600">
-            {{ session('success') }}
-        </div>
-    @endif
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('swal:modal', (data) => {
+            const eventData = data[0]; // الحصول على البيانات المرسلة من dispatch
+            Swal.fire({
+                title: eventData.title,
+                text: eventData.text,
+                icon: eventData.icon,
+                confirmButtonText: 'حسناً',
+                timer: 5000, // تختفي تلقائياً بعد 5 ثوانٍ
+                timerProgressBar: true,
+            });
+        });
+    });
+</script>
 </div>
