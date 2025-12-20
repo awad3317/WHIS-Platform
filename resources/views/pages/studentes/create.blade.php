@@ -239,7 +239,7 @@
             </div>
 
             <!-- ==================== Files Card ==================== -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
                 <h2 class="text-xl font-bold text-gray-800 mb-6">
                     {{ trans('student.student_files') }}
                 </h2>
@@ -247,12 +247,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
 
                     <div class="mb-8">
-                        <label class="block text-sm font-medium text-gray-700 mb-3">
+                        <label class="block text-sm font-medium dark:text-white text-gray-700 mb-3">
                             {{ trans('student.student_image') }}
                         </label>
                         <div x-data="{ imagePreview: null }" class="relative">
                             <label for="studentImage"
-                                class="cursor-pointer flex flex-row-reverse items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-4 hover:border-brand-500 transition-colors duration-200 min-h-[120px] w-full">
+                                class="cursor-pointer flex flex-row-reverse items-center justify-center rounded-xl border-2 border-dashed dark:bg-gray-800 border-gray-300 bg-gray-50 p-4 hover:border-brand-500 transition-colors duration-200 min-h-[120px] w-full">
 
                                 <template x-if="imagePreview">
                                     <div class="flex justify-center items-center w-full">
@@ -289,13 +289,13 @@
 
                     <!-- قسم شهادة الطالب -->
                     <div class="mb-8">
-                        <label class="block text-sm font-medium text-gray-700 mb-3">
+                        <label class="block text-sm font-medium dark:text-white text-gray-700 mb-3">
                             {{ trans('student.student_certificate') }}
                         </label>
 
                         <div x-data="{ certificatePreview: null }" class="relative">
                             <label for="studentCertificate"
-                                class="cursor-pointer flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-4 hover:border-brand-500 transition-colors duration-200 min-h-[120px] w-full">
+                                class="cursor-pointer flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 dark:bg-gray-800 bg-gray-50 p-4 hover:border-brand-500 transition-colors duration-200 min-h-[120px] w-full">
 
                                 <template x-if="certificatePreview">
                                     <div class="flex justify-center items-center w-full">
@@ -311,7 +311,7 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <span class="text-sm text-gray-700 font-medium"
+                                            <span class="text-sm text-gray-700  font-medium"
                                                 x-text="$event.target.files[0].name"></span>
                                         </div>
                                     </div>
@@ -330,7 +330,7 @@
                                             </div>
                                         </div>
 
-                                        <span class="text-xs text-brand-500 font-medium">
+                                        <span class="text-xs text-brand-500  font-medium">
                                             {{ trans('student.upload_student_certificate') }}
                                         </span>
                                     </div>
@@ -346,7 +346,7 @@
                 <!-- قسم الملفات الإضافية -->
                 <div x-data="{ additionalFiles: [] }" class="mb-6">
 
-                    <h2 class="text-xl font-bold text-gray-800 mb-6">
+                    <h2 class="text-xl font-bold dark:text-white text-gray-800 mb-6">
                         {{ trans('student.additional_files') }}
                     </h2>
 
@@ -354,7 +354,7 @@
 
 
                         <button type="button" @click="additionalFiles.push({ file: null, name: '' })"
-                            class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full shadow-sm text-black bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+                            class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs dark:text-white font-medium rounded-full shadow-sm text-black bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -404,7 +404,7 @@
                     <template x-for="(fileItem, index) in additionalFiles" :key="index">
 
                         <div
-                            class="relative bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition mb-6">
+                            class="relative bg-white border dark:bg-gray-700 border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition mb-6">
 
                             <!-- زر حذف -->
                             <button type="button" @click="additionalFiles.splice(index, 1)"
@@ -420,7 +420,7 @@
 
                                 <!-- اسم الملف -->
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <label class="block text-sm font-semibold dark:text-white text-gray-700 mb-2">
                                         {{ trans('student.file_name') }}
                                     </label>
 
@@ -445,7 +445,7 @@
 
                                     <label :for="'additionalFile_' + index"
                                         class="cursor-pointer h-[54px] flex items-center justify-between gap-3 px-4
-                                       rounded-xl border-2 border-dashed border-gray-300 bg-gray-50
+                                       rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 
                                        hover:bg-white hover:border-brand-500 transition">
 
                                         <div class="flex items-center gap-3">
@@ -470,7 +470,7 @@
                                             </span>
                                         </div>
 
-                                        <span class="text-xs text-brand-500 font-semibold">
+                                        <span class="text-xs text-brand-500 font-semibold ">
                                             {{ trans('student.browse') }}
                                         </span>
                                     </label>

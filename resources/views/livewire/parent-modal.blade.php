@@ -115,7 +115,7 @@
                             {{ __('student.cancel') }}
                         </button>
 
-                        <button type="submit" wire:loading.attr="disabled"
+                        <button type="submit" wire:loading.att="disabled"
                             class="px-4 py-2 text-white rounded-lg bg-brand-500">
                             <span wire:loading.remove> {{ __('student.add_parent') }} </span>
                             <span wire:loading> {{ __('student.adding_parent') }} ... </span>
