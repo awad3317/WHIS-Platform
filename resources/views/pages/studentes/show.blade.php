@@ -12,8 +12,7 @@
                 <div class="flex items-center gap-5">
                     <div
                         class="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-2xl border-2 border-white dark:border-gray-700 shadow-xl">
-                        <img src="{{ $photo }}" alt="student"
-                            class="h-full w-full object-cover">
+                        <img src="{{ $photo }}" alt="student" class="h-full w-full object-cover">
                         @if ($student->is_active)
                             <span
                                 class="absolute bottom-1 inset-inline-end-1 h-4 w-4 rounded-full border-2 border-white bg-success-500 dark:border-gray-700"></span>
@@ -63,24 +62,20 @@
         <div x-data="{ activeTab: 'personal' }" class="space-y-6">
             <div
                 class="flex items-center p-1 bg-gray-100 dark:bg-gray-800 rounded-2xl w-fit backdrop-blur-sm shadow-inner overflow-x-auto">
-                <button @click="activeTab = 'personal'"
-                    :class="activeTab === 'personal' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
-                        'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
+                <button @click="activeTab = 'personal'" :class="activeTab === 'personal' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
+                            'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
                     class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap">
                     {{ __('student.personal_info') }}
                 </button>
-                <button @click="activeTab = 'parents'"
-                    :class="activeTab === 'parents' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
-                        'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
+                <button @click="activeTab = 'parents'" :class="activeTab === 'parents' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
+                            'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
                     class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap">
                     {{ __('student.parents_info') }}
                 </button>
-                <button @click="activeTab = 'files'"
-                    :class="activeTab === 'files' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
-                        'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
+                <button @click="activeTab = 'files'" :class="activeTab === 'files' ? 'bg-brand-500 text-white shadow-md dark:bg-brand-500 dark:text-white' :
+                            'text-gray-500 hover:text-gray-700 dark:text-gray-400'"
                     class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap">
-                    {{ __('student.student_files') }} <span
-                        class="ms-1 opacity-60">({{ $student->files->count() }})</span>
+                    {{ __('student.student_files') }} <span class="ms-1 opacity-60">({{ $student->files->count() }})</span>
                 </button>
             </div>
 
@@ -155,7 +150,8 @@
                         <div class="flex-1 space-y-3">
                             <div class="flex justify-between items-center">
                                 <h4 class="font-bold text-gray-900 dark:text-white">
-                                    {{ app()->getLocale() == 'ar' ? $parent->name_ar : $parent->name_en }}</h4>
+                                    {{ app()->getLocale() == 'ar' ? $parent->name_ar : $parent->name_en }}
+                                </h4>
                                 <span
                                     class="text-[10px] font-black uppercase bg-brand-50 text-brand-700 px-2.5 py-1 rounded-lg dark:bg-brand-500/20 dark:text-brand-400">
                                     {{ __('student.' . $parent->pivot->relationship) }}
@@ -180,28 +176,45 @@
             <div x-show="activeTab === 'files'" x-transition class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @forelse($student->files as $file)
                     <div
-                        class="group rounded-3xl border border-gray-100 bg-white p-5 shadow-sm transition-all hover:border-brand-400 dark:border-gray-800 dark:bg-gray-800">
+                        class="flex items-center justify-between rounded-2xl border border-gray-100 bg-white py-4 pl-4 pr-4 dark:border-gray-800 dark:bg-white/[0.03] xl:pr-5">
                         <div class="flex items-center gap-4">
                             <div
-                                class="h-12 w-12 flex-shrink-0 rounded-2xl bg-gray-50 flex items-center justify-center dark:bg-gray-700 group-hover:bg-brand-500 group-hover:text-white transition-all shadow-inner">
-                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                    </path>
+                                class="flex h-[52px] w-[52px] items-center justify-center rounded-xl bg-success-500/[0.08] text-success-500">
+                                <svg class="fill-current" width="20" height="18" viewBox="0 0 20 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.05 3.9L8.45 4.35L9.05 3.9ZM2.25 2.25H6.5V0.75H2.25V2.25ZM1.5 15V3H0V15H1.5ZM17.75 15.75H2.25V17.25H17.75V15.75ZM18.5 6V15H20V6H18.5ZM17.75 3.75H10.25V5.25H17.75V3.75ZM9.65 3.45L8.3 1.65L7.1 2.55L8.45 4.35L9.65 3.45ZM10.25 3.75C10.0139 3.75 9.79164 3.63885 9.65 3.45L8.45 4.35C8.87492 4.91656 9.5418 5.25 10.25 5.25V3.75ZM20 6C20 4.75736 18.9926 3.75 17.75 3.75V5.25C18.1642 5.25 18.5 5.58579 18.5 6H20ZM17.75 17.25C18.9926 17.25 20 16.2426 20 15H18.5C18.5 15.4142 18.1642 15.75 17.75 15.75V17.25ZM0 15C0 16.2426 1.00736 17.25 2.25 17.25V15.75C1.83579 15.75 1.5 15.4142 1.5 15H0ZM6.5 2.25C6.73607 2.25 6.95836 2.36115 7.1 2.55L8.3 1.65C7.87508 1.08344 7.2082 0.75 6.5 0.75V2.25ZM2.25 0.75C1.00736 0.75 0 1.75736 0 3H1.5C1.5 2.58579 1.83579 2.25 2.25 2.25V0.75Z"
+                                        fill="" />
                                 </svg>
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="text-sm font-bold text-gray-900 dark:text-white truncate"
-                                    title="{{ basename($file->file_name) }}">
+
+                            <div>
+                                <h4 class="mb-1 text-sm font-medium text-gray-800 dark:text-white/90">
                                     {{ basename($file->file_name) }}
-                                </p>
-                                <div class="flex gap-4 mt-2">
-                                    <a href="{{ asset('storage/' . $file->file_path) }}" target="_blank"
-                                        class="text-[10px] font-black uppercase text-brand-500 dark:text-brand-400">{{ __('student.open') }}</a>
-                                    <a href="{{ asset('storage/' . $file->file_path) }}" download
-                                        class="text-[10px] font-black uppercase text-success-500 dark:text-success-400">{{ __('student.download') }}</a>
-                                </div>
+                                </h4>
+                                <span class="block text-sm text-gray-500 dark:text-gray-400">
+                                    <a href="{{ Route('student.downloadFile', $file->id) }}" download
+                                        class="text-[10px] font-black uppercase text-success-500 dark:text-success-400">
+                                        {{ __('student.download') }}
+                                    </a>
+                                    
+                                </span>
                             </div>
+                        </div>
+
+                        <div>
+                            <span class="mb-1 block text-right text-sm text-gray-500 dark:text-gray-400">
+                                <a href="{{ route('student.viewFiles', $file->id) }}" target="_blank"
+                                        class="text-[10px] font-black uppercase text-blue-500 dark:text-blue-400 hover:underline">
+                                        {{ __('student.open') }}
+                                    </a>
+                            </span>
+                            <span class="block text-right text-sm text-gray-500 dark:text-gray-400">
+                                <a href="{{ route('student.viewFiles', $file->id) }}" target="_blank"
+                                        class="text-[10px] font-black uppercase text-blue-500 dark:text-blue-400 hover:underline">
+                                        {{ __('student.edit') }}
+                                    </a>
+                            </span>
                         </div>
                     </div>
                 @empty

@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('Attendance', AttendanceController::class);
     Route::resource('students', StudentController::class);
+    Route::get('/download-student-file/{fileId}', [StudentController::class, 'downloadStudentFile'])->name('student.downloadFile');
+    Route::get('/view-student-file/{fileId}', [StudentController::class, 'viewStudentFile'])->name('student.viewFiles');
     Route::resource('employees', EmployeeController::class);
     Route::resource('parents', ParentController::class);
     

@@ -112,19 +112,42 @@ class StudentFileService
         return Str::slug($fileType) . '_' . Str::slug($originalName) . '_' . $academic_no . '_' . $timestamp . '_' . $random . '.' . $extension;
     }
 
+    public function getById(int $fileId): ?StudentFile
+    {
+        return StudentFile::find($fileId);
+    }
+
     public function downloadFile(StudentFile $studentFile)
     {
         if (!Storage::disk($this->disk)->exists($studentFile->file_path)) {
             throw new \Exception('الملف غير موجود');
         }
 
-        $filePath = Storage::disk($this->disk)->path($studentFile->file_path);
-
-        return [
-            'path' => $filePath,
-            'name' => $studentFile->file_name,
-        ];
+        return Storage::disk($this->disk)->download(
+            $studentFile->file_path, 
+            $studentFile->file_name
+        );
     }
+    public function viewFile(StudentFile $studentFile)
+{
+    if (!Storage::disk($this->disk)->exists($studentFile->file_path)) {
+        throw new \Exception('الملف غير موجود');
+    }
+
+    // اختيار 1: للعرض في المتصفح مباشرة
+    $fileContent = Storage::disk($this->disk)->get($studentFile->file_path);
+    $mimeType = Storage::disk($this->disk)->mimeType($studentFile->file_path);
+
+    return response($fileContent)
+        ->header('Content-Type', $mimeType)
+        ->header('Content-Disposition', 'inline; filename="' . $studentFile->file_name . '"');
+
+    // أو اختيار 2: استخدام response()->file() (لـ Laravel 5.6+)
+    // $filePath = Storage::disk($this->disk)->path($studentFile->file_path);
+    // return response()->file($filePath, [
+    //     'Content-Disposition' => 'inline; filename="' . $studentFile->file_name . '"'
+    // ]);
+}
 
     public function getFileInfo(StudentFile $studentFile): array
     {

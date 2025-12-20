@@ -170,4 +170,38 @@ class StudentController extends Controller
         $photo= 'data:image/jpeg;base64,' . $this->studentFileService->getFileBase64($studentFile);
         return view('pages.studentes.show', compact('student', 'photo'));
     }
+
+    public function edit($id)
+    {
+        $student = $this->studentRepository->getById($id);
+        if (!$student) {
+            return redirect()->back()->with('error', 'الطالب غير موجود!');
+        }
+        $classes = ClassModel::where('is_active', 1)->get();
+        return view('pages.studentes.edit', compact('student', 'classes'));
+    }
+    public function downloadStudentFile($fileId)
+    {
+        try {
+            $studentFile = $this->studentFileService->getById($fileId);
+        
+            return $this->studentFileService->downloadFile($studentFile);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'حدث خطأ أثناء تنزيل الملف: ' . $e->getMessage());
+        }
+    }
+    public function viewStudentFile($fileId)
+    {
+    try {
+        $studentFile = $this->studentFileService->getById($fileId);
+        if (!$studentFile) {
+            return redirect()->back()->with('error', 'الملف غير موجود!');
+        }
+
+        return $this->studentFileService->viewFile($studentFile);
+
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'حدث خطأ أثناء عرض الملف: ' . $e->getMessage());
+    }
+    }   
 }
